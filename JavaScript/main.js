@@ -17,6 +17,12 @@ function init() {
 
   scene = new THREE.Scene();
 
+   // Check if user is on a mobile device
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    document.getElementById('titleHeader').style.fontSize = '10vw';
+    document.getElementById('soundIcon').style.width = '40px';
+  }
+
   // Add the space skybox
   var textureLoader = new THREE.TextureLoader();
   var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
@@ -152,5 +158,4 @@ function updateParticles() {
 
 function playMusic() {
   document.getElementById("theSound").play();
-  console.log("test");
 }
