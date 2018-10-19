@@ -24,13 +24,7 @@ function init() {
   }
 
   window.addEventListener("orientationchange", function() {
-    if (/CriOS/i.test(navigator.userAgent) && 
-      /iphone|ipod|ipad/i.test(navigator.userAgent)) {
-      setTimeout(changeOrientation, 250);
-    }
-    else {
-      changeOrientation();
-    }
+    setTimeout(changeOrientation, 250);
   });
 
   // Add the space skybox
