@@ -7,13 +7,15 @@
 *******************************************************************************/
 
 var scene, camera, renderer, particles, particleSystem, particleCount = 1800;
+var keepParticles = true, spawnParticles = true;
 
 init();
 animate();
 
 function init() {
-  camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10000 );
-  camera.position.z = 50;
+  camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10000);
+  camera.position = (20,20,20);
+  camera.lookAt(0,0,0)
 
   scene = new THREE.Scene();
 
@@ -23,8 +25,9 @@ function init() {
     document.getElementById('soundIcon').style.width = '40px';
   }
 
+  // Resize when the orientation changes on mobile
   window.addEventListener("orientationchange", function() {
-    setTimeout(changeOrientation, 250);
+    setTimeout(changeOrientation, 250); // Adds a delay for chrome
   });
 
   // Add the space skybox
@@ -49,17 +52,15 @@ function init() {
   document.body.appendChild( renderer.domElement );
 
   createParticles(particleTexture);
-
 }
 
 function animate() {
 
-  updateParticles();
+  if (keepParticles) {
+    updateParticles();
+  }
 
   requestAnimationFrame( animate );
-
-  mesh.rotation.x += 0.01;
-  mesh.rotation.y += 0.02;
 
   renderer.render( scene, camera );
 
@@ -148,7 +149,7 @@ function updateParticles() {
   var verts = particleSystem.geometry.vertices;
   for(var i = 0; i < verts.length; i++) {
     var vert = verts[i];
-    if (vert.y < -200) {
+    if (vert.y < -200 && spawnParticles) {
       vert.y = Math.random() * 800 - 400;
     }
     vert.y = vert.y - (10 * 0.01);
@@ -158,6 +159,15 @@ function updateParticles() {
   particleSystem.rotation.y -= .1 * 0.01;
 }
 
-function playMusic() {
+function startProgram() {
   document.getElementById("theSound").play();
+  document.getElementById("titleHeader").classList.add("hidden");
+  document.getElementById("startButton").classList.add("hidden");
+  spawnParticles = false;
+  setTimeout(function() {
+    scene.remove(particleSystem)
+    keepParticles = false;
+  }, 65000); // Delete all particles after 65 seconds
+
+  createElement();
 }
