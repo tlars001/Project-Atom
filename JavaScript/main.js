@@ -23,6 +23,10 @@ function init() {
     document.getElementById('soundIcon').style.width = '40px';
   }
 
+  window.addEventListener("orientationchange", function() {
+    changeOrientation();
+  });
+
   // Add the space skybox
   var textureLoader = new THREE.TextureLoader();
   var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
@@ -80,12 +84,10 @@ function changeSound() {
 
 /*******************************************************************************
  *  Function: changeOrientation()
- *  Description: This function will resize when the orientation changes
+ *  Description: This function will resize the canvas when the orientation 
+ *  changes
 *******************************************************************************/
 function changeOrientation() {
-  var windowHalfX = window.innerWidth / 2;
-  var windowHalfY = window.innerHeight / 2;
-
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
