@@ -24,7 +24,8 @@ function init() {
   }
 
   window.addEventListener("orientationchange", function() {
-    changeOrientation();
+    setTimeout(changeOrientation, 500);
+    console.log("test");
   });
 
   // Add the space skybox
