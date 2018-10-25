@@ -7,17 +7,23 @@
 *******************************************************************************/
 
 var scene, camera, renderer, particles, particleSystem, particleCount = 1800;
-var keepParticles = true, spawnParticles = true;
+var controls, raycaster, mouse, keepParticles = true, spawnParticles = true;
+var line;
 
 init();
 animate();
 
 function init() {
-  camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10000);
-  camera.position = (20,20,20);
-  camera.lookAt(0,0,0)
-
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
+  camera.position.set(0,50,70);
+  mouse = new THREE.Vector2();
   scene = new THREE.Scene();
+
+  var lineGeometry = new THREE.BufferGeometry();
+  lineGeometry.addAttribute( 'position', new THREE.BufferAttribute( new Float32Array( 4 * 3 ), 3 ) );
+  var lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, transparent: true } );
+  line = new THREE.Line( lineGeometry, lineMaterial );
+  scene.add(line);
 
    // Check if user is on a mobile device
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -42,16 +48,34 @@ function init() {
   scene.background = skybox;
   scene.add(skybox);
 
+
   // Needed for particles for some reason
   geometry = new THREE.BoxGeometry( 5, 5, 5 );
   material = new THREE.MeshNormalMaterial();
   mesh = new THREE.Mesh( geometry, material );
 
+  raycaster = new THREE.Raycaster();
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setSize( window.innerWidth, window.innerHeight );
-  document.body.appendChild( renderer.domElement );
 
+  controls = new THREE.OrbitControls( camera, renderer.domElement);
+  //controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+  //controls.dampingFactor = 0.25;
+  controls.screenSpacePanning = false;
+  controls.minDistance = 50;
+  controls.maxDistance = 500;
+  //controls.maxPolarAngle = Math.PI / 2;
+
+  var axesHelper = new THREE.AxesHelper( 50 );
+  scene.add(axesHelper);
+  camera.lookAt(axesHelper.position);
+
+
+  var ambientLight = new THREE.AmbientLight( 0x404040, 1 ); // soft white light
+  scene.add( ambientLight );
   createParticles(particleTexture);
+
+  document.body.appendChild( renderer.domElement );
 }
 
 function animate() {
@@ -60,9 +84,11 @@ function animate() {
     updateParticles();
   }
 
-  requestAnimationFrame( animate );
+  checkIntersection();
 
-  renderer.render( scene, camera );
+  requestAnimationFrame(animate);
+
+  renderer.render(scene, camera);
 
 }
 
@@ -169,5 +195,6 @@ function startProgram() {
     keepParticles = false;
   }, 65000); // Delete all particles after 65 seconds
 
-  createElement();
+  generateTable();
 }
+
