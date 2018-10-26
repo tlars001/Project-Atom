@@ -8,7 +8,7 @@
 
 var scene, camera, renderer, particles, particleSystem, particleCount = 1800;
 var controls, raycaster, mouse, keepParticles = true, spawnParticles = true;
-var line;
+var INTERSECTED;
 
 init();
 animate();
@@ -18,12 +18,6 @@ function init() {
   camera.position.set(0,50,70);
   mouse = new THREE.Vector2();
   scene = new THREE.Scene();
-
-  var lineGeometry = new THREE.BufferGeometry();
-  lineGeometry.addAttribute( 'position', new THREE.BufferAttribute( new Float32Array( 4 * 3 ), 3 ) );
-  var lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, transparent: true } );
-  line = new THREE.Line( lineGeometry, lineMaterial );
-  scene.add(line);
 
    // Check if user is on a mobile device
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -76,6 +70,7 @@ function init() {
   createParticles(particleTexture);
 
   document.body.appendChild( renderer.domElement );
+  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 }
 
 function animate() {
@@ -119,6 +114,8 @@ function changeOrientation() {
   camera.updateProjectionMatrix();
 
   renderer.setSize( window.innerWidth, window.innerHeight );
+
+  effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
 }
 
 /*******************************************************************************
@@ -197,4 +194,16 @@ function startProgram() {
 
   generateTable();
 }
+
+function onDocumentMouseMove( event ) 
+{
+  // the following line would stop any other event handler from firing
+  // (such as the mouse's TrackballControls)
+  // event.preventDefault();
+  
+  // update the mouse variable
+  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
 
