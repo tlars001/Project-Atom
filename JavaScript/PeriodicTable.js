@@ -12,17 +12,47 @@ var elements = [];
 var outlineMesh;
 
 function generateTable() {
-	//for (var i = 1; i < 5; i++) {
-	//	elements.push(createElement("10", "Mg", "Magnesium", "4.994", 0, 0));
-	//}
-
-	var xIndex = -60;
-	var yIndex = 0;
+	var xIndex = -240;
+	var yIndex = 120;
 
 	for (var key in data) {
     if (data.hasOwnProperty(key)) {
         elements.push(createElement(data[key].number, data[key].symbol, data[key].name, data[key].mass, xIndex, yIndex));
-        xIndex += 30;
+
+        // Create the table structure
+        if (data[key].symbol === "H") {
+        	xIndex = 270;
+        }
+        else if (data[key].symbol === "Be") {
+        	xIndex = 120;
+        }
+        else if (data[key].symbol === "Mg") {
+        	xIndex = 120;
+        }
+        else if (data[key].symbol === "La") {
+        	xIndex = -180;
+        	yIndex = -105; 
+        }
+        else if (data[key].symbol === "Lu") {
+        	xIndex = -150;
+        	yIndex = -30;
+        }
+        else if (data[key].symbol === "Ac") {
+        	xIndex = -180;
+        	yIndex = -135;
+        }
+        else if (data[key].symbol === "Lr") {
+        	xIndex = -150;
+        	yIndex = -60;
+        }
+        else {
+        	xIndex += 30;
+        }
+
+        if (xIndex > 270) {
+        	xIndex = -240;
+        	yIndex -= 30;
+        }
     }
 	}
 }
@@ -39,7 +69,7 @@ function createElement(number, symbol, name, mass, xPos, yPos) {
 
  	addText(number, 3, mesh.position.x-12, mesh.position.y+8, 2, true);
   addText(symbol, 7, mesh.position.x, mesh.position.y-1, 2,);
-  addText(name, 3, mesh.position.x, mesh.position.y-6, 2);
+  addText(name, 2.7, mesh.position.x, mesh.position.y-6, 2);
   addText(mass, 3, mesh.position.x, mesh.position.y-11, 2);
   scene.add(mesh);
   return mesh;
@@ -58,7 +88,7 @@ function addText(name, theSize, xPos, yPos, zPos, isNum=false) {
 		var centerOffset = -0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
 		var materials = [
 			new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } ),
-			new THREE.MeshBasicMaterial( { color: 0x00f000, overdraw: 0.5 } )
+			new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } )
 		];
 		mesh = new THREE.Mesh( geometry, materials );
 		if (isNum){

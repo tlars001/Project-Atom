@@ -15,7 +15,7 @@ animate();
 
 function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.set(0,50,150);
+  camera.position.set(0,0,500);
   mouse = new THREE.Vector2();
   scene = new THREE.Scene();
 
@@ -54,12 +54,13 @@ function init() {
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setSize( window.innerWidth, window.innerHeight );
 
-  controls = new THREE.OrbitControls( camera, renderer.domElement);
-  //controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-  //controls.dampingFactor = 0.25;
-  controls.screenSpacePanning = false;
+  controls = new THREE.PanControls( camera, renderer.domElement);
+  controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+  controls.dampingFactor = 0.1;
+  controls.rotateSpeed = 0.3;
+  controls.screenSpacePanning = true;
   controls.minDistance = 50;
-  controls.maxDistance = 500;
+  controls.maxDistance = 800;
   //controls.maxPolarAngle = Math.PI / 2;
 
   //var axesHelper = new THREE.AxesHelper( 50 );
@@ -67,7 +68,7 @@ function init() {
   //camera.lookAt(axesHelper.position);
 
 
-  addLights(0, 0, 100)
+  addLights(0, 0, 1000)
   var ambientLight = new THREE.AmbientLight( 0x404040, 1 ); // soft white light
   scene.add( ambientLight );
   createParticles(particleTexture);
@@ -85,6 +86,8 @@ function animate() {
   checkIntersection();
 
   requestAnimationFrame(animate);
+
+  controls.update();
 
   renderer.render(scene, camera);
 
