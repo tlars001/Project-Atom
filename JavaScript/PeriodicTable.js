@@ -12,18 +12,28 @@ var elements = [];
 var outlineMesh;
 
 function generateTable() {
-	elements.push(createElement("10", "MG", "Magnesium", "4.994", 0, 0));
-  elements.push(createElement("1", "H", "Hydrogen", "4.994", 30, 0));
-  elements.push(createElement("13", "Br", "Bromine", "4.994", -30, 0));
+	//for (var i = 1; i < 5; i++) {
+	//	elements.push(createElement("10", "Mg", "Magnesium", "4.994", 0, 0));
+	//}
+
+	var xIndex = -60;
+	var yIndex = 0;
+
+	for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+        elements.push(createElement(data[key].number, data[key].symbol, data[key].name, data[key].mass, xIndex, yIndex));
+        xIndex += 30;
+    }
+	}
 }
 
 
 function createElement(number, symbol, name, mass, xPos, yPos) {
   var geometry = new THREE.BoxGeometry( 25, 25, 5 );
-  var material = new THREE.MeshNormalMaterial();
+  var material = new THREE.MeshPhongMaterial({ color: 0xff0000});
   material.name = symbol;
   var mesh = new THREE.Mesh( geometry, material );
-  //scene.add(mesh);
+ 
  	mesh.position.x = xPos;
 	mesh.position.y = yPos;
 
@@ -89,7 +99,6 @@ function checkIntersection() {
 		if (changeGlow) {
 			changeGlow = false;
 			outlineMesh = addOutline(INTERSECTED);
-			//console.log(INTERSECTED.position);
 		}
 
 		if (INTERSECTED.position != outlineMesh.position) {
@@ -124,13 +133,48 @@ function checkIntersection() {
 
 function addOutline (object) {
 	var elementGeometry = new THREE.BoxGeometry( 25, 25, 5 );
-	var outlineMaterial1 = new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.BackSide, 
-			transparent: true, opacity: 0.7 } );
+	var outlineMaterial1 = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide, 
+			transparent: true, opacity: 0.9 } );
 	var outlineMesh1 = new THREE.Mesh( elementGeometry, outlineMaterial1 );
 	outlineMesh1.position.x = (object.position.x);
 	outlineMesh1.position.y = (object.position.y);
 	outlineMesh1.position.z = (object.position.z);
-	outlineMesh1.scale.multiplyScalar(1.05);
+	outlineMesh1.scale.multiplyScalar(1.1);
 	scene.add( outlineMesh1 );
 	return outlineMesh1;
+}
+
+function onDocumentMouseDown( event ) 
+{	
+	// update the mouse variable
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+	
+	// find intersections
+
+	// create a Ray with origin at the mouse position
+	//   and direction into the scene (camera direction)
+	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+	vector.unproject(camera);
+	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+	// create an array containing all objects in the scene with which the ray intersects
+	var intersect = raycaster.intersectObjects(elements);
+
+	// if there is one (or more) intersections
+	if ( intersect.length > 0 )
+	{
+		INTERSECTED = intersect[ 0 ].object;
+		var theColor = INTERSECTED.material.color;
+		console.log(INTERSECTED.material.name);
+		// change the color of the closest face.
+		INTERSECTED.material.color.setRGB( 0, 0, 1); 
+		resetColor(INTERSECTED);
+	}
+}
+
+function resetColor(object) {
+	setTimeout(function() {
+		object.material.color.setRGB( 1, 0, 0);
+  }, 5000);
 }

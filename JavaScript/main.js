@@ -8,14 +8,14 @@
 
 var scene, camera, renderer, particles, particleSystem, particleCount = 1800;
 var controls, raycaster, mouse, keepParticles = true, spawnParticles = true;
-var INTERSECTED;
+var INTERSECTED, isMobile = false;
 
 init();
 animate();
 
 function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.set(0,50,70);
+  camera.position.set(0,50,150);
   mouse = new THREE.Vector2();
   scene = new THREE.Scene();
 
@@ -23,12 +23,14 @@ function init() {
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
     document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
+    isMobile = true;
   }
 
   // Resize when the orientation changes on mobile
   window.addEventListener("orientationchange", function() {
     setTimeout(changeOrientation, 250); // Adds a delay for chrome
   });
+
 
   // Add the space skybox
   var textureLoader = new THREE.TextureLoader();
@@ -60,11 +62,12 @@ function init() {
   controls.maxDistance = 500;
   //controls.maxPolarAngle = Math.PI / 2;
 
-  var axesHelper = new THREE.AxesHelper( 50 );
-  scene.add(axesHelper);
-  camera.lookAt(axesHelper.position);
+  //var axesHelper = new THREE.AxesHelper( 50 );
+  //scene.add(axesHelper);
+  //camera.lookAt(axesHelper.position);
 
 
+  addLights(0, 0, 100)
   var ambientLight = new THREE.AmbientLight( 0x404040, 1 ); // soft white light
   scene.add( ambientLight );
   createParticles(particleTexture);
@@ -114,8 +117,6 @@ function changeOrientation() {
   camera.updateProjectionMatrix();
 
   renderer.setSize( window.innerWidth, window.innerHeight );
-
-  effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
 }
 
 /*******************************************************************************
@@ -183,6 +184,7 @@ function updateParticles() {
 }
 
 function startProgram() {
+  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.add("hidden");
   document.getElementById("startButton").classList.add("hidden");
