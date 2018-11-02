@@ -595,10 +595,10 @@ THREE.PanControls = function ( object, domElement ) {
 
 		//console.log( 'handleTouchStartDollyPan' );
 
-		if ( scope.enableZoom ) {
+		if (scope.enableZoom && event.touches.length === 2) {
 
-			var dx = event.touches[ 0 ].pageX;
-			var dy = event.touches[ 0 ].pageY;
+			var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+			var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
 
 			var distance = Math.sqrt( dx * dx + dy * dy );
 
