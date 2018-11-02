@@ -17,65 +17,68 @@ function generateTable() {
 
 	for (var key in data) {
     if (data.hasOwnProperty(key)) {
-        elements.push(createElement(data[key].number, data[key].symbol, data[key].name, data[key].mass, xIndex, yIndex));
+      elements.push(createElement(data[key].number, data[key].symbol, data[key].name, data[key].mass, data[key].theColor, xIndex, yIndex));
 
-        // Create the table structure
-        if (data[key].symbol === "H") {
-        	xIndex = 270;
-        }
-        else if (data[key].symbol === "Be") {
-        	xIndex = 120;
-        }
-        else if (data[key].symbol === "Mg") {
-        	xIndex = 120;
-        }
-        else if (data[key].symbol === "La") {
-        	xIndex = -180;
-        	yIndex = -105; 
-        }
-        else if (data[key].symbol === "Lu") {
-        	xIndex = -150;
-        	yIndex = -30;
-        }
-        else if (data[key].symbol === "Ac") {
-        	xIndex = -180;
-        	yIndex = -135;
-        }
-        else if (data[key].symbol === "Lr") {
-        	xIndex = -150;
-        	yIndex = -60;
-        }
-        else {
-        	xIndex += 30;
-        }
+      // Create the table structure
+      if (data[key].symbol === "H") {
+      	xIndex = 270;
+      }
+      else if (data[key].symbol === "Be") {
+      	xIndex = 120;
+      }
+      else if (data[key].symbol === "Mg") {
+      	xIndex = 120;
+      }
+      else if (data[key].symbol === "La") {
+      	xIndex = -180;
+      	yIndex = -105; 
+      }
+      else if (data[key].symbol === "Lu") {
+      	xIndex = -150;
+      	yIndex = -30;
+      }
+      else if (data[key].symbol === "Ac") {
+      	xIndex = -180;
+      	yIndex = -135;
+      }
+      else if (data[key].symbol === "Lr") {
+      	xIndex = -150;
+      	yIndex = -60;
+      }
+      else {
+      	xIndex += 30;
+      }
 
-        if (xIndex > 270) {
-        	xIndex = -240;
-        	yIndex -= 30;
-        }
+      if (xIndex > 270) {
+      	xIndex = -240;
+      	yIndex -= 30;
+      }
     }
 	}
+
+	addText("Select An Element", 20, 0, 150, -1000, false, true);
 }
 
 
-function createElement(number, symbol, name, mass, xPos, yPos) {
+function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
   var geometry = new THREE.BoxGeometry( 25, 25, 5 );
-  var material = new THREE.MeshPhongMaterial({ color: 0xff0000});
+  var material = new THREE.MeshPhongMaterial({ color: theColor});
   material.name = symbol;
   var mesh = new THREE.Mesh( geometry, material );
  
  	mesh.position.x = xPos;
 	mesh.position.y = yPos;
+	mesh.position.z = -1000;
 
- 	addText(number, 3, mesh.position.x-12, mesh.position.y+8, 2, true);
-  addText(symbol, 7, mesh.position.x, mesh.position.y-1, 2,);
-  addText(name, 2.7, mesh.position.x, mesh.position.y-6, 2);
-  addText(mass, 3, mesh.position.x, mesh.position.y-11, 2);
+ 	addText(number, 3, mesh.position.x-12, mesh.position.y+8, -998, true);
+  addText(symbol, 7, mesh.position.x, mesh.position.y-1, -998,);
+  addText(name, 2.7, mesh.position.x, mesh.position.y-6, -998);
+  addText(mass, 3, mesh.position.x, mesh.position.y-11, -998);
   scene.add(mesh);
   return mesh;
 }
 
-function addText(name, theSize, xPos, yPos, zPos, isNum=false) {
+function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
 	var loader = new THREE.FontLoader();
 	loader.load( 'Resources/helvetiker_regular.typeface.json', function ( font ) {
 		var geometry = new THREE.TextBufferGeometry( name, {
@@ -86,10 +89,20 @@ function addText(name, theSize, xPos, yPos, zPos, isNum=false) {
 		});
 		geometry.computeBoundingBox();
 		var centerOffset = -0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
-		var materials = [
-			new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } ),
-			new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } )
-		];
+		var materials;
+
+		if (isTitle) {
+			materials = [
+				new THREE.MeshBasicMaterial( { color: 0xa9a9a9, overdraw: 0.5 } ),
+				new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } )
+			];
+		}
+		else {
+			materials = [
+				new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } ),
+				new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } )
+			];
+		}
 		mesh = new THREE.Mesh( geometry, materials );
 		if (isNum){
 			mesh.position.x = xPos;
@@ -174,6 +187,15 @@ function addOutline (object) {
 	return outlineMesh1;
 }
 
+function onDocumentTouchStart( event ) {
+  //event.preventDefault();
+
+  event.clientX = event.touches[0].pageX;
+  event.clientY = event.touches[0].pageY;
+
+  onDocumentMouseDown( event );
+}
+
 function onDocumentMouseDown( event ) 
 {	
 	// update the mouse variable
@@ -205,6 +227,7 @@ function onDocumentMouseDown( event )
 
 function resetColor(object) {
 	setTimeout(function() {
-		object.material.color.setRGB( 1, 0, 0);
+		var theColor = data[object.material.name].theColor;
+		object.material.color.set(theColor);
   }, 5000);
 }

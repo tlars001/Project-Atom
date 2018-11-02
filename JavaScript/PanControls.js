@@ -567,14 +567,6 @@ THREE.PanControls = function ( object, domElement ) {
 
 	function handleTouchStartRotate( event ) {
 
-		//console.log( 'handleTouchStartRotate' );
-
-		rotateStart.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
-
-	}
-
-	function handleTouchStartDollyPan( event ) {
-
 		//console.log( 'handleTouchStartDollyPan' );
 
 		if ( scope.enableZoom ) {
@@ -599,27 +591,33 @@ THREE.PanControls = function ( object, domElement ) {
 
 	}
 
-	function handleTouchMoveRotate( event ) {
+	function handleTouchStartDollyPan( event ) {
 
-		//console.log( 'handleTouchMoveRotate' );
+		//console.log( 'handleTouchStartDollyPan' );
 
-		rotateEnd.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+		if ( scope.enableZoom ) {
 
-		rotateDelta.subVectors( rotateEnd, rotateStart ).multiplyScalar( scope.rotateSpeed );
+			var dx = event.touches[ 0 ].pageX;
+			var dy = event.touches[ 0 ].pageY;
 
-		var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+			var distance = Math.sqrt( dx * dx + dy * dy );
 
-		rotateLeft( 2 * Math.PI * rotateDelta.x / element.clientHeight ); // yes, height
+			dollyStart.set( 0, distance );
 
-		rotateUp( 2 * Math.PI * rotateDelta.y / element.clientHeight );
+		}
 
-		rotateStart.copy( rotateEnd );
+		if ( scope.enablePan ) {
 
-		scope.update();
+			var x = 0.5 * ( event.touches[ 0 ].pageX);
+			var y = 0.5 * ( event.touches[ 0 ].pageY);
+
+			panStart.set( x, y );
+
+		}
 
 	}
 
-	function handleTouchMoveDollyPan( event ) {
+	function handleTouchMoveRotate( event ) {
 
 		//console.log( 'handleTouchMoveDollyPan' );
 
@@ -644,6 +642,46 @@ THREE.PanControls = function ( object, domElement ) {
 
 			var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
 			var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
+
+			panEnd.set( x, y );
+
+			panDelta.subVectors( panEnd, panStart ).multiplyScalar( scope.panSpeed );
+
+			pan( panDelta.x, panDelta.y );
+
+			panStart.copy( panEnd );
+
+		}
+
+		scope.update();
+
+	}
+
+	function handleTouchMoveDollyPan( event ) {
+
+		//console.log( 'handleTouchMoveDollyPan' );
+
+		/*if ( scope.enableZoom ) {
+
+			var dx = event.touches[ 0 ].pageX;
+			var dy = event.touches[ 0 ].pageY;
+
+			var distance = Math.sqrt( dx * dx + dy * dy );
+
+			dollyEnd.set( 0, distance );
+
+			dollyDelta.set( 0, Math.pow( dollyEnd.y / dollyStart.y, scope.zoomSpeed ) );
+
+			dollyIn( dollyDelta.y );
+
+			dollyStart.copy( dollyEnd );
+
+		}
+*/
+		if ( scope.enablePan ) {
+
+			var x = 0.5 * ( event.touches[ 0 ].pageX);
+			var y = 0.5 * ( event.touches[ 0 ].pageY);
 
 			panEnd.set( x, y );
 
@@ -804,11 +842,11 @@ THREE.PanControls = function ( object, domElement ) {
 
 			case 1:	// one-fingered touch: rotate
 
-				if ( scope.enableRotate === false ) return;
+				if ( scope.enableZoom === false && scope.enablePan === false ) return;
 
-				handleTouchStartRotate( event );
+				handleTouchStartDollyPan( event );
 
-				state = STATE.TOUCH_ROTATE;
+				state = STATE.TOUCH_DOLLY_PAN;
 
 				break;
 
@@ -847,10 +885,10 @@ THREE.PanControls = function ( object, domElement ) {
 
 			case 1: // one-fingered touch: rotate
 
-				if ( scope.enableRotate === false ) return;
-				if ( state !== STATE.TOUCH_ROTATE ) return; // is this needed?
+				if ( scope.enableZoom === false && scope.enablePan === false ) return;
+				if ( state !== STATE.TOUCH_DOLLY_PAN ) return; // is this needed?
 
-				handleTouchMoveRotate( event );
+				handleTouchMoveDollyPan( event );
 
 				break;
 

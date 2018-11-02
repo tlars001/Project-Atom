@@ -6,16 +6,18 @@
  *  functions to make Project Atom work.
 *******************************************************************************/
 
+// Necessary global variables for the project
 var scene, camera, renderer, particles, particleSystem, particleCount = 1800;
 var controls, raycaster, mouse, keepParticles = true, spawnParticles = true;
-var INTERSECTED, isMobile = false;
+var INTERSECTED, rotation = 0, cameraSphere, isMobile = false;
+var isTable = false, isCenter = true, isMoving = false;
 
 init();
 animate();
 
 function init() {
-  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.set(0,0,500);
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
+  camera.position.set(0,0,-500);
   mouse = new THREE.Vector2();
   scene = new THREE.Scene();
 
@@ -36,7 +38,7 @@ function init() {
   var textureLoader = new THREE.TextureLoader();
   var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
   var particleTexture = new textureLoader.load( 'Resources/particle.png');
-  var boxGeometry = new THREE.BoxGeometry( 1000, 1000, 1000);
+  var boxGeometry = new THREE.BoxGeometry( 30000, 30000, 30000);
   var skyMaterial = new THREE.MeshBasicMaterial({map: mainBackground,
                                                  side: THREE.BackSide});
   var skybox = new THREE.Mesh(boxGeometry, skyMaterial);
@@ -46,14 +48,20 @@ function init() {
 
 
   // Needed for particles for some reason
-  geometry = new THREE.BoxGeometry( 5, 5, 5 );
+  geometry = new THREE.SphereGeometry(0.1, 10, 9);
   material = new THREE.MeshNormalMaterial();
   mesh = new THREE.Mesh( geometry, material );
+  cameraSphere = mesh;
+  cameraSphere.position.set(0,0,0);
+  scene.add(cameraSphere);
+  camera.lookAt(cameraSphere.position);
+  //cameraSphere.add(camera);
 
   raycaster = new THREE.Raycaster();
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setSize( window.innerWidth, window.innerHeight );
 
+  
   controls = new THREE.PanControls( camera, renderer.domElement);
   controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
   controls.dampingFactor = 0.1;
@@ -62,11 +70,13 @@ function init() {
   controls.minDistance = 50;
   controls.maxDistance = 800;
   //controls.maxPolarAngle = Math.PI / 2;
+  controls.panSpeed = 0.2;
+
+  controls.enabled = false;
+  
 
   //var axesHelper = new THREE.AxesHelper( 50 );
   //scene.add(axesHelper);
-  //camera.lookAt(axesHelper.position);
-
 
   addLights(0, 0, 1000)
   var ambientLight = new THREE.AmbientLight( 0x404040, 1 ); // soft white light
@@ -83,14 +93,60 @@ function animate() {
     updateParticles();
   }
 
-  checkIntersection();
+  if (isTable) {
+    rotation += 0.01;
+    if (cameraSphere.position.z > -1000) {
+      cameraSphere.position.z -= 3;
+      camera.lookAt(cameraSphere.position);
+      if (cameraSphere.position.z > -500)
+        cameraSphere.position.x += 3;
+      else
+        cameraSphere.position.x -= 3;
+    }
+
+    if (!isMoving) {
+      checkPanRange();
+    }
+  }
+
+
+  if (!isMobile) {
+    checkIntersection();
+  }
 
   requestAnimationFrame(animate);
 
-  controls.update();
+  if (!isMoving)
+    controls.update();
 
   renderer.render(scene, camera);
 
+}
+
+function checkPanRange() {
+  if (controls.target.y < -200) {
+    controls.target.y = -200;
+    controls.target.z = -1000;
+    camera.position.y = -200;
+  }
+
+  if (controls.target.y > 200) {
+    controls.target.y = 200;
+    controls.target.z = -1000;
+    camera.position.y = 200;
+  }
+
+  if (controls.target.x < -350) {
+    controls.target.x = -350;
+    controls.target.z = -1000;
+    camera.position.x = -350;
+  }
+
+  if (controls.target.x > 350) {
+    controls.target.x = 350;
+    controls.target.z = -1000;
+    camera.position.x = 350;
+  }
 }
 
 /*******************************************************************************
@@ -148,9 +204,9 @@ function createParticles(texture) {
 
     // create a particle with random
     // position values, -250 -> 250
-    var pX = Math.random() * 400 - 200,
-        pY = Math.random() * 400 - 200,
-        pZ = Math.random() * 400 - 200,
+    var pX = Math.random() * 300 - 150,
+        pY = Math.random() * 200 - 100,
+        pZ = Math.random() * 200 - 100,
         particle = new THREE.Vector3(pX, pY, pZ);
 
     particle.velocity = new THREE.Vector3(
@@ -170,24 +226,26 @@ function createParticles(texture) {
 
   // add it to the scene
   scene.add(particleSystem);
+  particleSystem.position.set(0,0,-300);
 }
 
 function updateParticles() {  
   var verts = particleSystem.geometry.vertices;
   for(var i = 0; i < verts.length; i++) {
     var vert = verts[i];
-    if (vert.y < -200 && spawnParticles) {
-      vert.y = Math.random() * 800 - 400;
+    if (vert.y < -100 && spawnParticles) {
+      vert.y = Math.random() * 200;
     }
-    vert.y = vert.y - (10 * 0.01);
+    vert.y = vert.y - (10 * 0.005);
   }
   particleSystem.geometry.verticesNeedUpdate = true;
   
-  particleSystem.rotation.y -= .1 * 0.01;
+  particleSystem.rotation.y -= .1 * 0.005;
 }
 
 function startProgram() {
   document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.add("hidden");
   document.getElementById("startButton").classList.add("hidden");
@@ -197,7 +255,19 @@ function startProgram() {
     keepParticles = false;
   }, 65000); // Delete all particles after 65 seconds
 
+  isCenter = false;
+  isTable = true;
+  isMoving = true;
+  setTimeout(setTableMovement, 9000);
+
   generateTable();
+}
+
+function setTableMovement() {
+  isMoving = false;
+  controls.target.set(0,0,-1000);
+  controls.update();
+  controls.enabled = true;
 }
 
 function onDocumentMouseMove( event ) 
