@@ -669,22 +669,22 @@ THREE.PanControls = function ( object, domElement ) {
 
 		//console.log( 'handleTouchMoveDollyPan' );
 
-		if ( scope.enableZoom && event.touches.length === 2) {
+		// if ( scope.enableZoom && event.touches.length === 2) {
 
-			var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
-			var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+		// 	var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+		// 	var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
 
-			var distance = Math.sqrt( dx * dx + dy * dy );
+		// 	var distance = Math.sqrt( dx * dx + dy * dy );
 
-			dollyEnd.set( 0, distance );
+		// 	dollyEnd.set( 0, distance );
 
-			dollyDelta.set( 0, Math.pow( dollyEnd.y / dollyStart.y, scope.zoomSpeed ) );
+		// 	dollyDelta.set( 0, Math.pow( dollyEnd.y / dollyStart.y, scope.zoomSpeed ) );
 
-			dollyIn( dollyDelta.y );
+		// 	dollyIn( dollyDelta.y );
 
-			dollyStart.copy( dollyEnd );
+		// 	dollyStart.copy( dollyEnd );
 
-		}
+		// }
 
 		if ( scope.enablePan ) {
 
