@@ -593,26 +593,26 @@ THREE.PanControls = function ( object, domElement ) {
 
 	function handleTouchStartDollyPan( event ) {
 
-		console.log( 'handleTouchStartDollyPan' );
+		//console.log( 'handleTouchStartDollyPan' );
 
-		if (scope.enableZoom) {
-			var dx;
-			var dy;
+		// if (scope.enableZoom) {
+		// 	var dx;
+		// 	var dy;
 
-			if (event.touches.length === 2) {
-				dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
-				dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
-			}
-			else {
-				dx = event.touches[ 0 ].pageX;
-				dy = event.touches[ 0 ].pageY;
-			}
+		// 	if (event.touches.length === 2) {
+		// 		dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+		// 		dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+		// 	}
+		// 	else {
+		// 		dx = event.touches[ 0 ].pageX;
+		// 		dy = event.touches[ 0 ].pageY;
+		// 	}
 
-			var distance = Math.sqrt( dx * dx + dy * dy );
+		// 	var distance = Math.sqrt( dx * dx + dy * dy );
 
-			dollyStart.set( 0, distance );
+		// 	dollyStart.set( 0, distance );
 
-		}
+		// }
 
 		if ( scope.enablePan ) {
 
