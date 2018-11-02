@@ -854,9 +854,9 @@ THREE.PanControls = function ( object, domElement ) {
 
 				if ( scope.enableZoom === false && scope.enablePan === false ) return;
 
-				handleTouchStartDollyPan( event );
+				//handleTouchStartDollyPan( event );
 
-				state = STATE.TOUCH_DOLLY_PAN;
+				//state = STATE.TOUCH_DOLLY_PAN;
 
 				break;
 
