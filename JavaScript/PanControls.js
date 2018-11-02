@@ -894,10 +894,10 @@ THREE.PanControls = function ( object, domElement ) {
 
 			case 2: // two-fingered touch: dolly-pan
 
-				if ( scope.enableZoom === false && scope.enablePan === false ) return;
-				if ( state !== STATE.TOUCH_DOLLY_PAN ) return; // is this needed?
+				//if ( scope.enableZoom === false && scope.enablePan === false ) return;
+				//if ( state !== STATE.TOUCH_DOLLY_PAN ) return; // is this needed?
 
-				handleTouchMoveDollyPan( event );
+				//handleTouchMoveDollyPan( event );
 
 				break;
 
