@@ -7,10 +7,11 @@
 *******************************************************************************/
 
 // Necessary global variables for the project
-var scene, camera, renderer, particles, particleSystem, particleCount = 1800;
-var controls, raycaster, mouse, keepParticles = true, spawnParticles = true;
+var scene, camera, renderer, particles, particleSystem, particleCount = 2000;
+var controls, raycaster, mouse, keepParticles = true;
 var INTERSECTED, rotation = 0, cameraSphere, isMobile = false;
 var isTable = false, isCenter = true, isMoving = false;
+var elementView = false;
 
 init();
 animate();
@@ -93,9 +94,13 @@ function animate() {
     updateParticles();
   }
 
+  if (cameraSphere.position.z === -1002 && !controls.enabled) {
+    setTableMovement();
+  }
+
   if (isTable) {
-    rotation += 0.01;
     if (cameraSphere.position.z > -1000) {
+      rotation += 0.01;
       cameraSphere.position.z -= 3;
       camera.lookAt(cameraSphere.position);
       if (cameraSphere.position.z > -500)
@@ -107,6 +112,15 @@ function animate() {
     if (!isMoving) {
       checkPanRange();
     }
+  }
+
+  if (isSelected && elementView) {
+    controls.enabled = false;
+    adjustCameraPosition();
+  }
+
+  if (elementView && cameraSphere.position.z > -1) {
+    console.log("Made it to element view");
   }
 
 
@@ -147,6 +161,50 @@ function checkPanRange() {
     controls.target.z = -1000;
     camera.position.x = 350;
   }
+}
+
+function adjustCameraPosition() {
+
+  if (camera.position.x > 2)
+    camera.position.x -= 3;
+
+  if (camera.position.x < -2)
+    camera.position.x+= 3;
+
+  if (camera.position.y > 2)
+    camera.position.y-= 3;
+
+  if (camera.position.y < -2)
+    camera.position.y+= 3;
+
+  if (camera.position.z > -502)
+    camera.position.z-= 3;
+
+  if (camera.position.z < -498)
+    camera.position.z+= 3;
+
+  if (camera.position.x > -2 && camera.position.x < 2 &&
+      camera.position.y > -2 && camera.position.y < 2 &&
+      camera.position.z > -502 && camera.position.z < -498) {
+    moveToElementView();
+  }
+  else {
+    cameraSphere.position.set(0,0,-1000);
+  }
+}
+
+function moveToElementView() {
+  //console.log("test2");
+  rotation += 0.01;
+  camera.lookAt(cameraSphere.position);
+  if (cameraSphere.position.z < 0) {
+    cameraSphere.position.z += 3;
+    if (cameraSphere.position.z < -500)
+      cameraSphere.position.x += 3;
+    else
+      cameraSphere.position.x -= 3;
+  }
+
 }
 
 /*******************************************************************************
@@ -203,10 +261,9 @@ function createParticles(texture) {
   for (var p = 0; p < particleCount; p++) {
 
     // create a particle with random
-    // position values, -250 -> 250
     var pX = Math.random() * 300 - 150,
         pY = Math.random() * 200 - 100,
-        pZ = Math.random() * 200 - 100,
+        pZ = Math.random() * 200 - 150,
         particle = new THREE.Vector3(pX, pY, pZ);
 
     particle.velocity = new THREE.Vector3(
@@ -233,7 +290,7 @@ function updateParticles() {
   var verts = particleSystem.geometry.vertices;
   for(var i = 0; i < verts.length; i++) {
     var vert = verts[i];
-    if (vert.y < -100 && spawnParticles) {
+    if (vert.y < -100) {
       vert.y = Math.random() * 200;
     }
     vert.y = vert.y - (10 * 0.005);
@@ -249,16 +306,15 @@ function startProgram() {
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.add("hidden");
   document.getElementById("startButton").classList.add("hidden");
-  spawnParticles = false;
   setTimeout(function() {
     scene.remove(particleSystem)
     keepParticles = false;
-  }, 65000); // Delete all particles after 65 seconds
+  }, 6000); // Delete all particles after 8 seconds
 
   isCenter = false;
   isTable = true;
   isMoving = true;
-  setTimeout(setTableMovement, 9000);
+  //setTimeout(setTableMovement, 9000);
 
   generateTable();
 }

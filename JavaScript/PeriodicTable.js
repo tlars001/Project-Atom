@@ -9,7 +9,7 @@
 var changeGlow = true;
 var selectedObject = [];
 var elements = [];
-var outlineMesh;
+var outlineMesh, isSelected  = false;
 
 function generateTable() {
 	var xIndex = -240;
@@ -135,7 +135,7 @@ function checkIntersection() {
 
 
 	// if there is one (or more) intersections
-	if ( intersects.length > 0 )
+	if ( intersects.length > 0 && !isSelected)
 	{
 		INTERSECTED = intersects[ 0 ].object;
 
@@ -214,8 +214,13 @@ function onDocumentMouseDown( event )
 	var intersect = raycaster.intersectObjects(elements);
 
 	// if there is one (or more) intersections
-	if ( intersect.length > 0 )
+	if ( intersect.length > 0 && !isSelected )
 	{
+		isSelected = true;
+		elementView = true;
+		isTable = false;
+		isMoving = true;
+		rotation = 0;
 		INTERSECTED = intersect[ 0 ].object;
 		var theColor = INTERSECTED.material.color;
 		console.log(INTERSECTED.material.name);
@@ -227,6 +232,7 @@ function onDocumentMouseDown( event )
 
 function resetColor(object) {
 	setTimeout(function() {
+		//isSelected = false;
 		var theColor = data[object.material.name].theColor;
 		object.material.color.set(theColor);
   }, 5000);

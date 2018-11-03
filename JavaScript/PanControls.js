@@ -565,54 +565,7 @@ THREE.PanControls = function ( object, domElement ) {
 
 	}
 
-	// function handleTouchStartRotate( event ) {
-
-	// 	console.log( 'handleTouchStartDollyPan' );
-
-	// 	if ( scope.enableZoom ) {
-
-	// 		var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
-	// 		var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
-
-	// 		var distance = Math.sqrt( dx * dx + dy * dy );
-
-	// 		dollyStart.set( 0, distance );
-
-	// 	}
-
-	// 	if ( scope.enablePan ) {
-
-	// 		var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
-	// 		var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
-
-	// 		panStart.set( x, y );
-
-	// 	}
-
-	// }
-
 	function handleTouchStartDollyPan( event ) {
-
-		//console.log( 'handleTouchStartDollyPan' );
-
-		// if (scope.enableZoom) {
-		// 	var dx;
-		// 	var dy;
-
-		// 	if (event.touches.length === 2) {
-		// 		dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
-		// 		dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
-		// 	}
-		// 	else {
-		// 		dx = event.touches[ 0 ].pageX;
-		// 		dy = event.touches[ 0 ].pageY;
-		// 	}
-
-		// 	var distance = Math.sqrt( dx * dx + dy * dy );
-
-		// 	dollyStart.set( 0, distance );
-
-		// }
 
 		if ( scope.enablePan ) {
 
@@ -625,66 +578,7 @@ THREE.PanControls = function ( object, domElement ) {
 
 	}
 
-	// function handleTouchMoveRotate( event ) {
-
-	// 	console.log( 'handleTouchMoveDollyPan' );
-
-	// 	if ( scope.enableZoom ) {
-
-	// 		var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
-	// 		var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
-
-	// 		var distance = Math.sqrt( dx * dx + dy * dy );
-
-	// 		dollyEnd.set( 0, distance );
-
-	// 		dollyDelta.set( 0, Math.pow( dollyEnd.y / dollyStart.y, scope.zoomSpeed ) );
-
-	// 		dollyIn( dollyDelta.y );
-
-	// 		dollyStart.copy( dollyEnd );
-
-	// 	}
-
-	// 	if ( scope.enablePan ) {
-
-	// 		var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
-	// 		var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
-
-	// 		panEnd.set( x, y );
-
-	// 		panDelta.subVectors( panEnd, panStart ).multiplyScalar( scope.panSpeed );
-
-	// 		pan( panDelta.x, panDelta.y );
-
-	// 		panStart.copy( panEnd );
-
-	// 	}
-
-	// 	scope.update();
-
-	// }
-
 	function handleTouchMoveDollyPan( event ) {
-
-		//console.log( 'handleTouchMoveDollyPan' );
-
-		// if ( scope.enableZoom && event.touches.length === 2) {
-
-		// 	var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
-		// 	var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
-
-		// 	var distance = Math.sqrt( dx * dx + dy * dy );
-
-		// 	dollyEnd.set( 0, distance );
-
-		// 	dollyDelta.set( 0, Math.pow( dollyEnd.y / dollyStart.y, scope.zoomSpeed ) );
-
-		// 	dollyIn( dollyDelta.y );
-
-		// 	dollyStart.copy( dollyEnd );
-
-		// }
 
 		if ( scope.enablePan ) {
 
