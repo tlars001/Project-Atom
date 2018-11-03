@@ -705,11 +705,34 @@ THREE.PanControls = function ( object, domElement ) {
 
 	}
 
-	function handleTouchZoom( event ) {
+	function handleTouchStartZoom( event ) {
 
 		//console.log( 'handleTouchMoveDollyPan' );
 
-		if ( scope.enableZoom && event.touches.length === 2) {
+		if ( scope.enableZoom) {
+
+			if ( scope.enableZoom ) {
+
+			var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+			var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+
+			var distance = Math.sqrt( dx * dx + dy * dy );
+
+			dollyStart.set( 0, distance );
+
+			}
+
+		}
+
+		scope.update();
+
+	}
+
+	function handleTouchMoveZoom( event ) {
+
+		//console.log( 'handleTouchMoveDollyPan' );
+
+		if ( scope.enableZoom) {
 
 			var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
 			var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
@@ -889,7 +912,7 @@ THREE.PanControls = function ( object, domElement ) {
 
 				//handleTouchStartDollyPan( event );
 
-				handleTouchZoom( event );
+				handleTouchStartZoom( event );
 
 				//state = STATE.TOUCH_DOLLY_PAN;
 
@@ -933,7 +956,7 @@ THREE.PanControls = function ( object, domElement ) {
 				if ( state !== STATE.TOUCH_DOLLY_PAN ) return; // is this needed?
 
 				//handleTouchMoveDollyPan( event );
-				handleTouchZoom(event);
+				handleTouchMoveZoom(event);
 
 				break;
 
