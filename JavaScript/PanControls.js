@@ -933,6 +933,7 @@ THREE.PanControls = function ( object, domElement ) {
 				if ( state !== STATE.TOUCH_DOLLY_PAN ) return; // is this needed?
 
 				//handleTouchMoveDollyPan( event );
+				handleTouchZoom(event);
 
 				break;
 
