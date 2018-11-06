@@ -177,10 +177,10 @@ function adjustCameraPosition() {
   if (camera.position.y < -2)
     camera.position.y+= 3;
 
-  if (camera.position.z > -502)
+  if (camera.position.z > -498)
     camera.position.z-= 3;
 
-  if (camera.position.z < -498)
+  if (camera.position.z < -502)
     camera.position.z+= 3;
 
   if (camera.position.x > -2 && camera.position.x < 2 &&

@@ -10,6 +10,7 @@ var changeGlow = true;
 var selectedObject = [];
 var elements = [];
 var outlineMesh, isSelected  = false;
+var latestTap = 0;
 
 function generateTable() {
 	var xIndex = -240;
@@ -188,12 +189,21 @@ function addOutline (object) {
 }
 
 function onDocumentTouchStart( event ) {
-  //event.preventDefault();
 
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
 
-  onDocumentMouseDown( event );
+  console.log(event.clientX + " " + event.clientY);
+
+  var now = new Date().getTime();
+	var timeSince = now - latestTap;
+
+	if((timeSince < 500) && (timeSince > 0)){
+	  // double tap  
+	  onDocumentMouseDown( event ); 
+	}
+
+  latestTap = new Date().getTime();
 }
 
 function onDocumentMouseDown( event ) 
@@ -216,6 +226,10 @@ function onDocumentMouseDown( event )
 	// if there is one (or more) intersections
 	if ( intersect.length > 0 && !isSelected )
 	{
+		if (isMobile) {
+			window.navigator.vibrate(300);
+		}
+
 		isSelected = true;
 		elementView = true;
 		isTable = false;
