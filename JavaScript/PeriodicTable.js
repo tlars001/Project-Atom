@@ -227,7 +227,7 @@ function onDocumentMouseDown( event )
 	if ( intersect.length > 0 && !isSelected )
 	{
 		if (isMobile) {
-			window.navigator.vibrate(300);
+			//window.navigator.vibrate(200);
 		}
 
 		isSelected = true;
