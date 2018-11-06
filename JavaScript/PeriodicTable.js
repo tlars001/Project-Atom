@@ -10,7 +10,7 @@ var changeGlow = true;
 var selectedObject = [];
 var elements = [];
 var outlineMesh, isSelected  = false;
-var latestTap = 0;
+var clickTimer = 0;
 
 function generateTable() {
 	var xIndex = -240;
@@ -193,17 +193,20 @@ function onDocumentTouchStart( event ) {
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
 
-  console.log(event.clientX + " " + event.clientY);
+  if (clickTimer == null) {
+    clickTimer = setTimeout(function () {
+      clickTimer = null;
+      //alert("single");
 
-  var now = new Date().getTime();
-	var timeSince = now - latestTap;
+  	}, 500)
+  } 
+  else {
+      clearTimeout(clickTimer);
+      clickTimer = null;
+      //alert("double");
+      onDocumentMouseDown( event ); 
 
-	if((timeSince < 500) && (timeSince > 0)){
-	  // double tap  
-	  onDocumentMouseDown( event ); 
-	}
-
-  latestTap = new Date().getTime();
+  }	
 }
 
 function onDocumentMouseDown( event ) 
@@ -227,7 +230,7 @@ function onDocumentMouseDown( event )
 	if ( intersect.length > 0 && !isSelected )
 	{
 		if (isMobile) {
-			//window.navigator.vibrate(200);
+			window.navigator.vibrate(200);
 		}
 
 		isSelected = true;
