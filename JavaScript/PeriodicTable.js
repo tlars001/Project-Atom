@@ -188,7 +188,7 @@ function addOutline (object) {
 	return outlineMesh1;
 }
 
-function onDocumentTouchStart( event ) {
+function onDocumentTouchStart(event) {
 
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
@@ -197,7 +197,6 @@ function onDocumentTouchStart( event ) {
     clickTimer = setTimeout(function () {
       clickTimer = null;
       //alert("single");
-      alert(event.clientX + " " + event.clientY);
      
   	}, 500)
   } 
@@ -205,22 +204,21 @@ function onDocumentTouchStart( event ) {
     clearTimeout(clickTimer);
     clickTimer = null;
     //alert("double");
-    selectElement(); 
+    selectElement(event); 
 
   }	
 }
 
-function onDocumentMouseDown( event ) 
+function onDocumentMouseDown(event) 
 {	
 	if (!isMobile)
-		selectElement();	
+		selectElement(event);	
 }
 
-function selectElement() {
+function selectElement(event) {
 	// update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-	alert("Made it " + mouse.x + " " + mouse.y);
 	
 	// find intersections
 
