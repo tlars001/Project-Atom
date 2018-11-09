@@ -189,15 +189,16 @@ function addOutline (object) {
 }
 
 function onDocumentTouchStart( event ) {
-	console.log(event);
+
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
+  selectElement();
 
   if (clickTimer == null) {
     clickTimer = setTimeout(function () {
       clickTimer = null;
       //alert("single");
-      selectElement();
+     
   	}, 500)
   } 
   else {
