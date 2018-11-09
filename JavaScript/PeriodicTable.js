@@ -189,7 +189,7 @@ function addOutline (object) {
 }
 
 function onDocumentTouchStart( event ) {
-
+	console.log(event);
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
 
@@ -201,17 +201,19 @@ function onDocumentTouchStart( event ) {
   	}, 500)
   } 
   else {
-      clearTimeout(clickTimer);
-      clickTimer = null;
-      //alert("double");
-      selectElement(); 
+		event.preventDefault();
+    clearTimeout(clickTimer);
+    clickTimer = null;
+    alert("double");
+    selectElement(); 
 
   }	
 }
 
 function onDocumentMouseDown( event ) 
 {	
-	selectElement();	
+	if (!mobile)
+		selectElement();	
 }
 
 function selectElement() {
