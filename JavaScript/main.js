@@ -303,8 +303,6 @@ function updateParticles() {
 }
 
 function startProgram() {
-  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.add("hidden");
   document.getElementById("startButton").classList.add("hidden");
@@ -322,6 +320,8 @@ function startProgram() {
 }
 
 function setTableMovement() {
+  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
   isMoving = false;
   controls.target.set(0,0,-1000);
   controls.update();

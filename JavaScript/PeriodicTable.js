@@ -10,7 +10,7 @@ var changeGlow = true;
 var selectedObject = [];
 var elements = [];
 var outlineMesh, isSelected  = false;
-var clickTimer = 0;
+var clickTimer = null;
 
 function generateTable() {
 	var xIndex = -240;
@@ -196,21 +196,25 @@ function onDocumentTouchStart( event ) {
   if (clickTimer == null) {
     clickTimer = setTimeout(function () {
       clickTimer = null;
-      alert("single");
+      //alert("single");
 
   	}, 500)
   } 
   else {
       clearTimeout(clickTimer);
       clickTimer = null;
-      alert("double");
-      onDocumentMouseDown( event ); 
+      //alert("double");
+      selectElement(); 
 
   }	
 }
 
 function onDocumentMouseDown( event ) 
 {	
+	selectElement();	
+}
+
+function selectElement() {
 	// update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
