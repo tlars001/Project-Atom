@@ -193,7 +193,7 @@ function onDocumentTouchStart(event) {
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
 
-  onDocumentMouseDown(event);
+  //onDocumentMouseDown(event);
 
   if (clickTimer == null) {
     clickTimer = setTimeout(function () {
