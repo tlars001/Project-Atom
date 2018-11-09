@@ -197,15 +197,15 @@ function onDocumentTouchStart( event ) {
     clickTimer = setTimeout(function () {
       clickTimer = null;
       //alert("single");
-
+      selectElement();
   	}, 500)
   } 
   else {
 		event.preventDefault();
     clearTimeout(clickTimer);
     clickTimer = null;
-    alert("double");
-    selectElement(); 
+    //alert("double");
+    //selectElement(); 
 
   }	
 }
