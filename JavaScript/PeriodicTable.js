@@ -195,19 +195,20 @@ function onDocumentTouchStart(event) {
 
   onDocumentMouseDown(event);
 
-  // if (clickTimer == null) {
-  //   clickTimer = setTimeout(function () {
-  //     clickTimer = null;
-  //     //alert("single");
+  if (clickTimer == null) {
+    clickTimer = setTimeout(function () {
+      clickTimer = null;
+      //alert("single");
      
-  // 	}, 500)
-  // } 
-  // else {
-  //   clearTimeout(clickTimer);
-  //   clickTimer = null;
-  //   //alert("double");
-  //   selectElement(event); 
-  // }	
+  	}, 500)
+  } 
+  else {
+    clearTimeout(clickTimer);
+    clickTimer = null;
+    //alert("double");
+    //selectElement(event); 
+    onDocumentMouseDown(event);
+  }	
 
 }
 
