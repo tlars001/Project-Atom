@@ -193,29 +193,28 @@ function onDocumentTouchStart(event) {
   event.clientX = event.touches[0].pageX;
   event.clientY = event.touches[0].pageY;
 
-  //onDocumentMouseDown(event);
-
   if (clickTimer == null) {
     clickTimer = setTimeout(function () {
       clickTimer = null;
-      //alert("single");
      
-  	}, 500)
+  	}, 300)
   } 
   else {
     clearTimeout(clickTimer);
     clickTimer = null;
-    //alert("double");
-    //selectElement(event); 
-    onDocumentMouseDown(event);
+    selectElement(event);
   }	
 
 }
 
 function onDocumentMouseDown(event) 
-{	
-	//if (!isMobile)
-	//	selectElement(event);	
+{		
+	if (!isMobile) {
+		selectElement(event);
+	}
+}
+
+function selectElement(event) {
 	// update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
@@ -234,43 +233,6 @@ function onDocumentMouseDown(event)
 	// if there is one (or more) intersections
 	if ( intersect.length > 0 && !isSelected )
 	{
-		isSelected = true;
-		elementView = true;
-		isTable = false;
-		isMoving = true;
-		rotation = 0;
-		INTERSECTED = intersect[ 0 ].object;
-		var theColor = INTERSECTED.material.color;
-		console.log(INTERSECTED.material.name);
-		// change the color of the closest face.
-		INTERSECTED.material.color.setRGB( 0, 0, 1); 
-		resetColor(INTERSECTED);
-	}
-}
-
-function selectElement(theEvent) {
-	// update the mouse variable
-	mouse.x = ( theEvent.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( theEvent.clientY / window.innerHeight ) * 2 + 1;
-	
-	// find intersections
-
-	// create a Ray with origin at the mouse position
-	//   and direction into the scene (camera direction)
-	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-	vector.unproject(camera);
-	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
-	// create an array containing all objects in the scene with which the ray intersects
-	var intersect = raycaster.intersectObjects(elements);
-
-	// if there is one (or more) intersections
-	if ( intersect.length > 0 && !isSelected )
-	{
-		if (isMobile) {
-			window.navigator.vibrate(200);
-		}
-
 		isSelected = true;
 		elementView = true;
 		isTable = false;
