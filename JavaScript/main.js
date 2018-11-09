@@ -84,6 +84,8 @@ function init() {
   scene.add( ambientLight );
   createParticles(particleTexture);
 
+  generateTable()
+
   document.body.appendChild( renderer.domElement );
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 }
@@ -293,11 +295,11 @@ function updateParticles() {
     if (vert.y < -100) {
       vert.y = Math.random() * 200;
     }
-    vert.y = vert.y - (10 * 0.005);
+    vert.y = vert.y - (10 * 0.002);
   }
   particleSystem.geometry.verticesNeedUpdate = true;
   
-  particleSystem.rotation.y -= .1 * 0.005;
+  particleSystem.rotation.y -= .1 * 0.002;
 }
 
 function startProgram() {
@@ -316,7 +318,7 @@ function startProgram() {
   isMoving = true;
   //setTimeout(setTableMovement, 9000);
 
-  generateTable();
+  //generateTable();
 }
 
 function setTableMovement() {

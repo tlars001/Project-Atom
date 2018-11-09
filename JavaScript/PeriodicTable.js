@@ -196,14 +196,14 @@ function onDocumentTouchStart( event ) {
   if (clickTimer == null) {
     clickTimer = setTimeout(function () {
       clickTimer = null;
-      //alert("single");
+      alert("single");
 
   	}, 500)
   } 
   else {
       clearTimeout(clickTimer);
       clickTimer = null;
-      //alert("double");
+      alert("double");
       onDocumentMouseDown( event ); 
 
   }	
