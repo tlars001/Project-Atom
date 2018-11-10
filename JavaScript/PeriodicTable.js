@@ -193,6 +193,9 @@ function onDocumentTouchStart(event) {
     clickTimer = null;
     var diffX = Math.abs(event.clientX - prevTapX);
     var diffY = Math.abs(event.clientY - prevTapY);
+    console.log("DiffX: " + diffX);
+    console.log("DiffY: " + diffY);
+    alert(diffX + "  " + diffY);
     if (diffX < 5 && diffY < 5) {
     	selectElement(event);
   	}
