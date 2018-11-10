@@ -186,7 +186,7 @@ function onDocumentTouchStart(event) {
 
     clickTimer = setTimeout(function () {
       clickTimer = null;
-  	}, 400)
+  	}, 200)
   } 
   else {
     clearTimeout(clickTimer);
