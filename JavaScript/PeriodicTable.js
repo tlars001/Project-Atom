@@ -10,7 +10,7 @@ var changeGlow = true;
 var selectedObject = [];
 var elements = [];
 var outlineMesh, isSelected  = false;
-var clickTimer = null;
+var clickTimer = null, prevTapX = 0, prevTapY = 0;
 
 function generateTable() {
 	var xIndex = -240;
@@ -181,15 +181,21 @@ function onDocumentTouchStart(event) {
   event.clientY = event.touches[0].pageY;
 
   if (clickTimer == null) {
+  	prevTapX = event.clientX;
+    prevTapY = event.clientY;
+
     clickTimer = setTimeout(function () {
       clickTimer = null;
-     
-  	}, 200)
+  	}, 400)
   } 
   else {
     clearTimeout(clickTimer);
     clickTimer = null;
-    selectElement(event);
+    var diffX = Math.abs(event.clientX - prevTapX);
+    var diffY = Math.abs(event.clientY - prevTapY);
+    if (diffX < 5 && diffY < 5) {
+    	selectElement(event);
+  	}
   }	
 
 }
