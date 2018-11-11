@@ -8,10 +8,10 @@
 
 // Necessary global variables for the project
 var scene, camera, renderer, particles, particleSystem, particleCount = 2000;
-var controls, raycaster, mouse, keepParticles = true;
+var textureLoader, controls, raycaster, mouse, keepParticles = true;
 var INTERSECTED, rotation = 0, cameraSphere, isMobile = false;
-var isTable = false, isCenter = true, isMoving = false;
-var elementView = false;
+var isTable = false, isCenter = true, isMoving = true;
+var elementView = false, mainLight;
 
 init();
 animate();
@@ -36,7 +36,7 @@ function init() {
 
 
   // Add the space skybox
-  var textureLoader = new THREE.TextureLoader();
+  textureLoader = new THREE.TextureLoader();
   var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
   var particleTexture = new textureLoader.load( 'Resources/particle.png');
   var boxGeometry = new THREE.BoxGeometry( 30000, 30000, 30000);
@@ -49,7 +49,7 @@ function init() {
 
 
   // Needed for particles for some reason
-  geometry = new THREE.SphereGeometry(0.1, 10, 9);
+  geometry = new THREE.SphereGeometry(0.01, 10, 9);
   material = new THREE.MeshNormalMaterial();
   mesh = new THREE.Mesh( geometry, material );
   cameraSphere = mesh;
@@ -63,23 +63,10 @@ function init() {
   renderer.setSize( window.innerWidth, window.innerHeight );
 
   
-  controls = new THREE.PanControls( camera, renderer.domElement);
-  controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-  controls.dampingFactor = 0.1;
-  controls.rotateSpeed = 0.3;
-  controls.screenSpacePanning = true;
-  controls.minDistance = 50;
-  controls.maxDistance = 800;
-  //controls.maxPolarAngle = Math.PI / 2;
-  controls.panSpeed = 0.2;
-
+  setPanControls();
   controls.enabled = false;
-  
 
-  //var axesHelper = new THREE.AxesHelper( 50 );
-  //scene.add(axesHelper);
-
-  addLights(0, 0, 1000)
+  addLights(-300, 100, -500)
   var ambientLight = new THREE.AmbientLight( 0x404040, 1 ); // soft white light
   scene.add( ambientLight );
   createParticles(particleTexture);
@@ -100,9 +87,23 @@ function animate() {
     setTableMovement();
   }
 
+  if (cameraSphere.position.x === 390 && isTable) {
+    scene.remove(elementItemsGroup);
+    for (var i = 0; i < elementItemsGroup.children.length; i++) {
+      elementItemsGroup.remove(elementItemsGroup.children[i]);
+    }
+    scene.add(mainLight);
+    elementGenerated = false;
+    electronRotation = 0;
+  }
+
+  if (cameraSphere.position.x === 390 && elementView && !elementGenerated) {
+    elementInit();
+  }
+
   if (isTable) {
     if (cameraSphere.position.z > -1000) {
-      rotation += 0.01;
+      //rotation += 0.01;
       cameraSphere.position.z -= 3;
       camera.lookAt(cameraSphere.position);
       if (cameraSphere.position.z > -500)
@@ -111,7 +112,7 @@ function animate() {
         cameraSphere.position.x -= 3;
     }
 
-    if (!isMoving) {
+    if (!isMoving && isTable) {
       checkPanRange();
     }
   }
@@ -121,12 +122,29 @@ function animate() {
     adjustCameraPosition();
   }
 
-  if (elementView && cameraSphere.position.z > -1) {
-    console.log("Made it to element view");
+  if (goingBack) {
+    rotation = 0;
+    controls.enabled = false;
+    adjustCameraPosition();
+  }
+
+  if (elementView && cameraSphere.position.z > -1 && isSelected) {
+    cameraSphere.position.set(0,0,0);
+    isSelected = false;
+    isMoving = false;
+    setOrbitControls();
+    scene.remove(outlineMesh);
+    scene.remove(elementGroup);
+    scene.remove(mainLight);
+    //elementInit();
+  }
+
+  if (elementGenerated) {
+    rotateElectron();
   }
 
 
-  if (!isMobile) {
+  if (!isMobile && isTable && !isMoving) {
     checkIntersection();
   }
 
@@ -167,37 +185,58 @@ function checkPanRange() {
 
 function adjustCameraPosition() {
 
-  if (camera.position.x > 2)
-    camera.position.x -= 3;
+  if (goingBack && camera.position.z > 0) {
+    camera.position.z -= 3;
+    if (camera.position.x < 0)
+      camera.position.x -= 1;
+    else
+      camera.position.x += 0;
+  }
+  else {
+    if (camera.position.x > 2)
+      camera.position.x -= 3;
 
-  if (camera.position.x < -2)
-    camera.position.x+= 3;
+    if (camera.position.x < -2)
+      camera.position.x+= 3;
 
-  if (camera.position.y > 2)
-    camera.position.y-= 3;
+    if (camera.position.y > 2)
+      camera.position.y-= 3;
 
-  if (camera.position.y < -2)
-    camera.position.y+= 3;
+    if (camera.position.y < -2)
+      camera.position.y+= 3;
 
-  if (camera.position.z > -498)
-    camera.position.z-= 3;
+    if (camera.position.z > -498)
+      camera.position.z-= 3;
 
-  if (camera.position.z < -502)
-    camera.position.z+= 3;
+    if (camera.position.z < -502)
+      camera.position.z+= 3;
+}
 
   if (camera.position.x > -2 && camera.position.x < 2 &&
       camera.position.y > -2 && camera.position.y < 2 &&
       camera.position.z > -502 && camera.position.z < -498) {
-    moveToElementView();
+    if (goingBack) {
+      camera.lookAt(cameraSphere.position);
+      isTable = true;
+      goingBack = false;
+      elementView = false;
+      isMoving = true;
+      scene.add(elementGroup);
+    }
+    else {
+      moveToElementView();
+    }
   }
   else {
-    cameraSphere.position.set(0,0,-1000);
+    if (!goingBack) {
+      cameraSphere.position.set(0,0,-1000);
+    }
   }
 }
 
 function moveToElementView() {
   //console.log("test2");
-  rotation += 0.01;
+  //rotation += 0.01;
   camera.lookAt(cameraSphere.position);
   if (cameraSphere.position.z < 0) {
     cameraSphere.position.z += 3;
@@ -206,7 +245,29 @@ function moveToElementView() {
     else
       cameraSphere.position.x -= 3;
   }
+}
 
+function setPanControls() {
+  controls = new THREE.PanControls( camera, renderer.domElement);
+  controls.enableDamping = true; 
+  controls.dampingFactor = 0.1;
+  controls.rotateSpeed = 0.3;
+  controls.screenSpacePanning = true;
+  controls.minDistance = 50;
+  controls.maxDistance = 800;
+  controls.panSpeed = 0.2;
+}
+
+function setOrbitControls() {
+  controls = new THREE.OrbitControls( camera, renderer.domElement);
+  controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+  controls.enablePan = false;
+  controls.dampingFactor = 0.1;
+  controls.rotateSpeed = 0.3;
+  controls.minDistance = 50;
+  controls.maxDistance = 800;
+
+  controls.enabled = true;
 }
 
 /*******************************************************************************
@@ -243,9 +304,9 @@ function changeOrientation() {
  *  Description: This function adds a point light to the scene.
 *******************************************************************************/
 function addLights(x,y,z) {
-  var light = new THREE.PointLight(0xffffff, 1);
-  light.position.set(x, y, z);
-  scene.add(light);
+  mainLight = new THREE.PointLight(0xffffff, 1);
+  mainLight.position.set(x, y, z);
+  scene.add(mainLight);
 }
 
 function createParticles(texture) {
@@ -323,6 +384,7 @@ function setTableMovement() {
   document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.addEventListener( 'touchstart', onDocumentTouchStart, false );
   isMoving = false;
+  setPanControls();
   controls.target.set(0,0,-1000);
   controls.update();
   controls.enabled = true;
@@ -335,8 +397,11 @@ function onDocumentMouseMove( event )
   // event.preventDefault();
   
   // update the mouse variable
-  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  if (isTable)
+  {
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  }
 }
 
 

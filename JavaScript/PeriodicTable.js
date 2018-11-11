@@ -8,7 +8,7 @@
 
 var changeGlow = true;
 var selectedObject = [];
-var elements = [];
+var elements = [], elementGroup = new THREE.Group();
 var outlineMesh, isSelected  = false;
 var clickTimer = null, prevTapX = 0, prevTapY = 0;
 
@@ -58,6 +58,7 @@ function generateTable() {
 	}
 
 	addText("Select An Element", 20, 0, 150, -1000, false, true);
+	scene.add(elementGroup);
 }
 
 
@@ -75,7 +76,8 @@ function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
   addText(symbol, 7, mesh.position.x, mesh.position.y-1, -998,);
   addText(name, 2.7, mesh.position.x, mesh.position.y-6, -998);
   addText(mass, 3, mesh.position.x, mesh.position.y-11, -998);
-  scene.add(mesh);
+  elementGroup.add(mesh);
+  //scene.add(mesh);
   return mesh;
 }
 
@@ -115,7 +117,8 @@ function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
 		mesh.position.z = zPos;
 		mesh.rotation.x = 0;
 		mesh.rotation.y = Math.PI * 2;
-		scene.add(mesh);
+		elementGroup.add(mesh);
+		//scene.add(mesh);
 	});
 }
 
@@ -193,7 +196,7 @@ function onDocumentTouchStart(event) {
     clickTimer = null;
     var diffX = Math.abs(event.clientX - prevTapX);
     var diffY = Math.abs(event.clientY - prevTapY);
-    if (diffX < 15 && diffY < 15) {
+    if (diffX < 15 && diffY < 15 && isTable) {
     	selectElement(event);
   	}
   }	
@@ -202,7 +205,7 @@ function onDocumentTouchStart(event) {
 
 function onDocumentMouseDown(event) 
 {		
-	if (!isMobile) {
+	if (!isMobile && isTable) {
 		selectElement(event);
 	}
 }
@@ -230,7 +233,7 @@ function selectElement(event) {
 		elementView = true;
 		isTable = false;
 		isMoving = true;
-		rotation = 0;
+		//rotation = 0;
 		INTERSECTED = intersect[ 0 ].object;
 		var theColor = INTERSECTED.material.color;
 		console.log(INTERSECTED.material.name);

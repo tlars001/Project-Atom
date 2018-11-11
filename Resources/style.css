@@ -55,8 +55,69 @@ div:empty {
 	box-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
 }
 
+#backBtn {
+	position: absolute;
+	cursor: pointer;
+	z-index: 1;
+	top: 2%;
+	left: 2%;
+	height: 30px;
+	width: 40px;
+}
+
+#backBtn:hover {
+	opacity: 0.5;
+}
+
+#infoBtnWrapper {
+	width: 100%;
+	top: 2%;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#infoBtn {
+	z-index: 1;
+	cursor: pointer;
+	height: 30px;
+	width: 80px;
+}
+
+#infoBtn:hover {
+	opacity: 0.5;
+}
+
+#btnWrapper {
+	width: 100%;
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+}
+
+#settingsBtn {
+	position: absolute;
+	cursor: pointer;
+	z-index: 1;
+	top: 2%;
+	right: 2%;
+	height: 30px;
+	width: 30px;
+}
+
+#settingsBtn:hover {
+	opacity: 0.5;
+}
+
 .hidden {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 3s, opacity 3s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 1s 0s, opacity 1s linear;
 }

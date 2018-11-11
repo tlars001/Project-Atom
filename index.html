@@ -18,6 +18,12 @@ Summary: This program will allow the user to pick any element on the periodic
 		<h1 id="titleHeader">PROJECT AT&#x269B&#xFE0E;M</h1>
 		<button id="startButton" onclick="startProgram()">Start</button>
 		<img id="soundIcon" src="Resources/sound.png" alt="Sound" onclick="changeSound()">
+
+		<img id="backBtn" class="hidden" src="Resources/backArrow.png" onclick="returnToTable()">
+		<div id="infoBtnWrapper">
+			<button id="infoBtn" class="hidden"> Description </button>
+		</div>
+		<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png">
 	
 		<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
 
@@ -32,6 +38,7 @@ Summary: This program will allow the user to pick any element on the periodic
 		<script src="JavaScript/PanControls.js"></script>
 
 		<script src="JavaScript/elementData.js"></script>
+		<script src="JavaScript/elementView.js"></script>
 		<script src="JavaScript/PeriodicTable.js"></script>
 		
 	  	<!-- The main file for the program -->
