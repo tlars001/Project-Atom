@@ -180,27 +180,28 @@ function addOutline (object) {
 
 function onDocumentTouchStart(event) {
 
-  event.clientX = event.touches[0].pageX;
-  event.clientY = event.touches[0].pageY;
+	if (event.touches.length === 1) {
+	  event.clientX = event.touches[0].pageX;
+	  event.clientY = event.touches[0].pageY;
 
-  if (clickTimer == null) {
-  	prevTapX = event.clientX;
-    prevTapY = event.clientY;
+	  if (clickTimer == null) {
+	  	prevTapX = event.clientX;
+	    prevTapY = event.clientY;
 
-    clickTimer = setTimeout(function () {
-      clickTimer = null;
-  	}, 200)
-  } 
-  else {
-    clearTimeout(clickTimer);
-    clickTimer = null;
-    var diffX = Math.abs(event.clientX - prevTapX);
-    var diffY = Math.abs(event.clientY - prevTapY);
-    if (diffX < 15 && diffY < 15 && isTable) {
-    	selectElement(event);
-  	}
-  }	
-
+	    clickTimer = setTimeout(function () {
+	      clickTimer = null;
+	  	}, 200)
+	  } 
+	  else {
+	    clearTimeout(clickTimer);
+	    clickTimer = null;
+	    var diffX = Math.abs(event.clientX - prevTapX);
+	    var diffY = Math.abs(event.clientY - prevTapY);
+	    if (diffX < 15 && diffY < 15 && isTable) {
+	    	selectElement(event);
+	  	}
+	  }	
+	}
 }
 
 function onDocumentMouseDown(event) 
