@@ -66,8 +66,8 @@ function init() {
   setPanControls();
   controls.enabled = false;
 
-  addLights(-300, 100, -500)
-  var ambientLight = new THREE.AmbientLight( 0x404040, 1 ); // soft white light
+  addLights(0,0,0);
+  var ambientLight = new THREE.AmbientLight( 0x404040, 2 ); // soft white light
   scene.add( ambientLight );
   createParticles(particleTexture);
 
@@ -89,10 +89,13 @@ function animate() {
 
   if (cameraSphere.position.x === 390 && isTable) {
     scene.remove(elementItemsGroup);
-    for (var i = 0; i < elementItemsGroup.children.length; i++) {
-      elementItemsGroup.remove(elementItemsGroup.children[i]);
+    elementItemsGroup = new THREE.Group();
+    if (protons) {
+      protons.forEach(removeFromWorld);
+      neutrons.forEach(removeFromWorld);
     }
-    scene.add(mainLight);
+    
+    //scene.add(mainLight);
     elementGenerated = false;
     electronRotation = 0;
   }
@@ -135,12 +138,13 @@ function animate() {
     setOrbitControls();
     scene.remove(outlineMesh);
     scene.remove(elementGroup);
-    scene.remove(mainLight);
+    //scene.remove(mainLight);
     //elementInit();
   }
 
   if (elementGenerated) {
     rotateElectron();
+    updatePhysics();
   }
 
 
@@ -264,7 +268,7 @@ function setOrbitControls() {
   controls.enablePan = false;
   controls.dampingFactor = 0.1;
   controls.rotateSpeed = 0.3;
-  controls.minDistance = 50;
+  controls.minDistance = 70;
   controls.maxDistance = 800;
 
   controls.enabled = true;
@@ -304,7 +308,7 @@ function changeOrientation() {
  *  Description: This function adds a point light to the scene.
 *******************************************************************************/
 function addLights(x,y,z) {
-  mainLight = new THREE.PointLight(0xffffff, 1);
+  mainLight = new THREE.PointLight(0xffffff, 0.5);
   mainLight.position.set(x, y, z);
   scene.add(mainLight);
 }
@@ -326,7 +330,7 @@ function createParticles(texture) {
     // create a particle with random
     var pX = Math.random() * 300 - 150,
         pY = Math.random() * 200 - 100,
-        pZ = Math.random() * 200 - 150,
+        pZ = Math.random() * 150 - 150,
         particle = new THREE.Vector3(pX, pY, pZ);
 
     particle.velocity = new THREE.Vector3(
@@ -353,7 +357,7 @@ function updateParticles() {
   var verts = particleSystem.geometry.vertices;
   for(var i = 0; i < verts.length; i++) {
     var vert = verts[i];
-    if (vert.y < -100) {
+    if (vert.y < -60) {
       vert.y = Math.random() * 200;
     }
     vert.y = vert.y - (10 * 0.002);

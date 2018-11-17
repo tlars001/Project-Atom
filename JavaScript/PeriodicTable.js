@@ -237,7 +237,8 @@ function selectElement(event) {
 		//rotation = 0;
 		INTERSECTED = intersect[ 0 ].object;
 		var theColor = INTERSECTED.material.color;
-		console.log(INTERSECTED.material.name);
+		//console.log(INTERSECTED.material.name);
+		selectedElement = INTERSECTED.material.name;
 		// change the color of the closest face.
 		INTERSECTED.material.color.setRGB( 0, 0, 1); 
 		resetColor(INTERSECTED);
