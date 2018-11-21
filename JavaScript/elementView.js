@@ -3,6 +3,7 @@ var goingBack = false;
 var elementItemsGroup = new THREE.Group();
 var electronRotations, electronSpeed, selectedElement, electronDistance;
 var electronAngle, world, protons, neutrons, pullCount;
+var geometryPN, protonMaterial, neutronMaterial, electronGeometry, electronMaterial;
 
 function elementInit() {
 	var numProtons = +data[selectedElement].number;
@@ -37,6 +38,11 @@ function elementInit() {
 	world.quatNormalizeFast = true;
   world.quatNormalizeSkip = 4;
 
+  geometryPN = new THREE.SphereGeometry( 5, 32, 32 );
+  protonMaterial = new THREE.MeshPhongMaterial( { color: 0xdd5555, specular: 0x999999, shininess: 13} );
+  neutronMaterial = new THREE.MeshPhongMaterial( { color: 0x55dddd, specular: 0x999999, shininess: 13} );
+  electronGeometry = new THREE.SphereGeometry(1, 10, 9);
+  electronMaterial = new THREE.MeshBasicMaterial({color: "yellow"});
 	createAtom(numProtons, numNeutrons, numElectrons);
 }
 
@@ -77,8 +83,8 @@ function Proton(){
 		}),
 		// THREE
 		mesh: new THREE.Mesh(
-			new THREE.SphereGeometry( radius, 32, 32 ),
-			new THREE.MeshPhongMaterial( { color: 0xdd5555, specular: 0x999999, shininess: 13} )
+			geometryPN,
+			protonMaterial
 		)
 	}
 }
@@ -95,14 +101,14 @@ function Neutron(){
 		}),
 		// THREE
 		mesh: new THREE.Mesh(
-			new THREE.SphereGeometry( radius, 32, 32 ),
-			new THREE.MeshPhongMaterial( { color: 0x55dddd, specular: 0x999999, shininess: 13} )
+			geometryPN,
+			neutronMaterial
 		)
 	}
 }
 
 function randomPosition(outerRadius){
-	let x = (2 * Math.random() - 1 ) * outerRadius,
+	var x = (2 * Math.random() - 1 ) * outerRadius,
 		y = (2 * Math.random() - 1 ) * outerRadius,
 		z = (2 * Math.random() - 1 ) * outerRadius
 	return new CANNON.Vec3(x, y, z);
@@ -111,8 +117,6 @@ function randomPosition(outerRadius){
 function createElectrons(numElectrons) {
 
 	for (var i = 0; i < numElectrons; i++) {
-		var electronGeometry = new THREE.SphereGeometry(1, 10, 9);
-		var electronMaterial = new THREE.MeshBasicMaterial({color: "yellow"});
 		electronMesh = new THREE.Mesh( electronGeometry, electronMaterial );
 	  electronMesh.position.set(0,10,-20);
 	  addGlow(electronMesh);

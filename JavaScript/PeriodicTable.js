@@ -11,10 +11,18 @@ var selectedObject = [];
 var elements = [], elementGroup = new THREE.Group();
 var outlineMesh, isSelected  = false;
 var clickTimer = null, prevTapX = 0, prevTapY = 0;
+var elementGeometry, textBackMaterial, eTextMaterial, eTitleMaterial;
+var loader;
 
 function generateTable() {
 	var xIndex = -240;
 	var yIndex = 120;
+
+	loader = new THREE.FontLoader();
+	elementGeometry = new THREE.BoxGeometry( 25, 25, 5 );
+	textBackMaterial = new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } );
+	eTitleMaterial = new THREE.MeshBasicMaterial( { color: 0xa9a9a9, overdraw: 0.5 } );
+	eTextMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } );
 
 	for (var key in data) {
     if (data.hasOwnProperty(key)) {
@@ -63,10 +71,9 @@ function generateTable() {
 
 
 function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
-  var geometry = new THREE.BoxGeometry( 25, 25, 5 );
   var material = new THREE.MeshPhongMaterial({ color: theColor});
   material.name = symbol;
-  var mesh = new THREE.Mesh( geometry, material );
+  var mesh = new THREE.Mesh( elementGeometry, material );
  
  	mesh.position.x = xPos;
 	mesh.position.y = yPos;
@@ -82,7 +89,6 @@ function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
 }
 
 function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
-	var loader = new THREE.FontLoader();
 	loader.load( 'Resources/helvetiker_regular.typeface.json', function ( font ) {
 		var geometry = new THREE.TextBufferGeometry( name, {
 			font: font,
@@ -96,14 +102,14 @@ function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
 
 		if (isTitle) {
 			materials = [
-				new THREE.MeshBasicMaterial( { color: 0xa9a9a9, overdraw: 0.5 } ),
-				new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } )
+				eTitleMaterial,
+				textBackMaterial
 			];
 		}
 		else {
 			materials = [
-				new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } ),
-				new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } )
+				eTextMaterial,
+				textBackMaterial
 			];
 		}
 		mesh = new THREE.Mesh( geometry, materials );
