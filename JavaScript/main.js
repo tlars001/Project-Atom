@@ -26,6 +26,8 @@ function init() {
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
     document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
+    document.getElementById('settingsWindow').style.width = '60%';
+    document.getElementById('settingsWindow').style.right = '-60%';
     isMobile = true;
   }
 

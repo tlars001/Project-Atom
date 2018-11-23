@@ -6,6 +6,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    overflow: hidden !important;
 }
 canvas { width: 100%; height: 100% }
 
@@ -59,7 +60,7 @@ input[type=checkbox]
 }
 
 #overflow {
-	overflow: hidden;
+	overflow: hidden !important;
 }
 
 #titleHeader {
