@@ -11,7 +11,7 @@ var scene, camera, renderer, particles, particleSystem, particleCount = 2000;
 var textureLoader, controls, raycaster, mouse, keepParticles = true;
 var INTERSECTED, rotation = 0, cameraSphere, isMobile = false;
 var isTable = false, isCenter = true, isMoving = true;
-var elementView = false, mainLight;
+var elementView = false, mainLight, showUI = false;
 
 init();
 animate();
@@ -84,6 +84,7 @@ function animate() {
   }
 
   if (cameraSphere.position.z === -1002 && !controls.enabled) {
+    showUI = false;
     setTableMovement();
   }
 
@@ -123,6 +124,12 @@ function animate() {
   if (isSelected && elementView) {
     controls.enabled = false;
     adjustCameraPosition();
+  }
+
+  if (elementView && !isMoving && !showUI) {
+    displayUI();
+    showUI = true;
+    console.log("test");
   }
 
   if (goingBack) {
@@ -407,5 +414,3 @@ function onDocumentMouseMove( event )
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
   }
 }
-
-

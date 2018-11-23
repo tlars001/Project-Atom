@@ -25,10 +25,6 @@ function elementInit() {
 	//console.log("Protons: " + numProtons);
 	//console.log("Electrons: " + numElectrons);
 	//console.log("Neutrons: " + numNeutrons);
-
-	document.getElementById("backBtn").classList.replace("hidden", "visible");
-	document.getElementById("settingsBtn").classList.replace("hidden", "visible");
-	document.getElementById("infoBtn").classList.replace("hidden", "visible");
 	
 	//addLights(0,0,0);
 
@@ -44,6 +40,15 @@ function elementInit() {
   electronGeometry = new THREE.SphereGeometry(1, 10, 9);
   electronMaterial = new THREE.MeshBasicMaterial({color: "yellow"});
 	createAtom(numProtons, numNeutrons, numElectrons);
+}
+
+function displayUI() {
+	document.getElementById("backBtn").classList.replace("hidden", "visible");
+	document.getElementById("settingsBtn").classList.replace("hidden", "visible");
+	document.getElementById("infoBtn").classList.replace("hidden", "visible");
+	document.getElementById("backBtn").disabled = false;
+	document.getElementById("settingsBtn").disabled = false;
+	document.getElementById("infoBtn").disabled = false;
 }
 
 function calculateNeutrons(number, mass) {
@@ -251,8 +256,29 @@ function updatePhysics() {
 }
 
 function returnToTable() {
-	goingBack = true;
-	document.getElementById("backBtn").classList.replace("visible", "hidden");
-	document.getElementById("settingsBtn").classList.replace("visible", "hidden");
-	document.getElementById("infoBtn").classList.replace("visible", "hidden");
+	var isDisabled = document.getElementById("backBtn").disabled;
+	if (!isDisabled) {
+		goingBack = true;
+		document.getElementById("backBtn").classList.replace("visible", "hidden");
+		document.getElementById("backBtn").disabled = true;
+		document.getElementById("settingsBtn").classList.replace("visible", "hidden");
+		document.getElementById("settingsBtn").disabled = true;
+		document.getElementById("infoBtn").classList.replace("visible", "hidden");
+		document.getElementById("infoBtn").disabled = true;
+		console.log("test");
+	}
+}
+
+function showSettings() {
+	var isDisabled = document.getElementById("settingsBtn").disabled;
+	if (!isDisabled) {
+		document.getElementById("settingsWindow").classList.toggle("open");
+	}
+}
+
+function showInfo() {
+	var isDisabled = document.getElementById("infoBtn").disabled;
+	if (!isDisabled) {
+		alert("Info test");
+	}
 }

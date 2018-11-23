@@ -11,6 +11,9 @@ Summary: This program will allow the user to pick any element on the periodic
 		<title>Project Atom</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width", initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+		<meta name="description" content="A program to learn about different elements and parts of the atom.">
+		<meta name="keywords" content="Atom, Atoms, Element, Elements, Periodic, Table, Project, Learn, Proton, Protons, Neutron, Neutrons, Electron, Electrons">
+		<meta name="author" content="Trevor Larson">
 		<link rel="icon" href="Resources/atom.png">
 		<link rel="stylesheet" href="Resources/style.css">
 	</head>
@@ -21,9 +24,30 @@ Summary: This program will allow the user to pick any element on the periodic
 
 		<img id="backBtn" class="hidden" src="Resources/backArrow.png" onclick="returnToTable()">
 		<div id="infoBtnWrapper">
-			<button id="infoBtn" class="hidden"> Description </button>
+			<button id="infoBtn" class="hidden" onclick="showInfo()"> Description </button>
 		</div>
-		<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png">
+		<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png" onclick="showSettings()">
+		<div id="overflow">
+			<div id="settingsWindow" class="transition">
+				<div id="theSettings"> 
+					<h2 id="settingsHeader">Settings</h2>
+					<h3>Display:</h3>
+					<hr>
+					<div class="checkbox">
+						<input type="checkbox" name="protons" checked>
+						<span class="checkboxtext">Protons</span><br>
+						<input type="checkbox" name="neutrons" checked><span class="checkboxtext">Neutrons</span><br>
+						<input type="checkbox" name="electrons" checked><span class="checkboxtext">Electrons</span><br>
+					</div>
+					<h3>Movement:</h3>
+					<hr>
+					<div class="checkbox">
+						<input type="checkbox" name="protons"><span class="checkboxtext">Pause Movement</span><br>
+						<input type="checkbox" name="neutrons"><span class="checkboxtext">Realistic Electron Movement</span><br>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
 

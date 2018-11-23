@@ -6,12 +6,60 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
 }
 canvas { width: 100%; height: 100% }
 
 div:empty {
 	display: none;
+}
+
+h2 {
+	font-size: 40px;
+}
+
+h3 {
+	position: relative;
+	left: 30px;
+	margin-bottom: 0px;
+}
+
+hr { 
+	position: relative;
+	border-color: black;
+    display: block;
+    margin-before: 0em;
+    margin-after: 0.5em;
+    margin-start: 10px;
+    margin-end: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+
+input[type=checkbox]
+{
+	/* Double-sized Checkboxes */
+	-ms-transform: scale(2); /* IE */
+	-moz-transform: scale(2); /* FF */
+	-webkit-transform: scale(2); /* Safari and Chrome */
+	-o-transform: scale(2); /* Opera */
+	padding: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.checkboxtext {
+	position: relative;
+	left: 10px;
+	font-size: 120%;
+	text-align: left;
+}
+
+#overflow {
+	overflow: hidden;
 }
 
 #titleHeader {
@@ -65,10 +113,6 @@ div:empty {
 	width: 40px;
 }
 
-#backBtn:hover {
-	opacity: 0.5;
-}
-
 #infoBtnWrapper {
 	width: 100%;
 	top: 2%;
@@ -85,10 +129,6 @@ div:empty {
 	width: 80px;
 }
 
-#infoBtn:hover {
-	opacity: 0.5;
-}
-
 #btnWrapper {
 	width: 100%;
 	position: absolute;
@@ -99,15 +139,39 @@ div:empty {
 #settingsBtn {
 	position: absolute;
 	cursor: pointer;
-	z-index: 1;
+	z-index: 3;
 	top: 2%;
 	right: 2%;
 	height: 30px;
 	width: 30px;
 }
 
-#settingsBtn:hover {
-	opacity: 0.5;
+#settingsWindow {
+	background-color: grey;
+	position: absolute;
+	width: 40%;
+	height: 100%;
+	right: -40%;
+	z-index: 1;
+}
+
+#theSettings {
+	background-color: darkgrey;
+	margin: 5px;
+	position: absolute;
+	overflow: hidden;
+	width: calc(100% - 10px);
+	height: calc(100% - 10px);
+}
+
+#settingsHeader {
+	text-align: center;
+	position: relative;
+}
+
+.checkbox {
+	position: relative;
+	left: 30px;
 }
 
 .hidden {
@@ -120,4 +184,17 @@ div:empty {
   visibility: visible;
   opacity: 1;
   transition: visibility 1s 0s, opacity 1s linear;
+}
+
+.open{
+    right:0px !important;
+}
+
+.transition{
+    
+  -webkit-transition: right 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+     -moz-transition: right 0.3s ease-out;  /* Firefox 4-15 */
+       -o-transition: right 0.3s ease-out;  /* Opera 10.50–12.00 */
+          transition: right 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+
 }
