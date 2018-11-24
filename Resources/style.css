@@ -6,11 +6,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    overflow-x: hidden !important;
-    max-width: 100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    touch-action: manipulation;
+
 }
 canvas { width: 100%; height: 100% }
 
@@ -56,17 +53,22 @@ input[type=checkbox]
 	margin-bottom: 15px;
 }
 
+table {
+	border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 8px;
+}
+
 .checkboxtext {
 	position: relative;
 	left: 10px;
 	font-size: 120%;
 	text-align: left;
-}
-
-#overflow {
-	overflow-x: hidden !important;
-	touch-action: manipulation;
-	width: 100%;
 }
 
 #titleHeader {
@@ -113,7 +115,7 @@ input[type=checkbox]
 #backBtn {
 	position: absolute;
 	cursor: pointer;
-	z-index: 1;
+	z-index: 3;
 	top: 2%;
 	left: 2%;
 	height: 30px;
@@ -130,7 +132,7 @@ input[type=checkbox]
 }
 
 #infoBtn {
-	z-index: 1;
+	z-index: 3;
 	cursor: pointer;
 	height: 30px;
 	width: 80px;
@@ -146,11 +148,39 @@ input[type=checkbox]
 #settingsBtn {
 	position: absolute;
 	cursor: pointer;
-	z-index: 3;
+	z-index: 4;
 	top: 2%;
 	right: 2%;
 	height: 30px;
 	width: 30px;
+}
+
+#infoWindow {
+	background-color: grey;
+	position: absolute;
+	width: 100%;
+	height: 30%;
+	top: 0px;
+	z-index: 1;
+}
+
+#theInfo {
+	background-color: darkgrey;
+	margin: 5px;
+	position: absolute;
+	overflow: hidden;
+	width: calc(100% - 10px);
+	height: calc(100% - 10px);
+}
+
+#tableDiv {
+	margin: 10px;
+	margin-top: 60px;
+}
+
+#theDescription {
+	margin: 30px;
+	margin-top: 10px;
 }
 
 #settingsWindow {
@@ -158,7 +188,7 @@ input[type=checkbox]
 	position: absolute;
 	width: 30%;
 	height: 100%;
-	right: -30%;
+	right: 0px;
 	z-index: 1;
 }
 
@@ -181,27 +211,39 @@ input[type=checkbox]
 	left: 30px;
 }
 
-.hidden {
+.titleHidden {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 3s, opacity 3s linear;
 }
 
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.3s, opacity 0.3s linear;
+}
+
 .visible {
   visibility: visible;
   opacity: 1;
-  transition: visibility 1s 0s, opacity 1s linear;
+  transition: visibility 0.3s 0s, opacity 0.3s linear;
 }
 
 .open{
     right:0px !important;
+    visibility: visible;
+    opacity: 1;
 }
 
 .transition{
-    
-  -webkit-transition: right 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
-     -moz-transition: right 0.3s ease-out;  /* Firefox 4-15 */
-       -o-transition: right 0.3s ease-out;  /* Opera 10.50–12.00 */
-          transition: right 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
-
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+	-moz-transition: opacity 0.3s ease-out;  /* Firefox 4-15 */
+	-o-transition: opacity 0.3s ease-out;  /* Opera 10.50–12.00 */
+	transition: opacity 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+	-webkit-transition: visibility 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+	-moz-transition: visibility 0.3s ease-out;  /* Firefox 4-15 */
+	-o-transition: visibility 0.3s ease-out;  /* Opera 10.50–12.00 */
+	transition: visibility 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }

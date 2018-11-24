@@ -12,6 +12,13 @@ function elementInit() {
 	electronDistance = [];
 	electronSpeed = [];
 	electronAngle = [];
+
+	document.getElementById("theName").innerHTML = data[selectedElement].name;
+	document.getElementById("theSymbol").innerHTML = data[selectedElement].symbol;
+	document.getElementById("theNumber").innerHTML = data[selectedElement].number;
+	document.getElementById("theMass").innerHTML = data[selectedElement].mass;
+	document.getElementById("theDescription").innerHTML = data[selectedElement].info;
+
 	for (var i = 0; i < numElectrons; i++) {
 		electronRotations.push(getRandomNumber(0,200));
 		electronDistance.push(getRandomNumber(50,100));
@@ -272,13 +279,25 @@ function returnToTable() {
 function showSettings() {
 	var isDisabled = document.getElementById("settingsBtn").disabled;
 	if (!isDisabled) {
-		document.getElementById("settingsWindow").classList.toggle("open");
+		console.log("test");
+		if (document.getElementById("settingsWindow").classList.contains("hidden")) {
+			document.getElementById("settingsWindow").classList.replace("hidden", "visible");
+		}
+		else {
+			document.getElementById("settingsWindow").classList.replace("visible", "hidden");
+		}
+		//document.getElementById("settingsWindow").classList.toggle("open");
 	}
 }
 
 function showInfo() {
 	var isDisabled = document.getElementById("infoBtn").disabled;
 	if (!isDisabled) {
-		alert("Info test");
+		if (document.getElementById("infoWindow").classList.contains("hidden")) {
+			document.getElementById("infoWindow").classList.replace("hidden", "visible");
+		}
+		else {
+			document.getElementById("infoWindow").classList.replace("visible", "hidden");
+		}
 	}
 }

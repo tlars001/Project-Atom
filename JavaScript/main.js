@@ -27,7 +27,7 @@ function init() {
     document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
     document.getElementById('settingsWindow').style.width = '70%';
-    document.getElementById('settingsWindow').style.right = '-70%';
+    //document.getElementById('settingsWindow').style.right = '-70%';
     isMobile = true;
   }
 
@@ -377,9 +377,11 @@ function updateParticles() {
 }
 
 function startProgram() {
+  console.log("test");
   document.getElementById("theSound").play();
-  document.getElementById("titleHeader").classList.add("hidden");
-  document.getElementById("startButton").classList.add("hidden");
+  document.getElementById("titleHeader").classList.add("titleHidden");
+  document.getElementById("startButton").classList.add("titlehidden");
+  document.getElementById("startButton").disabled = true;
   setTimeout(function() {
     scene.remove(particleSystem)
     keepParticles = false;

@@ -18,55 +18,76 @@ Summary: This program will allow the user to pick any element on the periodic
 		<link rel="stylesheet" href="Resources/style.css">
 	</head>
 	<body onresize="changeOrientation()">
-		<div id="overflow">
-			<h1 id="titleHeader">PROJECT ATOM</h1>
-			<button id="startButton" onclick="startProgram()">Start</button>
-			<img id="soundIcon" src="Resources/sound.png" alt="Sound" onclick="changeSound()">
+		<h1 id="titleHeader">PROJECT ATOM</h1>
+		<button id="startButton" onclick="startProgram()">Start</button>
+		<img id="soundIcon" src="Resources/sound.png" alt="Sound" onclick="changeSound()">
 
-			<img id="backBtn" class="hidden" src="Resources/backArrow.png" onclick="returnToTable()">
-			<div id="infoBtnWrapper">
-				<button id="infoBtn" class="hidden" onclick="showInfo()"> Description </button>
+		<img id="backBtn" class="hidden" src="Resources/backArrow.png" onclick="returnToTable()">
+		<div id="infoBtnWrapper">
+			<button id="infoBtn" class="hidden" onclick="showInfo()"> Description </button>
+		</div>
+		<div id="infoWindow" class="hidden"> 
+			<div id="theInfo">
+				<div id="tableDiv">
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Symbol</th>
+							<th>Number</th>
+							<th>Mass</th>
+						</tr>
+						<tr>
+							<td id="theName"></td>
+							<td id="theSymbol"></td>
+							<td id="theNumber"></td>
+							<td id="theMass"></td>
+						</tr>
+					</table>
+				</div>
+				<h3>Description:</h3>
+				<hr>
+				<p id="theDescription"></p>
 			</div>
-			<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png" onclick="showSettings()">
-				<div id="settingsWindow" class="transition">
-					<div id="theSettings"> 
-						<h2 id="settingsHeader">Settings</h2>
-						<h3>Display:</h3>
-						<hr>
-						<div class="checkbox">
-							<input type="checkbox" name="protons" checked>
-							<span class="checkboxtext">Protons</span><br>
-							<input type="checkbox" name="neutrons" checked><span class="checkboxtext">Neutrons</span><br>
-							<input type="checkbox" name="electrons" checked><span class="checkboxtext">Electrons</span><br>
-						</div>
-						<h3>Movement:</h3>
-						<hr>
-						<div class="checkbox">
-							<input type="checkbox" name="protons"><span class="checkboxtext">Pause</span><br>
-							<input type="checkbox" name="neutrons"><span class="checkboxtext">Realistic Electrons</span><br>
-						</div>
+		</div>
+		<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png" onclick="showSettings()">
+			<div id="settingsWindow" class="hidden">
+				<div id="theSettings"> 
+					<h2 id="settingsHeader">Settings</h2>
+					<h3>Display:</h3>
+					<hr>
+					<div class="checkbox">
+						<input type="checkbox" name="protons" checked>
+						<span class="checkboxtext">Protons</span><br>
+						<input type="checkbox" name="neutrons" checked><span class="checkboxtext">Neutrons</span><br>
+						<input type="checkbox" name="electrons" checked><span class="checkboxtext">Electrons</span><br>
+					</div>
+					<h3>Movement:</h3>
+					<hr>
+					<div class="checkbox">
+						<input type="checkbox" name="protons"><span class="checkboxtext">Pause</span><br>
+						<input type="checkbox" name="neutrons"><span class="checkboxtext">Realistic Electrons</span><br>
 					</div>
 				</div>
+			</div>
+	
+		<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+
+	  <!-- This adds music to the program -->
+		<audio id="theSound" src="Resources/bensound-relaxing.mp3" loop>
+	  		<p>If you are reading this, it is because your browser does not support the audio element.</p>
+	  		<embed src="Resources/bensound-relaxing.mp3" width="180" height="90" hidden="true"/>
+	  	</audio>
+
+		<script src="JavaScript/cannon.min.js"></script>
+		<script src="JavaScript/three.min.js"></script>
+		<script src="JavaScript/OrbitControls.js"></script>
+		<script src="JavaScript/PanControls.js"></script>
+
+		<script src="JavaScript/elementData.js"></script>
+		<script src="JavaScript/elementView.js"></script>
+		<script src="JavaScript/PeriodicTable.js"></script>
 		
-			<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-
-		  <!-- This adds music to the program -->
-			<audio id="theSound" src="Resources/bensound-relaxing.mp3" loop>
-		  		<p>If you are reading this, it is because your browser does not support the audio element.</p>
-		  		<embed src="Resources/bensound-relaxing.mp3" width="180" height="90" hidden="true"/>
-		  	</audio>
-
-			<script src="JavaScript/cannon.min.js"></script>
-			<script src="JavaScript/three.min.js"></script>
-			<script src="JavaScript/OrbitControls.js"></script>
-			<script src="JavaScript/PanControls.js"></script>
-
-			<script src="JavaScript/elementData.js"></script>
-			<script src="JavaScript/elementView.js"></script>
-			<script src="JavaScript/PeriodicTable.js"></script>
-			
-		  	<!-- The main file for the program -->
-		  	<script src="JavaScript/main.js"></script>
-		</div>
+	  	<!-- The main file for the program -->
+	  	<script src="JavaScript/main.js"></script>
 	</body>
 </html>

@@ -4,7 +4,8 @@ var data = {
 		"symbol": "H",
 		"number": "1",
 		"mass": "1.00794",
-		"theColor": "teal"
+		"theColor": "teal",
+		"info": "Hydrogen is an element dude."
 	},
 
 	"He": {
