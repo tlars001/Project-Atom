@@ -115,7 +115,7 @@ td, th {
 #backBtn {
 	position: absolute;
 	cursor: pointer;
-	z-index: 3;
+	z-index: 2;
 	top: 2%;
 	left: 2%;
 	height: 30px;
@@ -132,7 +132,7 @@ td, th {
 }
 
 #infoBtn {
-	z-index: 3;
+	z-index: 2;
 	cursor: pointer;
 	height: 30px;
 	width: 80px;
@@ -159,7 +159,7 @@ td, th {
 	background-color: grey;
 	position: absolute;
 	width: 100%;
-	height: 30%;
+	height: 40%;
 	top: 0px;
 	z-index: 1;
 }
@@ -189,7 +189,7 @@ td, th {
 	width: 30%;
 	height: 100%;
 	right: 0px;
-	z-index: 1;
+	z-index: 2;
 }
 
 #theSettings {
@@ -225,25 +225,6 @@ td, th {
 
 .visible {
   visibility: visible;
-  opacity: 1;
+  opacity: 0.9;
   transition: visibility 0.3s 0s, opacity 0.3s linear;
-}
-
-.open{
-    right:0px !important;
-    visibility: visible;
-    opacity: 1;
-}
-
-.transition{
-	visibility: hidden;
-	opacity: 0;
-	-webkit-transition: opacity 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
-	-moz-transition: opacity 0.3s ease-out;  /* Firefox 4-15 */
-	-o-transition: opacity 0.3s ease-out;  /* Opera 10.50–12.00 */
-	transition: opacity 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
-	-webkit-transition: visibility 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
-	-moz-transition: visibility 0.3s ease-out;  /* Firefox 4-15 */
-	-o-transition: visibility 0.3s ease-out;  /* Opera 10.50–12.00 */
-	transition: visibility 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
