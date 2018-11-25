@@ -131,7 +131,6 @@ function animate() {
   if (elementView && !isMoving && !showUI) {
     displayUI();
     showUI = true;
-    console.log("test");
   }
 
   if (goingBack) {
@@ -151,10 +150,12 @@ function animate() {
     //elementInit();
   }
 
-  if (elementGenerated) {
-    rotateElectron();
-    updatePhysics();
-  }
+  if (!pauseMovement) {
+    if (elementGenerated) {
+      rotateElectron();
+      updatePhysics();
+    }
+  } 
 
 
   if (!isMobile && isTable && !isMoving) {
@@ -377,7 +378,6 @@ function updateParticles() {
 }
 
 function startProgram() {
-  console.log("test");
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.add("titleHidden");
   document.getElementById("startButton").classList.add("titlehidden");

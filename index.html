@@ -56,16 +56,16 @@ Summary: This program will allow the user to pick any element on the periodic
 					<h3>Display:</h3>
 					<hr>
 					<div class="checkbox">
-						<input type="checkbox" name="protons" checked>
+						<input type="checkbox" name="protons" checked onchange="changeProtons()">
 						<span class="checkboxtext">Protons</span><br>
-						<input type="checkbox" name="neutrons" checked><span class="checkboxtext">Neutrons</span><br>
-						<input type="checkbox" name="electrons" checked><span class="checkboxtext">Electrons</span><br>
+						<input type="checkbox" name="neutrons" checked onchange="changeNeutrons()"><span class="checkboxtext">Neutrons</span><br>
+						<input type="checkbox" name="electrons" checked onchange="changeElectrons()"><span class="checkboxtext">Electrons</span><br>
 					</div>
 					<h3>Movement:</h3>
 					<hr>
 					<div class="checkbox">
-						<input type="checkbox" name="protons"><span class="checkboxtext">Pause</span><br>
-						<input type="checkbox" name="neutrons"><span class="checkboxtext">Realistic Electrons</span><br>
+						<input type="checkbox" name="pause" onchange="changeMovement()"><span class="checkboxtext">Pause</span><br>
+						<input type="checkbox" name="realistic" onchange="changeRealism()"><span class="checkboxtext">Realistic Electrons</span><br>
 					</div>
 				</div>
 			</div>

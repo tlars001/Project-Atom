@@ -1,8 +1,8 @@
 var electronMesh, elementGenerated = false;
-var goingBack = false;
+var goingBack = false, realisticMovement = false;
 var elementItemsGroup = new THREE.Group();
 var electronRotations, electronSpeed, selectedElement, electronDistance;
-var electronAngle, world, protons, neutrons, pullCount;
+var electronAngle, world, protons, neutrons, pullCount, pauseMovement = false;
 var geometryPN, protonMaterial, neutronMaterial, electronGeometry, electronMaterial;
 
 function elementInit() {
@@ -28,12 +28,6 @@ function elementInit() {
 
 	var numNeutrons = calculateNeutrons(numProtons, data[selectedElement].mass);
 	pullCount = 0;
-	//console.log(data[selectedElement].name);
-	//console.log("Protons: " + numProtons);
-	//console.log("Electrons: " + numElectrons);
-	//console.log("Neutrons: " + numNeutrons);
-	
-	//addLights(0,0,0);
 
 	world = new CANNON.World();
 	world.gravity.set(0, 0, 0);
@@ -158,12 +152,17 @@ function addElectronLight(theMesh) {
 
 function rotateElectron() {
   var numElectrons = elementItemsGroup.children.length;
+  var theSpeed = 0.001;
+
+  if (realisticMovement) {
+  	theSpeed = 0.1;
+  }
 
   for (var i = 0; i < numElectrons; i++) {
   	if (electronSpeed[i] < 10 && electronSpeed[i] > -10) {
   		electronSpeed[i] *= 2;
   	}
-  	electronRotations[i] += (electronSpeed[i] * 0.001);
+  	electronRotations[i] += (electronSpeed[i] * theSpeed);
   	electronMesh = elementItemsGroup.children[i];
   	electronMesh.position.x = Math.sin(electronRotations[i]) * electronDistance[i];
 
@@ -266,27 +265,37 @@ function returnToTable() {
 	var isDisabled = document.getElementById("backBtn").disabled;
 	if (!isDisabled) {
 		goingBack = true;
+
+		if (!document.getElementById("infoBtn").disabled) {
+			document.getElementById("infoWindow").classList.replace("visible", "hidden");
+		}
+
+		if (!document.getElementById("settingsBtn").disabled) {
+				document.getElementById("settingsWindow").classList.replace("visible", "hidden");
+		}
+		
 		document.getElementById("backBtn").classList.replace("visible", "hidden");
 		document.getElementById("backBtn").disabled = true;
 		document.getElementById("settingsBtn").classList.replace("visible", "hidden");
 		document.getElementById("settingsBtn").disabled = true;
 		document.getElementById("infoBtn").classList.replace("visible", "hidden");
 		document.getElementById("infoBtn").disabled = true;
-		console.log("test");
 	}
 }
 
 function showSettings() {
 	var isDisabled = document.getElementById("settingsBtn").disabled;
 	if (!isDisabled) {
-		console.log("test");
 		if (document.getElementById("settingsWindow").classList.contains("hidden")) {
+			// Close the info menu if it's open
+			if (!document.getElementById("infoBtn").disabled) {
+				document.getElementById("infoWindow").classList.replace("visible", "hidden");
+			}
 			document.getElementById("settingsWindow").classList.replace("hidden", "visible");
 		}
 		else {
 			document.getElementById("settingsWindow").classList.replace("visible", "hidden");
 		}
-		//document.getElementById("settingsWindow").classList.toggle("open");
 	}
 }
 
@@ -294,10 +303,67 @@ function showInfo() {
 	var isDisabled = document.getElementById("infoBtn").disabled;
 	if (!isDisabled) {
 		if (document.getElementById("infoWindow").classList.contains("hidden")) {
+			// Close the settings if it's open
+			if (!document.getElementById("settingsBtn").disabled) {
+				document.getElementById("settingsWindow").classList.replace("visible", "hidden");
+			}
 			document.getElementById("infoWindow").classList.replace("hidden", "visible");
 		}
 		else {
 			document.getElementById("infoWindow").classList.replace("visible", "hidden");
 		}
+	}
+}
+
+function changeProtons() {
+	if (document.getElementsByName("protons")[0].checked) {
+		protons.forEach(function(object) {
+			scene.add(object.mesh);
+		});
+	}
+	else {
+		protons.forEach(function(object) {
+			scene.remove(object.mesh);
+		});
+	}
+}
+
+function changeNeutrons() {
+	if (document.getElementsByName("neutrons")[0].checked) {
+		neutrons.forEach(function(object) {
+			scene.add(object.mesh);
+		});
+	}
+	else {
+		neutrons.forEach(function(object) {
+			scene.remove(object.mesh);
+		});
+	}
+}
+
+function changeElectrons() {
+	if (document.getElementsByName("electrons")[0].checked) {
+		scene.add(elementItemsGroup);
+	}
+	else {
+		scene.remove(elementItemsGroup);
+	}
+}
+
+function changeMovement() {
+	if (document.getElementsByName("pause")[0].checked) {
+		pauseMovement = true;
+	}
+	else {
+		pauseMovement = false;
+	}
+}
+
+function changeRealism() {
+	if (document.getElementsByName("realistic")[0].checked) {
+		realisticMovement = true;
+	}
+	else {
+		realisticMovement = false;
 	}
 }
