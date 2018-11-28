@@ -26,9 +26,15 @@ function init() {
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
     document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
-    document.getElementById('settingsWindow').style.width = '70%';
-    document.getElementById('infoWindow').style.height = '50%';
+    document.getElementById('infoWindow').style.height = '100%';
     isMobile = true;
+
+    if (window.innerHeight > window.innerWidth) {
+      document.getElementById('settingsWindow').style.width = '70%';
+    }
+    else {
+      document.getElementById('settingsWindow').style.width = '40%';
+    }
   }
 
   // Resize when the orientation changes on mobile
@@ -311,6 +317,15 @@ function changeOrientation() {
   camera.updateProjectionMatrix();
 
   renderer.setSize( window.innerWidth, window.innerHeight );
+
+  if (isMobile) {
+    if (window.innerHeight > window.innerWidth) {
+        document.getElementById('settingsWindow').style.width = '70%';
+    }
+    else {
+        document.getElementById('settingsWindow').style.width = '40%';
+    }
+  }
 }
 
 /*******************************************************************************

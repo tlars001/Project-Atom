@@ -168,9 +168,11 @@ td, th {
 	background-color: darkgrey;
 	margin: 5px;
 	position: absolute;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
 	width: calc(100% - 10px);
 	height: calc(100% - 10px);
+	touch-action: manipulation;
 }
 
 #tableDiv {
@@ -196,9 +198,11 @@ td, th {
 	background-color: darkgrey;
 	margin: 5px;
 	position: absolute;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
 	width: calc(100% - 10px);
 	height: calc(100% - 10px);
+	touch-action: manipulation;
 }
 
 #settingsHeader {
