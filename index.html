@@ -6,14 +6,15 @@ Summary: This program will allow the user to pick any element on the periodic
 		 table and see a visual representation of it. Information will also be
 		 provided about each element to enhance the user's learning experience.
 *****************************************************************************-->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<title>Project Atom</title>
 		<meta charset="UTF-8">
 		<meta name="description" content="A program to learn about different elements and parts of the atom.">
 		<meta name="keywords" content="Atom, Atoms, Element, Elements, Periodic, Table, Project, Learn, Proton, Protons, Neutron, Neutrons, Electron, Electrons">
 		<meta name="author" content="Trevor Larson">
-		<meta name="viewport" content="width=device-width" initial-scale=1.0 maximum-scale=1.0 user-scalable=no"/>
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=no">
 		<link rel="icon" href="Resources/atom.png">
 		<link rel="stylesheet" href="Resources/style.css">
 	</head>
@@ -21,10 +22,9 @@ Summary: This program will allow the user to pick any element on the periodic
 		<h1 id="titleHeader">PROJECT ATOM</h1>
 		<button id="startButton" onclick="startProgram()">Start</button>
 		<img id="soundIcon" src="Resources/sound.png" alt="Sound" onclick="changeSound()">
-
-		<img id="backBtn" class="hidden" src="Resources/backArrow.png" onclick="returnToTable()">
+		<img id="backBtn" class="hidden" src="Resources/backArrow.png" onclick="returnToTable()" alt="Back">
 		<div id="infoBtnWrapper">
-			<button id="infoBtn" class="hidden" onclick="showInfo()"> Description </button>
+			<button id="infoBtn" class="hidden" onclick="showInfo()">Description</button>
 		</div>
 		<div id="infoWindow" class="hidden"> 
 			<div id="theInfo">
@@ -49,33 +49,37 @@ Summary: This program will allow the user to pick any element on the periodic
 				<p id="theDescription"></p>
 			</div>
 		</div>
-		<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png" onclick="showSettings()">
-			<div id="settingsWindow" class="hidden">
-				<div id="theSettings"> 
-					<h2 id="settingsHeader">Settings</h2>
-					<h3>Display:</h3>
-					<hr>
-					<div class="checkbox">
-						<input type="checkbox" name="protons" checked onchange="changeProtons()">
-						<span class="checkboxtext">Protons</span><br>
-						<input type="checkbox" name="neutrons" checked onchange="changeNeutrons()"><span class="checkboxtext">Neutrons</span><br>
-						<input type="checkbox" name="electrons" checked onchange="changeElectrons()"><span class="checkboxtext">Electrons</span><br>
-					</div>
-					<h3>Movement:</h3>
-					<hr>
-					<div class="checkbox">
-						<input type="checkbox" name="pause" onchange="changeMovement()"><span class="checkboxtext">Pause</span><br>
-						<input type="checkbox" name="realistic" onchange="changeRealism()"><span class="checkboxtext">Realistic Electrons</span><br>
-					</div>
+		<img id="settingsBtn" class="hidden" src="Resources/settingsIcon.png" onclick="showSettings()" alt="Settings">
+		<div id="settingsWindow" class="hidden">
+			<div id="theSettings"> 
+				<h2 id="settingsHeader">Settings</h2>
+				<h3>Display:</h3>
+				<hr>
+				<div class="checkbox">
+					<input type="checkbox" name="protons" checked onchange="changeProtons()">
+					<span class="checkboxtext">Protons</span><br>
+					<input type="checkbox" name="neutrons" checked onchange="changeNeutrons()"><span class="checkboxtext">Neutrons</span><br>
+					<input type="checkbox" name="electrons" checked onchange="changeElectrons()"><span class="checkboxtext">Electrons</span><br>
+				</div>
+				<h3>Movement:</h3>
+				<hr>
+				<div class="checkbox">
+					<input type="checkbox" name="pause" onchange="changeMovement()"><span class="checkboxtext">Pause</span><br>
+					<input type="checkbox" name="realistic" onchange="changeRealism()"><span class="checkboxtext">Realistic Electrons</span><br>
 				</div>
 			</div>
+		</div>
+
 	
 		<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+
+
+		<h4 id="elementName" class="hidden">Element</h4>
 
 	  <!-- This adds music to the program -->
 		<audio id="theSound" src="Resources/bensound-relaxing.mp3" loop>
 	  		<p>If you are reading this, it is because your browser does not support the audio element.</p>
-	  		<embed src="Resources/bensound-relaxing.mp3" width="180" height="90" hidden="true"/>
+	  		<embed src="Resources/bensound-relaxing.mp3" width="180" height="90" hidden="hidden"/>
 	  	</audio>
 
 		<script src="JavaScript/cannon.min.js"></script>

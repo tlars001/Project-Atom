@@ -64,8 +64,12 @@ function generateTable() {
       }
     }
 	}
+	var theText = "Select An Element";
+	if (isMobile) {
+		theText = "Double Tap An Element"
+	}
 
-	addText("Select An Element", 20, 0, 150, -1000, false, true);
+	addText(theText, 20, 0, 150, -1000, false, true);
 	scene.add(elementGroup);
 }
 

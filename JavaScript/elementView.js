@@ -14,6 +14,7 @@ function elementInit() {
 	electronAngle = [];
 
 	document.getElementById("theName").innerHTML = data[selectedElement].name;
+	document.getElementById("elementName").innerHTML = data[selectedElement].name;
 	document.getElementById("theSymbol").innerHTML = data[selectedElement].symbol;
 	document.getElementById("theNumber").innerHTML = data[selectedElement].number;
 	document.getElementById("theMass").innerHTML = data[selectedElement].mass;
@@ -47,6 +48,7 @@ function displayUI() {
 	document.getElementById("backBtn").classList.replace("hidden", "visible");
 	document.getElementById("settingsBtn").classList.replace("hidden", "visible");
 	document.getElementById("infoBtn").classList.replace("hidden", "visible");
+	document.getElementById("elementName").classList.replace("hidden", "visible");
 	document.getElementById("backBtn").disabled = false;
 	document.getElementById("settingsBtn").disabled = false;
 	document.getElementById("infoBtn").disabled = false;
@@ -245,7 +247,7 @@ function updatePhysics() {
 		neutrons.forEach(pushOrigin);
 	}
 
-	if (pullCount > 230) {
+	if (pullCount > 225) {
 		pullCount = 150;
 	}
 
@@ -280,6 +282,7 @@ function returnToTable() {
 		document.getElementById("settingsBtn").disabled = true;
 		document.getElementById("infoBtn").classList.replace("visible", "hidden");
 		document.getElementById("infoBtn").disabled = true;
+		document.getElementById("elementName").classList.replace("visible", "hidden");
 	}
 }
 

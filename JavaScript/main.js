@@ -284,7 +284,7 @@ function setOrbitControls() {
   controls.enablePan = false;
   controls.dampingFactor = 0.1;
   controls.rotateSpeed = 0.3;
-  controls.minDistance = 70;
+  controls.minDistance = 150;
   controls.maxDistance = 800;
 
   controls.enabled = true;
@@ -395,7 +395,7 @@ function updateParticles() {
 function startProgram() {
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.add("titleHidden");
-  document.getElementById("startButton").classList.add("titlehidden");
+  document.getElementById("startButton").classList.add("titleHidden");
   document.getElementById("startButton").disabled = true;
   setTimeout(function() {
     scene.remove(particleSystem)
