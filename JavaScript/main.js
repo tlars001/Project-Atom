@@ -27,7 +27,7 @@ function init() {
     document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
     document.getElementById('infoWindow').style.height = '100%';
-    document.getElementById('elementName').style.bottom = '0px';
+    document.getElementById('elementName').style.bottom = '-30px';
     isMobile = true;
 
     if (window.innerHeight > window.innerWidth) {
