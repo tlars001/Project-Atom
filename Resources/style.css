@@ -233,7 +233,7 @@ td, th {
 }
 .titleVisible {
 	visibility: visible;
-	opacity: 0.7;
+	opacity: 0.8;
 	transition: visibility 0s 3s, opacity 3s linear;
 }
 

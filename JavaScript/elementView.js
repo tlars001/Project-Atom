@@ -15,6 +15,7 @@ function elementInit() {
 
 	document.getElementById("theName").innerHTML = data[selectedElement].name;
 	document.getElementById("elementName").innerHTML = data[selectedElement].name;
+	document.getElementById("elementName").style.color = data[selectedElement].theColor;
 	document.getElementById("theSymbol").innerHTML = data[selectedElement].symbol;
 	document.getElementById("theNumber").innerHTML = data[selectedElement].number;
 	document.getElementById("theMass").innerHTML = data[selectedElement].mass;
