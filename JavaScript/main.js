@@ -27,6 +27,7 @@ function init() {
     document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
     document.getElementById('infoWindow').style.height = '100%';
+    document.getElementById('elementName').style.bottom = '0px';
     isMobile = true;
 
     if (window.innerHeight > window.innerWidth) {
@@ -394,8 +395,8 @@ function updateParticles() {
 
 function startProgram() {
   document.getElementById("theSound").play();
-  document.getElementById("titleHeader").classList.add("titleHidden");
-  document.getElementById("startButton").classList.add("titleHidden");
+  document.getElementById("titleHeader").classList.replace("titleVisible", "titleHidden");
+  document.getElementById("startButton").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").disabled = true;
   setTimeout(function() {
     scene.remove(particleSystem)
@@ -405,9 +406,6 @@ function startProgram() {
   isCenter = false;
   isTable = true;
   isMoving = true;
-  //setTimeout(setTableMovement, 9000);
-
-  //generateTable();
 }
 
 function setTableMovement() {

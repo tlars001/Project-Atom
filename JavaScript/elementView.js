@@ -36,10 +36,10 @@ function elementInit() {
 	world.quatNormalizeFast = true;
   world.quatNormalizeSkip = 4;
 
-  geometryPN = new THREE.SphereGeometry( 5, 32, 32 );
+  geometryPN = new THREE.SphereGeometry( 5, 18, 18 );
   protonMaterial = new THREE.MeshPhongMaterial( { color: 0xdd5555, specular: 0x999999, shininess: 13} );
   neutronMaterial = new THREE.MeshPhongMaterial( { color: 0x55dddd, specular: 0x999999, shininess: 13} );
-  electronGeometry = new THREE.SphereGeometry(1, 10, 9);
+  electronGeometry = new THREE.SphereGeometry(1, 10, 10);
   electronMaterial = new THREE.MeshBasicMaterial({color: "yellow"});
 	createAtom(numProtons, numNeutrons, numElectrons);
 }
