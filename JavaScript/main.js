@@ -9,12 +9,28 @@
 // Necessary global variables for the project
 var scene, camera, renderer, particles, particleSystem, particleCount = 2000;
 var textureLoader, controls, raycaster, mouse, keepParticles = true;
-var INTERSECTED, rotation = 0, cameraSphere, isMobile = false;
+var INTERSECTED, rotation = 0, isMobile = false;
 var isTable = false, isCenter = true, isMoving = true;
 var elementView = false, mainLight, showUI = false;
+var loader, theFont, isLoaded = false;
 
-init();
-animate();
+var manager = new THREE.LoadingManager();
+manager.onLoad = function() {
+  init();
+  animate();
+  isLoaded = true;
+  document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
+}
+
+loader = new THREE.FontLoader(manager);
+loader.load('Resources/helvetiker_regular.typeface.json', function(response) {
+  theFont = response;
+});
+
+textureLoader = new THREE.TextureLoader(manager);
+var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
+var particleTexture = new textureLoader.load( 'Resources/particle.png');
+var electronTexture = new textureLoader.load( 'Resources/glow.png');
 
 function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
@@ -45,9 +61,6 @@ function init() {
 
 
   // Add the space skybox
-  textureLoader = new THREE.TextureLoader();
-  var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
-  var particleTexture = new textureLoader.load( 'Resources/particle.png');
   var boxGeometry = new THREE.BoxGeometry( 30000, 30000, 30000);
   var skyMaterial = new THREE.MeshBasicMaterial({map: mainBackground,
                                                  side: THREE.BackSide});
@@ -61,16 +74,15 @@ function init() {
   geometry = new THREE.SphereGeometry(0.01, 10, 9);
   material = new THREE.MeshNormalMaterial();
   mesh = new THREE.Mesh( geometry, material );
-  cameraSphere = mesh;
-  cameraSphere.position.set(0,0,0);
-  scene.add(cameraSphere);
-  camera.lookAt(cameraSphere.position);
+  // cameraSphere = mesh;
+  // cameraSphere.position.set(0,0,0);
+  // scene.add(cameraSphere);
+  //camera.lookAt(cameraSphere.position);
   //cameraSphere.add(camera);
 
   raycaster = new THREE.Raycaster();
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setSize( window.innerWidth, window.innerHeight );
-
   
   setPanControls();
   controls.enabled = false;
@@ -79,8 +91,6 @@ function init() {
   var ambientLight = new THREE.AmbientLight( 0x404040, 2 ); // soft white light
   scene.add( ambientLight );
   createParticles(particleTexture);
-
-  generateTable()
 
   document.body.appendChild( renderer.domElement );
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -92,12 +102,8 @@ function animate() {
     updateParticles();
   }
 
-  if (cameraSphere.position.z === -1002 && !controls.enabled) {
-    showUI = false;
-    setTableMovement();
-  }
-
-  if (cameraSphere.position.x === 390 && isTable) {
+  if (isTable && goingBack) {
+    goingBack = false;
     scene.remove(elementItemsGroup);
     elementItemsGroup = new THREE.Group();
     if (protons) {
@@ -110,29 +116,8 @@ function animate() {
     electronRotation = 0;
   }
 
-  if (cameraSphere.position.x === 390 && elementView && !elementGenerated) {
-    elementInit();
-  }
-
-  if (isTable) {
-    if (cameraSphere.position.z > -1000) {
-      //rotation += 0.01;
-      cameraSphere.position.z -= 3;
-      camera.lookAt(cameraSphere.position);
-      if (cameraSphere.position.z > -500)
-        cameraSphere.position.x += 3;
-      else
-        cameraSphere.position.x -= 3;
-    }
-
-    if (!isMoving && isTable) {
+  if (isTable && !elementView) {
       checkPanRange();
-    }
-  }
-
-  if (isSelected && elementView) {
-    controls.enabled = false;
-    adjustCameraPosition();
   }
 
   if (elementView && !isMoving && !showUI) {
@@ -143,18 +128,7 @@ function animate() {
   if (goingBack) {
     rotation = 0;
     controls.enabled = false;
-    adjustCameraPosition();
-  }
-
-  if (elementView && cameraSphere.position.z > -1 && isSelected) {
-    cameraSphere.position.set(0,0,0);
-    isSelected = false;
-    isMoving = false;
-    setOrbitControls();
-    scene.remove(outlineMesh);
-    scene.remove(elementGroup);
-    //scene.remove(mainLight);
-    //elementInit();
+    //adjustCameraPosition();
   }
 
   if (!pauseMovement) {
@@ -164,15 +138,15 @@ function animate() {
     }
   } 
 
-
   if (!isMobile && isTable && !isMoving) {
     checkIntersection();
   }
 
   requestAnimationFrame(animate);
 
-  if (!isMoving)
+  if (!isMoving) {
     controls.update();
+  }
 
   renderer.render(scene, camera);
 
@@ -204,71 +178,9 @@ function checkPanRange() {
   }
 }
 
-function adjustCameraPosition() {
-
-  if (goingBack && camera.position.z > 0) {
-    camera.position.z -= 3;
-    if (camera.position.x < 0)
-      camera.position.x -= 1;
-    else
-      camera.position.x += 0;
-  }
-  else {
-    if (camera.position.x > 2)
-      camera.position.x -= 3;
-
-    if (camera.position.x < -2)
-      camera.position.x+= 3;
-
-    if (camera.position.y > 2)
-      camera.position.y-= 3;
-
-    if (camera.position.y < -2)
-      camera.position.y+= 3;
-
-    if (camera.position.z > -498)
-      camera.position.z-= 3;
-
-    if (camera.position.z < -502)
-      camera.position.z+= 3;
-}
-
-  if (camera.position.x > -2 && camera.position.x < 2 &&
-      camera.position.y > -2 && camera.position.y < 2 &&
-      camera.position.z > -502 && camera.position.z < -498) {
-    if (goingBack) {
-      camera.lookAt(cameraSphere.position);
-      isTable = true;
-      goingBack = false;
-      elementView = false;
-      isMoving = true;
-      scene.add(elementGroup);
-    }
-    else {
-      moveToElementView();
-    }
-  }
-  else {
-    if (!goingBack) {
-      cameraSphere.position.set(0,0,-1000);
-    }
-  }
-}
-
-function moveToElementView() {
-  //console.log("test2");
-  //rotation += 0.01;
-  camera.lookAt(cameraSphere.position);
-  if (cameraSphere.position.z < 0) {
-    cameraSphere.position.z += 3;
-    if (cameraSphere.position.z < -500)
-      cameraSphere.position.x += 3;
-    else
-      cameraSphere.position.x -= 3;
-  }
-}
-
 function setPanControls() {
+  camera.position.set(0,0,-500);
+  camera.lookAt(new THREE.Vector3(0,0,-1000));
   controls = new THREE.PanControls( camera, renderer.domElement);
   controls.enableDamping = true; 
   controls.dampingFactor = 0.1;
@@ -280,6 +192,8 @@ function setPanControls() {
 }
 
 function setOrbitControls() {
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
+  camera.position.set(0,0,-500);
   controls = new THREE.OrbitControls( camera, renderer.domElement);
   controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
   controls.enablePan = false;
@@ -314,17 +228,19 @@ function changeSound() {
  *  changes
 *******************************************************************************/
 function changeOrientation() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+  if (isLoaded) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-  renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( window.innerWidth, window.innerHeight );
 
-  if (isMobile) {
-    if (window.innerHeight > window.innerWidth) {
-        document.getElementById('settingsWindow').style.width = '70%';
-    }
-    else {
-        document.getElementById('settingsWindow').style.width = '40%';
+    if (isMobile) {
+      if (window.innerHeight > window.innerWidth) {
+          document.getElementById('settingsWindow').style.width = '70%';
+      }
+      else {
+          document.getElementById('settingsWindow').style.width = '40%';
+      }
     }
   }
 }
@@ -398,14 +314,20 @@ function startProgram() {
   document.getElementById("titleHeader").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").disabled = true;
+  document.getElementById("curtain").classList.replace("curtainHidden", "curtainVisible");
+
   setTimeout(function() {
     scene.remove(particleSystem)
     keepParticles = false;
-  }, 6000); // Delete all particles after 8 seconds
 
-  isCenter = false;
-  isTable = true;
-  isMoving = true;
+    isCenter = false;
+    isTable = true;
+    isMoving = true;
+    camera.lookAt(new THREE.Vector3(0,0,-1000));
+    generateTable();
+    setTableMovement();
+    document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
+  }, 1000); // Change the scene after 1 second
 }
 
 function setTableMovement() {

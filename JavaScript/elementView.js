@@ -43,6 +43,10 @@ function elementInit() {
   electronGeometry = new THREE.SphereGeometry(1, 10, 10);
   electronMaterial = new THREE.MeshBasicMaterial({color: "yellow"});
 	createAtom(numProtons, numNeutrons, numElectrons);
+
+	setTimeout(function() {
+		document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
+	}, 3500);
 }
 
 function displayUI() {
@@ -141,7 +145,7 @@ function createElectrons(numElectrons) {
 function addGlow(theMesh) {
   var spriteMaterial = new THREE.SpriteMaterial(
   {
-    map: textureLoader.load( 'Resources/glow.png' ),
+    map: electronTexture,
     color: "yellow", transparent: true, blending: THREE.AdditiveBlending });
   var sprite = new THREE.Sprite( spriteMaterial );
   sprite.scale.set(7, 7, 1.0);
@@ -284,6 +288,22 @@ function returnToTable() {
 		document.getElementById("infoBtn").classList.replace("visible", "hidden");
 		document.getElementById("infoBtn").disabled = true;
 		document.getElementById("elementName").classList.replace("visible", "hidden");
+		document.getElementById("curtain").classList.replace("curtainHidden", "curtainVisible");
+
+		setTimeout(function() {
+			elementView = false;
+			isCenter = false;
+	    isTable = true;
+	    isMoving = true;
+	    camera.lookAt(new THREE.Vector3(0,0,-1000));
+	   	scene.add(elementGroup);
+	   	isSelected = false;
+	   	showUI = false;
+	    setTableMovement();
+	    document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
+		}, 1500)
+
+
 	}
 }
 

@@ -12,13 +12,11 @@ var elements = [], elementGroup = new THREE.Group();
 var outlineMesh, isSelected  = false;
 var clickTimer = null, prevTapX = 0, prevTapY = 0;
 var elementGeometry, textBackMaterial, eTextMaterial, eTitleMaterial;
-var loader;
 
 function generateTable() {
 	var xIndex = -240;
 	var yIndex = 120;
 
-	loader = new THREE.FontLoader();
 	elementGeometry = new THREE.BoxGeometry( 25, 25, 5 );
 	textBackMaterial = new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } );
 	eTitleMaterial = new THREE.MeshBasicMaterial( { color: 0xa9a9a9, overdraw: 0.5 } );
@@ -93,43 +91,40 @@ function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
 }
 
 function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
-	loader.load( 'Resources/helvetiker_regular.typeface.json', function ( font ) {
-		var geometry = new THREE.TextBufferGeometry( name, {
-			font: font,
-			size: theSize,
-			height: 1,
-			curveSegments: 2
-		});
-		geometry.computeBoundingBox();
-		var centerOffset = -0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
-		var materials;
-
-		if (isTitle) {
-			materials = [
-				eTitleMaterial,
-				textBackMaterial
-			];
-		}
-		else {
-			materials = [
-				eTextMaterial,
-				textBackMaterial
-			];
-		}
-		mesh = new THREE.Mesh( geometry, materials );
-		if (isNum){
-			mesh.position.x = xPos;
-		}
-		else {
-			mesh.position.x = centerOffset + xPos;
-		}
-		mesh.position.y = yPos;
-		mesh.position.z = zPos;
-		mesh.rotation.x = 0;
-		mesh.rotation.y = Math.PI * 2;
-		elementGroup.add(mesh);
-		//scene.add(mesh);
+	var geometry = new THREE.TextBufferGeometry( name, {
+		font: theFont,
+		size: theSize,
+		height: 1,
+		curveSegments: 2
 	});
+	geometry.computeBoundingBox();
+	var centerOffset = -0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+	var materials;
+
+	if (isTitle) {
+		materials = [
+			eTitleMaterial,
+			textBackMaterial
+		];
+	}
+	else {
+		materials = [
+			eTextMaterial,
+			textBackMaterial
+		];
+	}
+	mesh = new THREE.Mesh( geometry, materials );
+	if (isNum){
+		mesh.position.x = xPos;
+	}
+	else {
+		mesh.position.x = centerOffset + xPos;
+	}
+	mesh.position.y = yPos;
+	mesh.position.z = zPos;
+	mesh.rotation.x = 0;
+	mesh.rotation.y = Math.PI * 2;
+	elementGroup.add(mesh);
 }
 
 function checkIntersection() {
@@ -240,25 +235,31 @@ function selectElement(event) {
 	// if there is one (or more) intersections
 	if ( intersect.length > 0 && !isSelected )
 	{
-		isSelected = true;
-		elementView = true;
+
 		isTable = false;
-		isMoving = true;
-		//rotation = 0;
+
 		INTERSECTED = intersect[ 0 ].object;
 		var theColor = INTERSECTED.material.color;
-		//console.log(INTERSECTED.material.name);
 		selectedElement = INTERSECTED.material.name;
 		// change the color of the closest face.
 		INTERSECTED.material.color.setRGB( 0, 0, 1); 
+		document.getElementById("curtain").classList.replace("curtainHidden", "curtainVisible");
+		setTimeout(function() {
+			isSelected = true;
+			elementView = true;
+			elementInit();
+			setOrbitControls();
+			scene.remove(outlineMesh);
+    	scene.remove(elementGroup);
+		}, 1000)
+
 		resetColor(INTERSECTED);
 	}
 }
 
 function resetColor(object) {
 	setTimeout(function() {
-		//isSelected = false;
 		var theColor = data[object.material.name].theColor;
 		object.material.color.set(theColor);
-  }, 5000);
+  }, 1000);
 }
