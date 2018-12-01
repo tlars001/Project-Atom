@@ -1,4 +1,4 @@
-var electronMesh, elementGenerated = false;
+var electronMesh, elementGenerated = false, waitTime;
 var goingBack = false, realisticMovement = false;
 var elementItemsGroup = new THREE.Group();
 var electronRotations, electronSpeed, selectedElement, electronDistance;
@@ -12,6 +12,20 @@ function elementInit() {
 	electronDistance = [];
 	electronSpeed = [];
 	electronAngle = [];
+	waitTime = 3500;
+
+	if (numProtons == 1) {
+		waitTime = 500;
+	}
+	else if (numProtons < 5 && numProtons > 1) {
+		waitTime = 2000;
+	}
+	else if (numProtons < 45 && numProtons >= 5) {
+		waitTime = 2700;
+	}
+	else if (numProtons > 45 && numProtons < 80) {
+		waitTime = 3000;
+	}
 
 	document.getElementById("theName").innerHTML = data[selectedElement].name;
 	document.getElementById("elementName").innerHTML = data[selectedElement].name;
@@ -46,7 +60,7 @@ function elementInit() {
 
 	setTimeout(function() {
 		document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
-	}, 3500);
+	}, waitTime);
 }
 
 function displayUI() {
