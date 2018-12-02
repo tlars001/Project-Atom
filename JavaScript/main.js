@@ -47,9 +47,11 @@ function init() {
     isMobile = true;
 
     if (window.innerHeight > window.innerWidth) {
+      document.getElementById('loading').style.transform = 'translateY(630%)';
       document.getElementById('settingsWindow').style.width = '70%';
     }
     else {
+      document.getElementById('loading').style.transform = 'translateY(320%)';
       document.getElementById('settingsWindow').style.width = '40%';
     }
   }
@@ -237,9 +239,11 @@ function changeOrientation() {
     if (isMobile) {
       if (window.innerHeight > window.innerWidth) {
           document.getElementById('settingsWindow').style.width = '70%';
+          document.getElementById('loading').style.transform = 'translateY(630%)';
       }
       else {
           document.getElementById('settingsWindow').style.width = '40%';
+          document.getElementById('loading').style.transform = 'translateY(320%)';
       }
     }
   }

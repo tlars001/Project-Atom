@@ -35,6 +35,8 @@ function elementInit() {
 	document.getElementById("theMass").innerHTML = data[selectedElement].mass;
 	document.getElementById("theDescription").innerHTML = data[selectedElement].info;
 
+	resetSettings();
+
 	for (var i = 0; i < numElectrons; i++) {
 		electronRotations.push(getRandomNumber(0,200));
 		electronDistance.push(getRandomNumber(50,100));
@@ -404,4 +406,15 @@ function changeRealism() {
 	else {
 		realisticMovement = false;
 	}
+}
+
+function resetSettings() {
+	document.getElementsByName("protons")[0].checked = true;
+	document.getElementsByName("neutrons")[0].checked = true;
+	document.getElementsByName("electrons")[0].checked = true;
+	document.getElementsByName("pause")[0].checked = false;
+	document.getElementsByName("realistic")[0].checked = false;
+
+	realisticMovement = false;
+	pauseMovement = false;
 }

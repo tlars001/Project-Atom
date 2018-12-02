@@ -25,14 +25,6 @@ h3 {
 	margin-bottom: 0px;
 }
 
-h5 {
-	font-size: 40px;
-	bottom: 30%;
-	left: 40%;
-	display: inline-block;
-	transform: translateY(1300%);
-}
-
 hr { 
 	position: relative;
 	border-color: black;
@@ -87,6 +79,14 @@ td, th {
 	z-index: 20;
 	position: absolute;
 	text-align: center;
+}
+
+#loading {
+	font-size: 40px;
+	bottom: 30%;
+	left: 40%;
+	display: inline-block;
+	transform: translateY(1300%);
 }
 
 #titleHeader {
