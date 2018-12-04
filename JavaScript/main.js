@@ -28,9 +28,9 @@ loader.load('Resources/helvetiker_regular.typeface.json', function(response) {
 });
 
 textureLoader = new THREE.TextureLoader(manager);
-var mainBackground = new textureLoader.load( 'Resources/skyBox.png');
-var particleTexture = new textureLoader.load( 'Resources/particle.png');
-var electronTexture = new textureLoader.load( 'Resources/glow.png');
+var mainBackground = textureLoader.load( 'Resources/skyBox.png');
+var particleTexture = textureLoader.load( 'Resources/particle.png');
+var electronTexture = textureLoader.load( 'Resources/glow.png');
 
 function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
@@ -76,11 +76,6 @@ function init() {
   geometry = new THREE.SphereGeometry(0.01, 10, 9);
   material = new THREE.MeshNormalMaterial();
   mesh = new THREE.Mesh( geometry, material );
-  // cameraSphere = mesh;
-  // cameraSphere.position.set(0,0,0);
-  // scene.add(cameraSphere);
-  //camera.lookAt(cameraSphere.position);
-  //cameraSphere.add(camera);
 
   raycaster = new THREE.Raycaster();
   renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -113,7 +108,6 @@ function animate() {
       neutrons.forEach(removeFromWorld);
     }
     
-    //scene.add(mainLight);
     elementGenerated = false;
     electronRotation = 0;
   }
@@ -127,10 +121,9 @@ function animate() {
     showUI = true;
   }
 
-  if (goingBack) {
+  if (goingBack && controls.enabled) {
     rotation = 0;
     controls.enabled = false;
-    //adjustCameraPosition();
   }
 
   if (!pauseMovement) {
@@ -344,12 +337,7 @@ function setTableMovement() {
   controls.enabled = true;
 }
 
-function onDocumentMouseMove( event ) 
-{
-  // the following line would stop any other event handler from firing
-  // (such as the mouse's TrackballControls)
-  // event.preventDefault();
-  
+function onDocumentMouseMove( event ) {  
   // update the mouse variable
   if (isTable)
   {

@@ -87,7 +87,6 @@ function calculateNeutrons(number, mass) {
 }
 
 function createAtom(numProtons, numNeutrons, numElectrons) {
-
 	protons = Array(numProtons).fill(0).map( () => Proton() );
 	neutrons = Array(numNeutrons).fill(0).map( () => Neutron() );
 
@@ -100,7 +99,7 @@ function createAtom(numProtons, numNeutrons, numElectrons) {
 	elementGenerated = true;
 }
 
-function Proton(){
+function Proton() {
 	let radius = 5;
 
 	return {
@@ -118,7 +117,7 @@ function Proton(){
 	}
 }
 
-function Neutron(){
+function Neutron() {
 	let radius = 5;
 
 	return {
@@ -136,7 +135,7 @@ function Neutron(){
 	}
 }
 
-function randomPosition(outerRadius){
+function randomPosition(outerRadius) {
 	var x = (2 * Math.random() - 1 ) * outerRadius,
 		y = (2 * Math.random() - 1 ) * outerRadius,
 		z = (2 * Math.random() - 1 ) * outerRadius
@@ -149,7 +148,7 @@ function createElectrons(numElectrons) {
 		electronMesh = new THREE.Mesh( electronGeometry, electronMaterial );
 	  electronMesh.position.set(0,10,-20);
 	  addGlow(electronMesh);
-	  //addElectronLight(electronMesh);
+	  
 	  elementItemsGroup.add(electronMesh);
 	}
 }
@@ -166,11 +165,6 @@ function addGlow(theMesh) {
   var sprite = new THREE.Sprite( spriteMaterial );
   sprite.scale.set(7, 7, 1.0);
   theMesh.add(sprite); // this centers the glow at the mesh
-}
-
-function addElectronLight(theMesh) {
-  var light = new THREE.PointLight(0xffffff, 0.1);
-  theMesh.add(light);
 }
 
 function rotateElectron() {
@@ -220,22 +214,22 @@ function getRandomSpeed(min, max) {
 	return (Math.floor(Math.random() * (max-min+1)) + min);
 }
 
-function addToWorld(object){
+function addToWorld(object) {
 	world.add(object.body);
 	scene.add(object.mesh);
 }
 
-function removeFromWorld(object){
+function removeFromWorld(object) {
 	world.remove(object.body);
 	scene.remove(object.mesh);
 }
 
-function updateMeshState(object){
+function updateMeshState(object) {
 	object.mesh.position.copy(object.body.position);
 	object.mesh.quaternion.copy(object.body.quaternion);
 }
 
-function pullOrigin(object){
+function pullOrigin(object) {
 	object.body.force.set(
 		-object.body.position.x,
 		-object.body.position.y,
@@ -243,7 +237,7 @@ function pullOrigin(object){
 	);
 }
 
-function pushOrigin(object){
+function pushOrigin(object) {
 	object.body.force.set(
 		object.body.position.x,
 		object.body.position.y,
@@ -257,7 +251,6 @@ function resistance(object, val) {
 }
 
 function updatePhysics() {
-
 	if (pullCount < 200) {
 		protons.forEach(pullOrigin);
 		neutrons.forEach(pullOrigin);
@@ -281,7 +274,6 @@ function updatePhysics() {
 
 	protons.forEach(updateMeshState);
 	neutrons.forEach(updateMeshState);
-
 }
 
 function returnToTable() {
@@ -313,6 +305,7 @@ function returnToTable() {
 	    isMoving = true;
 	    camera.lookAt(new THREE.Vector3(0,0,-1000));
 	   	scene.add(elementGroup);
+	   	scene.add(keyGroup);
 	   	isSelected = false;
 	   	showUI = false;
 	    setTableMovement();

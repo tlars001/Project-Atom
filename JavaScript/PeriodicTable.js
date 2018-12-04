@@ -7,7 +7,7 @@
 *******************************************************************************/
 
 var changeGlow = true;
-var selectedObject = [];
+var selectedObject = [], keyGeometry, keyGroup = new THREE.Group();
 var elements = [], elementGroup = new THREE.Group();
 var outlineMesh, isSelected  = false;
 var clickTimer = null, prevTapX = 0, prevTapY = 0;
@@ -18,6 +18,7 @@ function generateTable() {
 	var yIndex = 120;
 
 	elementGeometry = new THREE.BoxGeometry( 25, 25, 5 );
+	keyGeometry = new THREE.BoxGeometry(10, 10, 5);
 	textBackMaterial = new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } );
 	eTitleMaterial = new THREE.MeshBasicMaterial( { color: 0xa9a9a9, overdraw: 0.5 } );
 	eTextMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } );
@@ -67,10 +68,71 @@ function generateTable() {
 		theText = "Double Tap An Element"
 	}
 
+	// Add the heading to the table
 	addText(theText, 20, 0, 150, -1000, false, true);
+
+	createKey();
+
 	scene.add(elementGroup);
+	scene.add(keyGroup);
 }
 
+function createKey() {
+	// Horizontal line
+	var geometry = new THREE.BoxGeometry(285, 0.2, 0.2);
+  var mesh = new THREE.Mesh(geometry, eTitleMaterial );
+ 
+ 	mesh.position.x = -45;
+	mesh.position.y = 105;
+	mesh.position.z = -1000;
+
+  keyGroup.add(mesh);
+
+  // Vertical line
+  geometry = new THREE.BoxGeometry(0.2, 70, 0.2);
+  mesh = new THREE.Mesh(geometry, eTitleMaterial );
+ 
+ 	mesh.position.x = 4;
+	mesh.position.y = 83;
+	mesh.position.z = -1000;
+
+  keyGroup.add(mesh);
+
+	// Metals
+	addText("Metals", 7, -100, 110, -1000, false, true);
+	createKeySquare("goldenrod", -180, 95);
+	addText("Alkali metals", 6, -146, 92, -1000, false, true);
+	createKeySquare("yellow", -180, 75);
+	addText("Alkaline earth metals", 6, -131, 72, -1000, false, true);
+	createKeySquare("indianred", -180, 55);
+	addText("Lanthanoids", 6, -147, 52, -1000, false, true);
+	createKeySquare("magenta", -80, 95);
+	addText("Actinoids", 6, -52, 92, -1000, false, true);
+	createKeySquare("red", -80, 75);
+	addText("Transition metals", 6, -38, 72, -1000, false, true);
+	createKeySquare("cyan", -80, 55);
+	addText("Poor metals", 6, -46, 52, -1000, false, true);
+
+	// Nonmetals
+	addText("Nonmetals", 7, 50, 110, -1000, false, true);
+	createKeySquare("green", 20, 95);
+	addText("Other nonmetals", 6, 61, 92, -1000, false, true);
+	createKeySquare("purple", 20, 75);
+	addText("Noble gasses", 6, 57, 72, -1000, false, true);
+}
+
+function createKeySquare(theColor, xPos, yPos) {
+	var material = new THREE.MeshPhongMaterial({ color: theColor});
+  var mesh = new THREE.Mesh( keyGeometry, material );
+ 
+ 	mesh.position.x = xPos;
+	mesh.position.y = yPos;
+	mesh.position.z = -1000;
+
+  keyGroup.add(mesh);
+
+  return mesh;
+}
 
 function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
   var material = new THREE.MeshPhongMaterial({ color: theColor});
@@ -86,7 +148,7 @@ function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
   addText(name, 2.7, mesh.position.x, mesh.position.y-6, -998);
   addText(mass, 3, mesh.position.x, mesh.position.y-11, -998);
   elementGroup.add(mesh);
-  //scene.add(mesh);
+
   return mesh;
 }
 
@@ -132,7 +194,6 @@ function checkIntersection() {
 	// create a Ray with origin at the mouse position
 	//   and direction into the scene (camera direction)
 	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-	//projector.unprojectVector( vector, camera );
 	vector.unproject(camera);
 	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
@@ -143,8 +204,7 @@ function checkIntersection() {
 	//		and intersected by the Ray projected from the mouse position 	
 
 	// if there is one (or more) intersections
-	if ( intersects.length > 0 && !isSelected)
-	{
+	if ( intersects.length > 0 && !isSelected) {
 		INTERSECTED = intersects[ 0 ].object;
 
 		if (changeGlow) {
@@ -184,7 +244,6 @@ function addOutline (object) {
 }
 
 function onDocumentTouchStart(event) {
-
 	if (event.touches.length === 1) {
 	  event.clientX = event.touches[0].pageX;
 	  event.clientY = event.touches[0].pageY;
@@ -209,8 +268,7 @@ function onDocumentTouchStart(event) {
 	}
 }
 
-function onDocumentMouseDown(event) 
-{		
+function onDocumentMouseDown(event) {		
 	if (!isMobile && isTable) {
 		selectElement(event);
 	}
@@ -233,9 +291,7 @@ function selectElement(event) {
 	var intersect = raycaster.intersectObjects(elements);
 
 	// if there is one (or more) intersections
-	if ( intersect.length > 0 && !isSelected )
-	{
-
+	if ( intersect.length > 0 && !isSelected ) {
 		isTable = false;
 
 		INTERSECTED = intersect[ 0 ].object;
@@ -251,6 +307,7 @@ function selectElement(event) {
 			setOrbitControls();
 			scene.remove(outlineMesh);
     	scene.remove(elementGroup);
+    	scene.remove(keyGroup);
 		}, 1000)
 
 		resetColor(INTERSECTED);
