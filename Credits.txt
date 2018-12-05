@@ -6,3 +6,6 @@ http://www.elementsdatabase.com/
 
 Proton and Neutron Physics: micnil
 https://stackoverflow.com/questions/36317734/calculating-individual-spheres-position-to-create-a-sphere-made-of-spheres/36321528
+
+Table Structure Ideas:
+https://www.ptable.com/

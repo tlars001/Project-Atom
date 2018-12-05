@@ -1,3 +1,11 @@
+/*******************************************************************************
+ *  Author: Trevor Larson
+ *
+ *  Summary:
+ *  This file will contain all of the code related to the element view of the
+ *  project.
+*******************************************************************************/
+
 var electronMesh, elementGenerated = false, waitTime;
 var goingBack = false, realisticMovement = false;
 var elementItemsGroup = new THREE.Group();

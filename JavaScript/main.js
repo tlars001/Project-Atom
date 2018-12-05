@@ -9,22 +9,23 @@
 // Necessary global variables for the project
 var scene, camera, renderer, particles, particleSystem, particleCount = 2000;
 var textureLoader, controls, raycaster, mouse, keepParticles = true;
-var INTERSECTED, rotation = 0, isMobile = false;
+var INTERSECTED, rotation = 0, isMobile = false, programStarted = false;
 var isTable = false, isCenter = true, isMoving = true;
-var elementView = false, mainLight, showUI = false;
-var loader, theFont, isLoaded = false;
-
+var elementView = false, mainLight, showUI = false, playAudio = true;
+var loader, audioLoader, audioListener, theSound, theFont, isLoaded = false;
 var manager = new THREE.LoadingManager();
-manager.onLoad = function() {
-  init();
-  animate();
-  isLoaded = true;
-  document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
-}
 
 loader = new THREE.FontLoader(manager);
 loader.load('Resources/helvetiker_regular.typeface.json', function(response) {
   theFont = response;
+});
+
+audioListener = new THREE.AudioListener();
+theSound = new THREE.Audio(audioListener);
+audioLoader = new THREE.AudioLoader(manager);
+audioLoader.load('Resources/bensound-relaxing.mp3', function (buffer) {
+  theSound.setBuffer(buffer);
+  theSound.setLoop(true);
 });
 
 textureLoader = new THREE.TextureLoader(manager);
@@ -32,34 +33,47 @@ var mainBackground = textureLoader.load( 'Resources/skyBox.png');
 var particleTexture = textureLoader.load( 'Resources/particle.png');
 var electronTexture = textureLoader.load( 'Resources/glow.png');
 
+manager.onLoad = function() {
+  init();
+  animate();
+  isLoaded = true;
+
+  setTimeout(function() {
+    document.getElementById("curtain").classList.replace("curtainVisible", "curtainHidden");
+  }, 500);
+}
+
 function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
-  camera.position.set(0,0,-500);
   mouse = new THREE.Vector2();
   scene = new THREE.Scene();
 
-   // Check if user is on a mobile device
+  camera.add(audioListener);
+
+  // Resize when the orientation changes on mobile
+  window.addEventListener("orientationchange", function() {
+    setTimeout(changeOrientation, 250); // Adds a delay for chrome
+  });
+
+  // Check if user is on a mobile device
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    document.getElementById('titleHeader').style.fontSize = '10vw';
     document.getElementById('soundIcon').style.width = '40px';
     document.getElementById('infoWindow').style.height = '100%';
     document.getElementById('elementName').style.bottom = '-28px';
     isMobile = true;
 
     if (window.innerHeight > window.innerWidth) {
-      document.getElementById('loading').style.transform = 'translateY(630%)';
-      document.getElementById('settingsWindow').style.width = '70%';
+      if (/iPad/i.test(navigator.userAgent)) {
+        document.getElementById('settingsWindow').style.width = '40%';
+      }
+      else {
+        document.getElementById('settingsWindow').style.width = '70%';
+      }
     }
     else {
-      document.getElementById('loading').style.transform = 'translateY(320%)';
       document.getElementById('settingsWindow').style.width = '40%';
     }
   }
-
-  // Resize when the orientation changes on mobile
-  window.addEventListener("orientationchange", function() {
-    setTimeout(changeOrientation, 250); // Adds a delay for chrome
-  });
 
 
   // Add the space skybox
@@ -89,6 +103,7 @@ function init() {
   scene.add( ambientLight );
   createParticles(particleTexture);
 
+  camera.position.set(0,0,-100);
   document.body.appendChild( renderer.domElement );
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 }
@@ -205,15 +220,20 @@ function setOrbitControls() {
  *  Description: This function will change the sound icon and mute/unmute sound.
 *******************************************************************************/
 function changeSound() {
-  var theSound = document.getElementById("theSound");
-  var isMuted = theSound.muted;
-  if (isMuted == true) {
-    theSound.muted = false;
+  var soundIconSrc = document.getElementById("soundIcon").src;
+  var isPlaying = theSound.isPlaying;
+  if (soundIconSrc.includes('Resources/mute.png')) {
+    if (programStarted) {
+    theSound.play();
+    }
+
     document.getElementById("soundIcon").src = 'Resources/sound.png'
+    playAudio = true;
   }
   else {
-    theSound.muted = true;
+    theSound.pause();
     document.getElementById("soundIcon").src = 'Resources/mute.png'
+    playAudio = false;
   }
 }
 
@@ -231,12 +251,16 @@ function changeOrientation() {
 
     if (isMobile) {
       if (window.innerHeight > window.innerWidth) {
+        if (/iPad/i.test(navigator.userAgent)) {
+          document.getElementById('settingsWindow').style.width = '40%';
+        }
+        else {
           document.getElementById('settingsWindow').style.width = '70%';
-          document.getElementById('loading').style.transform = 'translateY(630%)';
+        }
       }
       else {
           document.getElementById('settingsWindow').style.width = '40%';
-          document.getElementById('loading').style.transform = 'translateY(320%)';
+          //document.getElementById('loading').style.transform = 'translateY(320%)';
       }
     }
   }
@@ -267,9 +291,9 @@ function createParticles(texture) {
   for (var p = 0; p < particleCount; p++) {
 
     // create a particle with random
-    var pX = Math.random() * 300 - 150,
+    var pX = Math.random() * 200 - 100,
         pY = Math.random() * 200 - 100,
-        pZ = Math.random() * 150 - 150,
+        pZ = Math.random() * 200 - 100,
         particle = new THREE.Vector3(pX, pY, pZ);
 
     particle.velocity = new THREE.Vector3(
@@ -289,7 +313,6 @@ function createParticles(texture) {
 
   // add it to the scene
   scene.add(particleSystem);
-  particleSystem.position.set(0,0,-300);
 }
 
 function updateParticles() {  
@@ -303,11 +326,16 @@ function updateParticles() {
   }
   particleSystem.geometry.verticesNeedUpdate = true;
   
-  particleSystem.rotation.y -= .1 * 0.002;
+  particleSystem.rotation.y -= .1 * 0.005;
 }
 
 function startProgram() {
-  document.getElementById("theSound").play();
+  programStarted = true;
+
+  if (playAudio) {
+  theSound.play();
+  }
+
   document.getElementById("titleHeader").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").disabled = true;
