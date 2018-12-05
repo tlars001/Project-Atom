@@ -9,23 +9,15 @@
 // Necessary global variables for the project
 var scene, camera, renderer, particles, particleSystem, particleCount = 2000;
 var textureLoader, controls, raycaster, mouse, keepParticles = true;
-var INTERSECTED, rotation = 0, isMobile = false, programStarted = false;
+var INTERSECTED, rotation = 0, isMobile = false;
 var isTable = false, isCenter = true, isMoving = true;
-var elementView = false, mainLight, showUI = false, playAudio = true;
-var loader, audioLoader, audioListener, theSound, theFont, isLoaded = false;
+var elementView = false, mainLight, showUI = false;
+var loader, theFont, isLoaded = false;
 var manager = new THREE.LoadingManager();
 
 loader = new THREE.FontLoader(manager);
 loader.load('Resources/helvetiker_regular.typeface.json', function(response) {
   theFont = response;
-});
-
-audioListener = new THREE.AudioListener();
-theSound = new THREE.Audio(audioListener);
-audioLoader = new THREE.AudioLoader(manager);
-audioLoader.load('Resources/bensound-relaxing.mp3', function (buffer) {
-  theSound.setBuffer(buffer);
-  theSound.setLoop(true);
 });
 
 textureLoader = new THREE.TextureLoader(manager);
@@ -47,8 +39,6 @@ function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
   mouse = new THREE.Vector2();
   scene = new THREE.Scene();
-
-  camera.add(audioListener);
 
   // Resize when the orientation changes on mobile
   window.addEventListener("orientationchange", function() {
@@ -220,20 +210,15 @@ function setOrbitControls() {
  *  Description: This function will change the sound icon and mute/unmute sound.
 *******************************************************************************/
 function changeSound() {
-  var soundIconSrc = document.getElementById("soundIcon").src;
-  var isPlaying = theSound.isPlaying;
-  if (soundIconSrc.includes('Resources/mute.png')) {
-    if (programStarted) {
-    theSound.play();
-    }
-
+  var theSound = document.getElementById("theSound");
+  var isMuted = theSound.muted;
+  if (isMuted == true) {
+    theSound.muted = false;
     document.getElementById("soundIcon").src = 'Resources/sound.png'
-    playAudio = true;
   }
   else {
-    theSound.pause();
+    theSound.muted = true;
     document.getElementById("soundIcon").src = 'Resources/mute.png'
-    playAudio = false;
   }
 }
 
@@ -330,12 +315,7 @@ function updateParticles() {
 }
 
 function startProgram() {
-  programStarted = true;
-
-  if (playAudio) {
-  theSound.play();
-  }
-
+  document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").disabled = true;

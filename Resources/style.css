@@ -84,7 +84,7 @@ td, th {
 #loading {
 	position: absolute;
 	font-size: 40px;
-	bottom: 18%;
+	bottom: 10%;
 	z-index: 21;
 	color: white;
 	width: 100%;
