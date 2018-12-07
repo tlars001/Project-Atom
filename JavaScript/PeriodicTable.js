@@ -6,24 +6,38 @@
  *	periodic table of elements.
 *******************************************************************************/
 
+// Global variables needed for table view.
 var changeGlow = true;
 var selectedObject = [], keyGeometry, keyGroup = new THREE.Group();
 var elements = [], elementGroup = new THREE.Group();
 var outlineMesh, isSelected  = false;
 var clickTimer = null, prevTapX = 0, prevTapY = 0;
 var elementGeometry, textBackMaterial, eTextMaterial, eTitleMaterial;
+var elementPartGeometry;
 
+/*******************************************************************************
+ *  Function: generateTable()
+ *  Description: This will create the periodic table of elements when the user
+ *  		         starts the program.
+*******************************************************************************/
 function generateTable() {
 	var xIndex = -240;
 	var yIndex = 120;
 
+	// Create the geometries and materials before the loop
 	elementGeometry = new THREE.BoxGeometry( 25, 25, 5 );
+	elementPartGeometry = new THREE.BoxGeometry(50, 25, 5);
 	keyGeometry = new THREE.BoxGeometry(10, 10, 5);
 	textBackMaterial = new THREE.MeshBasicMaterial( { color: 0x228B22, overdraw: 0.5 } );
 	eTitleMaterial = new THREE.MeshBasicMaterial( { color: 0xa9a9a9, overdraw: 0.5 } );
 	eTextMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } );
 
+	// Generate the table
 	for (var key in data) {
+		// Protons, neutrons, and electrons are a special case
+		if (data[key].name === "Proton")
+			break;
+
     if (data.hasOwnProperty(key)) {
       elements.push(createElement(data[key].number, data[key].symbol, data[key].name, data[key].mass, data[key].theColor, xIndex, yIndex));
 
@@ -63,6 +77,12 @@ function generateTable() {
       }
     }
 	}
+
+	// Create selection boxes for protons, neutrons, and electrons
+	elements.push(createElementPart("Proton", 0xdd5555, -100, -180));
+	elements.push(createElementPart("Neutron", 0x55dddd, 0, -180));
+	elements.push(createElementPart("Electron", "yellow", 100, -180));
+
 	var theText = "Select An Element";
 	if (isMobile) {
 		theText = "Double Tap An Element"
@@ -77,6 +97,11 @@ function generateTable() {
 	scene.add(keyGroup);
 }
 
+/*******************************************************************************
+ *  Function: createKey()
+ *  Description: This will generate the color key at the top of the periodic
+ *               table.
+*******************************************************************************/
 function createKey() {
 	// Horizontal line
 	var geometry = new THREE.BoxGeometry(285, 0.2, 0.2);
@@ -102,7 +127,7 @@ function createKey() {
 	addText("Metals", 7, -100, 110, -1000, false, true);
 	createKeySquare("goldenrod", -180, 95);
 	addText("Alkali metals", 6, -146, 92, -1000, false, true);
-	createKeySquare("yellow", -180, 75);
+	createKeySquare("dodgerblue", -180, 75);
 	addText("Alkaline earth metals", 6, -131, 72, -1000, false, true);
 	createKeySquare("indianred", -180, 55);
 	addText("Lanthanoids", 6, -147, 52, -1000, false, true);
@@ -121,6 +146,10 @@ function createKey() {
 	addText("Noble gasses", 6, 57, 72, -1000, false, true);
 }
 
+/*******************************************************************************
+ *  Function: createKeySquare()
+ *  Description: This will generate each color square used in the key.
+*******************************************************************************/
 function createKeySquare(theColor, xPos, yPos) {
 	var material = new THREE.MeshPhongMaterial({ color: theColor});
   var mesh = new THREE.Mesh( keyGeometry, material );
@@ -134,6 +163,10 @@ function createKeySquare(theColor, xPos, yPos) {
   return mesh;
 }
 
+/*******************************************************************************
+ *  Function: createElement()
+ *  Description: This creates an individual element tile on the periodic table.
+*******************************************************************************/
 function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
   var material = new THREE.MeshPhongMaterial({ color: theColor});
   material.name = symbol;
@@ -152,6 +185,31 @@ function createElement(number, symbol, name, mass, theColor, xPos, yPos) {
   return mesh;
 }
 
+/*******************************************************************************
+ *  Function: createElementPart()
+ *  Description: This function is similar to createElement, but handles the
+ *               special case of the proton, neutron, and electron tiles at the
+ *               bottom of the table.
+*******************************************************************************/
+function createElementPart(name, theColor, xPos, yPos) {
+  var material = new THREE.MeshPhongMaterial({ color: theColor});
+  material.name = name;
+  var mesh = new THREE.Mesh( elementPartGeometry, material );
+ 
+ 	mesh.position.x = xPos;
+	mesh.position.y = yPos;
+	mesh.position.z = -1000;
+
+  addText(name, 8, mesh.position.x, mesh.position.y-3, -998);
+  elementGroup.add(mesh);
+
+  return mesh;
+}
+
+/*******************************************************************************
+ *  Function: addText()
+ *  Description: This adds text to each element tile on the periodic table.
+*******************************************************************************/
 function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
 	var geometry = new THREE.TextBufferGeometry( name, {
 		font: theFont,
@@ -189,6 +247,12 @@ function addText(name, theSize, xPos, yPos, zPos, isNum=false, isTitle=false) {
 	elementGroup.add(mesh);
 }
 
+/*******************************************************************************
+ *  Function: checkIntersection()
+ *  Description: If the user is on desktop, this function checks if the mouse
+ *               has intersected with a tile. If so, the tile is given an
+ *               outline to give the user feedback that it is highlighted.
+*******************************************************************************/
 function checkIntersection() {
 	// find intersections
 	// create a Ray with origin at the mouse position
@@ -230,8 +294,12 @@ function checkIntersection() {
 	}
 }
 
+/*******************************************************************************
+ *  Function: addOutline()
+ *  Description: This function adds the outline to the current intersected tile.
+*******************************************************************************/
 function addOutline (object) {
-	var elementGeometry = new THREE.BoxGeometry( 25, 25, 5 );
+	var elementGeometry = new THREE.BoxGeometry(object.geometry.parameters.width, object.geometry.parameters.height, object.geometry.parameters.depth);
 	var outlineMaterial1 = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide, 
 			transparent: true, opacity: 0.9 } );
 	var outlineMesh1 = new THREE.Mesh( elementGeometry, outlineMaterial1 );
@@ -243,6 +311,12 @@ function addOutline (object) {
 	return outlineMesh1;
 }
 
+/*******************************************************************************
+ *  Function: onDocumentTouchStart()
+ *  Description: If the device running the application is mobile, this will
+ *               distinguish double taps from single taps and panning so elements
+ *               are not accidentally selected while panning or zooming.
+*******************************************************************************/
 function onDocumentTouchStart(event) {
 	if (event.touches.length === 1) {
 	  event.clientX = event.touches[0].pageX;
@@ -268,12 +342,22 @@ function onDocumentTouchStart(event) {
 	}
 }
 
+/*******************************************************************************
+ *  Function: onDocumentMouseDown()
+ *  Description: Simply calls selectElement() if the user is on a desktop.
+*******************************************************************************/
 function onDocumentMouseDown(event) {		
 	if (!isMobile && isTable) {
 		selectElement(event);
 	}
 }
 
+/*******************************************************************************
+ *  Function: selectElement()
+ *  Description: This function determines if a users click or double tap is on
+ *               one of the element tiles. If so, the program transitions to
+ *               element view.
+*******************************************************************************/
 function selectElement(event) {
 	// update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -314,6 +398,11 @@ function selectElement(event) {
 	}
 }
 
+/*******************************************************************************
+ *  Function: resetColor()
+ *  Description: This resets the selected tile color after the user selects an
+ *               element.
+*******************************************************************************/
 function resetColor(object) {
 	setTimeout(function() {
 		var theColor = data[object.material.name].theColor;

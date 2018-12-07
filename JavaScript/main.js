@@ -15,16 +15,19 @@ var elementView = false, mainLight, showUI = false;
 var loader, theFont, isLoaded = false;
 var manager = new THREE.LoadingManager();
 
+// Load the font for the periodic table
 loader = new THREE.FontLoader(manager);
 loader.load('Resources/helvetiker_regular.typeface.json', function(response) {
   theFont = response;
 });
 
+// Load the images used in the program
 textureLoader = new THREE.TextureLoader(manager);
 var mainBackground = textureLoader.load( 'Resources/skyBox.png');
 var particleTexture = textureLoader.load( 'Resources/particle.png');
 var electronTexture = textureLoader.load( 'Resources/glow.png');
 
+// Start the program when loading is done
 manager.onLoad = function() {
   init();
   animate();
@@ -35,6 +38,10 @@ manager.onLoad = function() {
   }, 500);
 }
 
+/*******************************************************************************
+ *  Function: init()
+ *  Description: This will initialize the program and create the three.js scene.
+*******************************************************************************/
 function init() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
   mouse = new THREE.Vector2();
@@ -52,6 +59,7 @@ function init() {
     document.getElementById('elementName').style.bottom = '-28px';
     isMobile = true;
 
+    // Check if it is landscape or portrait mode
     if (window.innerHeight > window.innerWidth) {
       if (/iPad/i.test(navigator.userAgent)) {
         document.getElementById('settingsWindow').style.width = '40%';
@@ -76,7 +84,7 @@ function init() {
   scene.add(skybox);
 
 
-  // Needed for particles for some reason
+  // Needed for particles
   geometry = new THREE.SphereGeometry(0.01, 10, 9);
   material = new THREE.MeshNormalMaterial();
   mesh = new THREE.Mesh( geometry, material );
@@ -98,12 +106,18 @@ function init() {
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 }
 
+/*******************************************************************************
+ *  Function: animate()
+ *  Description: This function is essentially the loop for the program. It will
+ *               make object movement possible throughout the program.
+*******************************************************************************/
 function animate() {
-
+  // Update the particles until the user presses start
   if (keepParticles) {
     updateParticles();
   }
 
+  // Remove the element when the user returns to table view
   if (isTable && goingBack) {
     goingBack = false;
     scene.remove(elementItemsGroup);
@@ -117,20 +131,24 @@ function animate() {
     electronRotation = 0;
   }
 
+  // Check the pan range as long as the user is in table view
   if (isTable && !elementView) {
       checkPanRange();
   }
 
+  // Display the UI if the user has gone to element view
   if (elementView && !isMoving && !showUI) {
     displayUI();
     showUI = true;
   }
 
+  // Disable controls when the user is switching back to table view
   if (goingBack && controls.enabled) {
     rotation = 0;
     controls.enabled = false;
   }
 
+  // Give the atom parts movement if we are in element view
   if (!pauseMovement) {
     if (elementGenerated) {
       rotateElectron();
@@ -138,6 +156,7 @@ function animate() {
     }
   } 
 
+  // Only add an outline when hovering tiles if the user is on a desktop
   if (!isMobile && isTable && !isMoving) {
     checkIntersection();
   }
@@ -149,9 +168,13 @@ function animate() {
   }
 
   renderer.render(scene, camera);
-
 }
 
+/*******************************************************************************
+ *  Function: checkPanRange()
+ *  Description: This limits how far the user can pan the screen while in table
+ *               view.
+*******************************************************************************/
 function checkPanRange() {
   if (controls.target.y < -200) {
     controls.target.y = -200;
@@ -178,6 +201,10 @@ function checkPanRange() {
   }
 }
 
+/*******************************************************************************
+ *  Function: setPanControls()
+ *  Description: This will initialize the panning controls for the table view.
+*******************************************************************************/
 function setPanControls() {
   camera.position.set(0,0,-500);
   camera.lookAt(new THREE.Vector3(0,0,-1000));
@@ -191,6 +218,10 @@ function setPanControls() {
   controls.panSpeed = 0.2;
 }
 
+/*******************************************************************************
+ *  Function: setOrbitControls()
+ *  Description: This will initialize the orbit controls for element view.
+*******************************************************************************/
 function setOrbitControls() {
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000);
   camera.position.set(0,0,-500);
@@ -225,7 +256,7 @@ function changeSound() {
 /*******************************************************************************
  *  Function: changeOrientation()
  *  Description: This function will resize the canvas when the orientation 
- *  changes
+ *               changes.
 *******************************************************************************/
 function changeOrientation() {
   if (isLoaded) {
@@ -245,7 +276,6 @@ function changeOrientation() {
       }
       else {
           document.getElementById('settingsWindow').style.width = '40%';
-          //document.getElementById('loading').style.transform = 'translateY(320%)';
       }
     }
   }
@@ -261,6 +291,10 @@ function addLights(x,y,z) {
   scene.add(mainLight);
 }
 
+/*******************************************************************************
+ *  Function: createParticles()
+ *  Description: This will initialize the particles seen when the program loads.
+*******************************************************************************/
 function createParticles(texture) {
   // create the particle variables
   particles = new THREE.Geometry();
@@ -300,6 +334,10 @@ function createParticles(texture) {
   scene.add(particleSystem);
 }
 
+/*******************************************************************************
+ *  Function: updateParticles()
+ *  Description: This function will make the particles move.
+*******************************************************************************/
 function updateParticles() {  
   var verts = particleSystem.geometry.vertices;
   for(var i = 0; i < verts.length; i++) {
@@ -314,17 +352,23 @@ function updateParticles() {
   particleSystem.rotation.y -= .1 * 0.005;
 }
 
+/*******************************************************************************
+ *  Function: startProgram()
+ *  Description: This will transfer the program to table view when the user
+ *               presses the start button.
+*******************************************************************************/
 function startProgram() {
+  // Make the Title and start button disappear and play the music
   document.getElementById("theSound").play();
   document.getElementById("titleHeader").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").classList.replace("titleVisible", "titleHidden");
   document.getElementById("startButton").disabled = true;
   document.getElementById("curtain").classList.replace("curtainHidden", "curtainVisible");
 
+  // Generate the table while the curtain is drawn
   setTimeout(function() {
     scene.remove(particleSystem)
     keepParticles = false;
-
     isCenter = false;
     isTable = true;
     isMoving = true;
@@ -335,6 +379,10 @@ function startProgram() {
   }, 1000); // Change the scene after 1 second
 }
 
+/*******************************************************************************
+ *  Function: setTableMovement()
+ *  Description: This initializes the movement for the table view.
+*******************************************************************************/
 function setTableMovement() {
   document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -345,11 +393,20 @@ function setTableMovement() {
   controls.enabled = true;
 }
 
+/*******************************************************************************
+ *  Function: onDocumentMouseMove()
+ *  Description: This keeps track of the mouse position while the user is in
+ *               table view.
+*******************************************************************************/
 function onDocumentMouseMove( event ) {  
   // update the mouse variable
   if (isTable)
   {
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  }
+  else {
+    mouse.x = -1;
+    mouse.y = 1;
   }
 }

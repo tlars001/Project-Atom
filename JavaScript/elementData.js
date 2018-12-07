@@ -31,7 +31,7 @@ var data = {
 		"symbol": "Be",
 		"number": "4",
 		"mass": "9.012182",
-		"theColor": "yellow",
+		"theColor": "dodgerblue",
 		"info": "Beryllium is a divalent chemical metal which occurs in nature in a combination with different minerals and metals. It is found in the composition of some noble gemstones, including chrysoberyl and beryl. In a free state, beryllium is a lightweight, strong, brittle, and steel-grey, alkaline earth metal. This metal is mostly used to harden alloys and specifically beryllium copper. Due to its thermal stability, flexural rigidity, low density, and thermal conductivity, beryllium is used in structural applications, with its qualities making it an aerospace material. It is used for space vehicles, missiles, high speed aircraft, and communication satellites. Because of its atomic mass and low density, the metal is transparent of ionizing radiation such as X-rays. It is also widely used in experiments in particle physics and for X-ray equipment. Due to their high thermal conductivity, beryllium oxide and beryllium are used in heat sinking applications and heat transport."
 	},
 
@@ -103,7 +103,7 @@ var data = {
 		"symbol": "Mg",
 		"number": "12",
 		"mass": "24.305",
-		"theColor": "yellow",
+		"theColor": "dodgerblue",
 		"info": "Magnesium is a well-known chemical element under number 12 in the periodic table. It goes by the symbol Mg and is one of the elements that are most frequently found in the Earth's crust, and indeed in the whole universe. It makes up 13 percent of the Earth's mass. Its abundance is owed to its easy accumulation in supernova stars. Mg is highly soluble in water, which is why it is one of the most abundant elements that can be dissolved. Magnesium is found in significant quantities in different minerals, such as serpentine, olivine, magnetite, dolomite, and others. It is the 3rd most abundant element in the earth’s crust, after iron and aluminum, and is also found is salty layers, underground brines, and seawater."
 	},
 
@@ -175,7 +175,7 @@ var data = {
 		"symbol": "Ca",
 		"number": "20",
 		"mass": "40.078",
-		"theColor": "yellow",
+		"theColor": "dodgerblue",
 		"info": "Calcium is an alkaline earth metal and one of the most abundant elements found in the Earth's crust in terms of mass. This soft gray element is rather hard, and it is important for life on earth, especially for cell physiology whereby the calcium ion Ca2+ moves out and into the cytoplasm, signaling different cellular processes. It is the main component in the mineralization of shells and bones, and the most abundant element of all by mass in many living organisms. Calcium is an important constituent of teeth, leaves, and bones, and calcium carbonate is found in stalactites and stalagmites. It makes up some 3.22 percent of the oceans, air, and earth. There are different natural forms of the metal, including gypsum, limestone, and fluorite. Apatite is a chlorophosphate or fluorophosphate of the element."
 	},
 
@@ -337,7 +337,7 @@ var data = {
 		"symbol": "Sr",
 		"number": "38",
 		"mass": "87.62",
-		"theColor": "yellow",
+		"theColor": "dodgerblue",
 		"info": "Strontium is an alkaline earth metal that is commercially available. Its chemical and physical properties are similar to that of elements such as barium and calcium. It was discovered in 1790 by the Scottish chemist William Cruickshank and the physician and chemist Adair Crawford. The element reacts vigorously when in contact with water and tarnishes in air. With water, it forms hydrogen gas and strontium hydroxide, which is a caustic alkali, causing severe lung, eye, and skin irritation. There are two oxidation states - 1 and 2 - and 4 stable isotopes - Sr-88, Sr-87, Sr-86, and Sr-84. In general, the radioactive isotopes of the element share the same properties. The properties of Sr-90 are similar to that of calcium. The element also forms compounds such as carbonates and nitrates, including strontium nitrate and carbonate."
 	},
 
@@ -499,7 +499,7 @@ var data = {
 		"symbol": "Ba",
 		"number": "56",
 		"mass": "137.33",
-		"theColor": "yellow",
+		"theColor": "dodgerblue",
 		"info": "Barium is a chemical element and an alkaline earth metal with a soft silvery color. Because of its reactivity with air, this metallic metal is not observed in its pure form in nature. Barium is found in naturally occurring minerals. Among them are witherite, which is a barium carbonate, barite, and barium sulfate. Barium occurs in a combination with other elements, including oxygen, carbon, and sulfur. The metal has half the density of iron and is very light. It forms hydroxide by reacting vigorously with water and oxidizes in air. Barium also forms some poisonous compounds by reacting with most of the non-metals."
 	},
 
@@ -787,7 +787,7 @@ var data = {
 		"symbol": "Ra",
 		"number": "88",
 		"mass": "(226)",
-		"theColor": "yellow",
+		"theColor": "dodgerblue",
 		"info": "Radium is a solid metal that belongs to the group of the alkaline earth metals and has no stable isotopes. Naturally occurring radium is found in animals, plants, water, soils, and rock. It is mainly found in Phosphate rocks. While the element is present in uranium ores, it is a scarce one. There is only 0.14 grams in 1,000 kg of uranium. It is usually found in the form of radium bromide and chloride which are byproducts. The element was discovered in 1898 by Marie and Pierre Curie and it was in 1910 when it was first isolated. This metal is used for medical treatment, including cancer treatment. Radon gas, which is produced through radioactive decay, is used in radon spas for therapeutic purposes. Radon therapy is offered in Russia, Austria, and other European countries (mostly in Central Europe). One of the isotopes, radium-223 is used to treat bone metastases and prostate cancer. The survival for patients who receive treatment is 14 months and 11 months for patients who are given placebo. Side effects have been reported, including foot swelling, vomiting, diarrhea, and nausea."
 	},
 
@@ -1059,5 +1059,32 @@ var data = {
 		"mass": "(294)",
 		"theColor": "purple",
 		"info": "Oganesson is a synthetic, super heavy, transactinide element, also known as element 118 and eka-radon. Transactinides are super heavy elements such as Livermorium, Flerovium, Copernicium, Hassium, Bohrium, and others. These elements have atomic numbers from 104 to 118. They are also transuranium elements and are artificially produced. With the exception of Dubnium and Rutherfordium, all elements are very unstable and have very short half lives. Like other transactinide elements, Oganesson is manmade, radioactive, and only produced in laboratories. Systemic names are used prior to discovery and isolation. Permanent names are usually given to these elements by the researchers who contributed to their discovery. Oganesson's chemical and physical properties have not been thoroughly studied. Its electron configuration, element category, density, and phase are unknown."
+	},
+
+	"Proton": {
+		"name": "Proton",
+		"symbol": "-",
+		"number": "0",
+		"mass": "0",
+		"theColor": "#dd5555",
+		"info": "A proton is a subatomic particle found in the nucleus of every atom.  The particle has a positive electrical charge, equal and opposite to that of the electron. If isolated, a single proton would have a mass of only 1.673 ? 10-27 kilograms, just slightly less than the mass of a neutron. Protons need not be confined to the nuclei of atoms.  When protons are found outside atomic nuclei, they acquire fascinating, bizarre, and potentially dangerous properties, similar to those of neutrons in similar circumstances.  But protons have an additional property. Because they carry an electric charge, they can be accelerated by electric and/or magnetic fields.  High-speed protons, and atomic nuclei containing them, are emitted in large numbers during solar flares.  The particles are accelerated by the earth's magnetic field, causing ionospheric disturbances known as geomagnetic storms."
+	},
+
+	"Neutron": {
+		"name": "Neutron",
+		"symbol": "-",
+		"number": "0",
+		"mass": "0",
+		"theColor": "#55dddd",
+		"info": "A neutron is a subatomic particle found in the nucleus of every atom except that of simple hydrogen.  The particle derives its name from the fact that it has no electrical charge; it is neutral.   Neutrons are extremely dense.  If isolated, a single neutron would have a mass of only 1.675 ? 10-27 kilogram, but if a teaspoonful of tightly packed neutrons could be scooped up, the resulting chunk of matter would weigh millions of tons at the earth's surface. Neutrons need not be confined to the nuclei of atoms.  They can exist all by themselves.  When neutrons are found outside atomic nuclei, they acquire fascinating, bizarre, and potentially dangerous properties.  When they travel at high speed, they produce deadly radiation.  The so-called neutron bomb, known for its ability to kill people and animals while having a minimal effect on inanimate physical structures, works by producing a barrage of high-speed neutrons.  The high density of these particles, combined with their speed, gives them extreme energy.  As a result, they have the power to alter, or even break apart, the nuclei of atoms that they strike."
+	},
+
+	"Electron": {
+		"name": "Electron",
+		"symbol": "-",
+		"number": "0",
+		"mass": "0",
+		"theColor": "yellow",
+		"info": "An electron is a negatively charged subatomic particle. It can be either free (not attached to any atom), or bound to the nucleus of an atom. Electrons in atoms exist in spherical shells of various radii, representing energy levels. The larger the spherical shell, the higher the energy contained in the electron. In electrical conductors, current flow results from the movement of electrons from atom to atom individually, and from negative to positive electric poles in general. In semiconductor materials, current also occurs as a movement of electrons. But in some cases, it is more illustrative to envision the current as a movement of electron deficiencies from atom to atom. An electron-deficient atom in a semiconductor is called a hole. Holes \"move\" from positive to negative electric poles in general. The charge on a single electron is considered as the unit electrical charge. It is assigned negative polarity. The charge on an electron is equal, but opposite, to the positive charge on a proton or hole."
 	}
 }
