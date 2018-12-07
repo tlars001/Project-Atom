@@ -135,7 +135,7 @@ function createKey() {
 	addText("Actinoids", 6, -52, 92, -1000, false, true);
 	createKeySquare("red", -80, 75);
 	addText("Transition metals", 6, -38, 72, -1000, false, true);
-	createKeySquare("cyan", -80, 55);
+	createKeySquare("darkcyan", -80, 55);
 	addText("Poor metals", 6, -46, 52, -1000, false, true);
 
 	// Nonmetals

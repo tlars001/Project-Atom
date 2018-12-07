@@ -4,7 +4,7 @@ var data = {
 		"symbol": "H",
 		"number": "1",
 		"mass": "1.00794",
-		"theColor": "teal",
+		"theColor": "mediumseagreen",
 		"info": "Hydrogen is a chemical element and the most abundant and lightest element of all. It constitutes about 75 percent of the elemental mass in the universe. Hydrogen, found in plasma state, is the main element in the composition of stars in the main sequence. On earth, hydrogen occurs relatively rare in nature. It is the main component of all organic matter and water. Industrial production of hydrogen takes place by steam reforming of natural gas. Electrolysis of water and other energy-intensive hydrogen production techniques are less often used. In terms of chemical properties, molecular hydrogen or dihydrogen (hydrogen gas) is highly flammable. It burns in air in different concentrations, ranging from 4 percent up to 75 percent by volume. Explosive mixtures form with air in concentration between 4 and 74 percent. Concentration of 5 to 95 percent forms explosive mixtures with chlorine. Ultraviolet light is emitted by pure hydrogen-oxygen flames, and they are almost invisible to the naked eye. The use of flame detector may be required to detect burning hydrogen leaks, and leaks like these can be dangerous."
 	},
 
@@ -112,7 +112,7 @@ var data = {
 		"symbol": "Al",
 		"number": "13",
 		"mass": "26.982",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "This silvery white element is a member of the boron group. It is the most abundant element in the world after oxygen and silicon and the most abundantly present in the Earth's crust. It makes up approximately 8 percent of the solid surface of the Earth. This element is extremely reactive with almost all chemicals, elements, and compounds and is not found in nature. However, it is part of more than 270 different minerals. Its low density and non-corrosive properties make it a vital structural component in the aerospace industry and other sectors. Its most useful compounds are oxides and sulfates. Oxides are found in the oxidation state of ?2. They can be chemical compounds formally containing oxygen in this state. "
 	},
 
@@ -265,7 +265,7 @@ var data = {
 		"symbol": "Zn",
 		"number": "30",
 		"mass": "65.38",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Zinc is a chemical element and transition metal which is commonly found in the Earth's crust. This is a lustrous, reactive metal with a bluish-white color. It was discovered in 1746 by Andreas Marggraf, a German chemist who is known as a pioneer in the field of analytical chemistry. Zinc is crystalline and brittle at normal temperatures and malleable and ductile at temperatures between 230 F (110 C) and 300 F (150 C). The element reacts with dilute acids and nonmetals. The melting point is 788 F (420 C) and the boiling point is 1664 F (907 C). Zinc combines with a number of elements, including tellurium, nickel, cobalt, magnesium, and tin. The metal also forms alloys with silver, lead, iron, gold, and bismuth. Binary alloys are also formed when zinc reacts with antimony, aluminum, and copper. The element has a hexagonal packed structure and 10 isotopes. Zn-64 is the most abundant one."
 	},
 
@@ -274,7 +274,7 @@ var data = {
 		"symbol": "Ga",
 		"number": "31",
 		"mass": "69.723",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Gallium is a metal that does not occur naturally on its own, but can be found as a salt in zinc and bauxite ores. It is a poor metal, meaning that its melting and boiling points are relatively low, its electro-negativity is relatively high, and it is softer. It differs from metalloids in this regard. Brittle at low temperatures, gallium becomes a liquid when the temperature rises to around 25 degrees Celsius. It can melt in your hand at room temperature. A compound of Ga, gallium arsenide, is used in semiconductors. Other two compounds of this element, gallium nitride and indium gallium nitride, are used to produce diode lasers. Almost all of the gallium in the world is used in semiconductors at the present time, but new uses are constantly being found. One emerging use is in medicine as a way to treat inflammation. The use of certain gallium salts is believed to be important for treatment."
 	},
 
@@ -283,7 +283,7 @@ var data = {
 		"symbol": "Ge",
 		"number": "32",
 		"mass": "72.630",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Germanium was named by the German scientist Clemens Winkler after his country. Germanium is grayish-white in color, hard, and shimmers. It is semi-metal, which is solid at room temperature. A member of the carbon group of elements, its chemical makeup is similar to that of silicon and tin. This element has five isotopes, which occur in nature, and forms a number of compounds as well. It is used in semiconductors, fiber-optic systems, infrared optics, and in other electronics. Recently, it is also being used in nanowires. The main source of germanium is sphalerite, but it can also be found in copper, silver, and lead ores. Crystalline germanium has been produced using zone refining techniques. There is no need to produce germanium in laboratory conditions because it is available commercially. However, germanium is a relatively rare metal and 1 kg cost $800 in 1999. When handling certain germanium compounds, it is necessary to take precaution, because they can cause inflammation of the eyes, skin, lungs, and throat."
 	},
 
@@ -427,7 +427,7 @@ var data = {
 		"symbol": "Cd",
 		"number": "48",
 		"mass": "112.41",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Cadmium is a chemical element similar to mercury and zinc, which are stable metals. It is a blue-white, soft metal similar to mercury in that it has a lower melting point than the group of transition metals. Being a soft metal, cadmium can be cut with a knife, and is soluble in acids. However, it is not soluble in alkalis and tarnishes in air. Because cadmium does not have partly filled f or d electron shells in common oxidation or elemental states, it is not considered a transition metal in every case. In the Earth’s crust, cadmium is found in concentrations of 0.1 – 0.5 ppm. Cadmium is a byproduct of zinc extraction, occurring as a component of many zinc ores. It is a rare element compared to zinc and also occurs as a byproduct of copper and lead extraction. After application, it is present in the environment because cadmium is found in pesticides and manures. A large amount of cadmium is released every year or some 25,000 tons. Half of it is released through weathering rocks into the rivers and some through volcanoes and forest fires into the air. Cadmium is also released through manufacturing and other human activities. Because sufficient quantities of cadmium are produced as a byproduct, cadmium ores are not explored. The mining sites are those where zinc is extracted, and the smelting of this metallic element from sphelerite, which is its ore, produces cadmium as a byproduct. The main producers of cadmium are Canada, the United States, Japan, Mexico, Australia, and Peru."
 	},
 
@@ -436,7 +436,7 @@ var data = {
 		"symbol": "In",
 		"number": "49",
 		"mass": "114.82",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Indium is a malleable and soft chemical element, which is similar to thallium and gallium in terms of chemical properties. It is a rare and fusible metal and exhibits intermediary properties between gallium and thallium. The primary source of indium is zinc ores, and it occurs in a compound form in them. Indium rarely occurs in the form of grains of a free or native metal, and these grains are of no commercial importance. The element does not react with water, but strong oxidizing agents oxidize it, for example, oxalic acid and halogens, giving indium (III) compounds. Indium does not react with carbon, silicon, or boron, and the corresponding carbide, silicide, and boride are not known. No reaction takes place between hydrogen and indium, but indium (III) and indium (I) hydrates can be formed. Indium has a face-centered tetragonal structure. It dissolvers in acids and is stable in water and air. It burns with a violet flame when it is heated about its melting point."
 	},
 
@@ -445,7 +445,7 @@ var data = {
 		"symbol": "Sn",
 		"number": "50",
 		"mass": "118.71",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Tin is a metal and chemical element which is known since ancient times. Copper and tin were combined to produce bronze as early as 3000 BC. Tin is ductile, malleable, and silvery-white in color and occurs in two allotropic forms. The element is pliable and soft and reacts with acid salts, alkalis, and strong acids. Tin has good corrosion resistance and is used as a catalyst. It has a boiling point of (4118 F) 2270 C and melting point of 450 F (232 C). There are 20 isotopes and 10 of them are stable. The element has a diamond cubic structure and forms different compounds, including organotin compounds, hydrides, and inorganic compounds such as tin tetraiodide, tin tetrabromide, and other halide compounds. Tin is solid at room temperature. The two oxidation states are + 4 and +2."
 	},
 
@@ -454,7 +454,7 @@ var data = {
 		"symbol": "Sb",
 		"number": "51",
 		"mass": "121.76",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Antimony is a toxic chemical element. It is classed among the group of metalloids. Metalloids are elements that are neither purely metal nor non-metal. Other metalloids include boron, silicon, germanium, arsenic, and tellurium. The status of polonium is disputed, although this element is often classed among the metalloids as well. The use of antimony is limited owing to its excessive toxic properties. The compounds of this element, however, have proven of great use in terms of chemical developments. They serve to reduce the flammability of fuels and postpone combustion, which is why they are important fire retardants and are used in many commercial products for industrial and domestic use. Antimony is increasingly being used in microelectronics."
 	},
 
@@ -715,7 +715,7 @@ var data = {
 		"symbol": "Hg",
 		"number": "80",
 		"mass": "200.59",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Mercury is a chemical element known as hydrargyrum and quicksilver. It is a silvery, heavy d-block element with a boiling point of 356.73 C and a freezing point of -38.83 C. This element is the only metal in a liquid state at standard conditions for pressure and temperature apart from bromine. Other metals melt above room temperature, including rubidium, francium, caesium, and gallium. This element is a fair conductor of electricity, but at the same time, it is a poor conductor of heat and has a very low melting point compared to other d-block metals. It does not react with dilute sulfuric acid and most other acids, but aqua regia, nitric acid, and concentrated sulfuric acid dissolve it, giving chloride, nitrate, and sulfate salts."
 	},
 
@@ -724,7 +724,7 @@ var data = {
 		"symbol": "Tl",
 		"number": "81",
 		"mass": "204.38",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Thallium is a post-transition metal and chemical element that was discovered in 1861 by Claude-Auguste Lamy and William Crookes. They discovered the element independently by using a new method known as flame spectroscopy. This is a method used to study the composition of chemicals and minerals. Thallium is found in different ores, including metal-sulfide ores, zinc, lead, and copper. It occurs in minerals found in granites, soils, and clays. Minerals that contain silver, lead, copper, arsenic, and antimony also contain thallium in selenides and sulfides. There are some thallium minerals as well, including lorandite and crookesite. Other minerals include sabatierite, routhierite, hutchinsonite, and gabrielite, the latter of which is found in Switzerland. Minerals such as christite and bukovite also contain thallium. Christite is found in deposits in Nevada, the US, and China while bukovite occurs in deposits in Argentina, France, Sweden, and the Czech Republic."
 	},
 
@@ -733,7 +733,7 @@ var data = {
 		"symbol": "Pb",
 		"number": "82",
 		"mass": "207.2",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Lead is named after the Latin plumbum. As we know, in the past, all the plumbing was made of lead, which results in poisoning and death. Thankfully, it no longer is. Lead is soft and considered a poor metal, which means that it is a metallic element in the p-block. It is not clear why these elements are considered poor metals. What sets them apart from the others is that their electro-negativity is higher while their melting and boiling points are lower than that of transition metals. The other poor metals are tin, gallium, aluminum, bismuth, indium, and thallium. Lead is also considered a heavy metal. Its exposure to air renders it gray in color; otherwise it is whitish and silvery when melted. Some consider lead to be the most stable element of all because of its high atomic number."
 	},
 
@@ -742,7 +742,7 @@ var data = {
 		"symbol": "Bi",
 		"number": "83",
 		"mass": "208.98",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Bismuth is a chemical element and a poor metal, resembling antimony and arsenic chemically. In nature, the element can occur uncombined, but its oxide and sulfide form ores with commercial importance. Bismuth is a silvery white metal, but surface oxide can make it appear pink in color. It is brittle, and its denseness is 86 percent that of lead. Bismuth is a crystalline metal and the most diamagnetic of all. Except mercury, it has a lower thermal conductivity compared to other metals. Bismuth also has the highest Hall effect and a high electrical resistance. In a magnetic field, its electrical resistance increases more than that of other metals. Normally, it is not necessary to isolate the metal in laboratory conditions because it is commercially available. In nature, it is found as bismutite, bismuthinite, and bismite. Bismuth can be a byproduct of gold, silver, lead, copper, thin, and zinc plants. The metal does not have stable isotopes. Bismuth-209 was believed to be the heaviest naturally occurring isotope, but research in 2002 proved that it is unstable. Through alpha decay, the isotope decays into thallium-205."
 	},
 
@@ -751,7 +751,7 @@ var data = {
 		"symbol": "Po",
 		"number": "84",
 		"mass": "(209)",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Polonium is a radioactive element and a very rare semi-metal. The element has 33 radioactive isotopes, including polonium-208 and polonium-210. It is a scarce element that is produced in nuclear reactors. Neurons are used to bombard bismuth-209, and bismuth-210 is formed as a result. Polonium-210 is created through emission of beta particles. Only 3 isotopes have an appreciable half-life - polonium-210, polonium-209, and polonium-208. The half-life of polonium-209 is 102 years, making it the most stable isotope. It emits alpha particles and decays into lead-205. Polonium-210 also emits an alpha particle and decays into lead-210. This isotope is found in the earth’s crust in small quantities. It can be artificially produced from uranium minerals and ores. The isotope is mainly used to clean dust from camera lenses and photographic films and to eliminate static electricity. Anti-static brushes contain small amounts of polonium-210. It is also used for laboratory experiments in the USA. Neutron sources are created by combining beryllium and polonium-210. Early versions of atomic weapons used such neutron sources."
 	},
 
@@ -1003,7 +1003,7 @@ var data = {
 		"symbol": "Cn",
 		"number": "112",
 		"mass": "(285)",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Copernicium is a manmade element that was synthesized in 1996 by the German physicist Sigurd Hofmann and the Bulgarian researcher Victor Ninov who also made contributions to the discovery of Roentgenium and Darmstadtium. This is a very radioactive element that is only synthesized in controlled settings. Some of its properties have been studied while others are still unknown. The short half life of the element makes it difficult to study its properties. It is expected that Copernicium exhibits properties similar to radon. The element's oxidation states and ionization energy are unknown. With an atomic weight of 285, this is a d-block element with a density of 23.7 grams per cubic centimeter. Copernicium is a transition metal which is predicted to have 4 oxidation states – 0, 1, 2, and 4. It is produced through the reaction of two isotopes, lead-208 and zinc-70."
 	},
 
@@ -1012,7 +1012,7 @@ var data = {
 		"symbol": "Nh",
 		"number": "113",
 		"mass": "(286)",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Nihonium is a chemical element with a temporary name which was discovered in 2003 at the Lawrence Livermore National Laboratory and the Joint Institute for Nuclear Research. Nihonium is predicted to share some properties with elements such as Thallium, Indium, Gallium, Aluminum, and Boron. However, it is expected to behave like a post-transition metal. This is the heaviest element in the boron group and the elements are also known as icosagens. It has an atomic weight of 286 and is solid at room temperature. Scientists predict a density of 16 grams per cubic centimeter. The element is predicted to show several oxidation states – +5, +3, and +2. Its ionization energy, covalent radius, and atomic radius are unknown and so are the melting and boiling points and electron configuration. These properties have only been extrapolated or predicted. The color is unknown but is expected to be gray, silvery-white, or metallic."
 	},
 
@@ -1021,7 +1021,7 @@ var data = {
 		"symbol": "Fl",
 		"number": "114",
 		"mass": "(289)",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Flerovium is a manmade element that was discovered at the JINR and Lawrence Livermore National Laboratory. Little is known about the appearance and physical and chemical properties of Flerovium. This element is synthetic, radioactive, and volatile and has an atomic weight of 289. It has 114 protons and 114 electrons and is a period 7 element. Other elements in this group include curium, plutonium, neptunium, and uranium. This is the heaviest known group 14 element. It is a super heavy element and is predicted to be solid at room temperature. Its ionization energy, atomic radius, melting and boiling points, and oxidation states are unknown. The element’s ionic and Van Der Waals radius are also unknown and so are its electronegativity, heat of fusion, and heat of vaporization. The element is predicted to have properties similar to tin and lead. Lead is ductile, corrosion resistant, and malleable while tin is corrosion resistant, pliable, and soft."
 	},
 
@@ -1030,7 +1030,7 @@ var data = {
 		"symbol": "Mc",
 		"number": "115",
 		"mass": "(290)",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Moscovium  is a synthetic, transuranium element which is very unstable and higly radioactive. It is a super heavy post-transition metal also known as element 115 and eka-bismuth. Ununpentium is the temporary name. This is a 7-period, p-block element and the heaviest known pnictogen. Other pnictogens are bismuth, phosphorus, nitrogen, antimony, and arsenic. They are solid at room temperature, the only exception being nitrogen, and have different crystal structures, densities, and melting points. All elements in this group form covalent bonds. Given that new isotopes could be isolated in the future, the element’s atomic weight is provisional. It is a group 15 metal with no stable isotopes. Until recently, Nh was one of the transuranium elements which were only theoretically thought to exist. The first experiment was conducted by a research team at the Joint Institute for Nuclear Research. They used Ca-48 to target Am-243 and created 4 Nh atoms."
 	},
 
@@ -1039,7 +1039,7 @@ var data = {
 		"symbol": "Lv",
 		"number": "116",
 		"mass": "(293)",
-		"theColor": "cyan",
+		"theColor": "darkcyan",
 		"info": "Livermorium is an artificially made element which was isolated in 2000. This is a super heavy, highly radioactive element produced by nuclear reactions. Some of its isotopes have been isolated, namely Lv-295, Lv-294, Lv-288, and Lv-285. All isotopes studied so far are unstable. The longest-lived isotope of Livermorium is Lv-293, with a half life of 61 milliseconds. The shortest-lived isotope is Livermorium-290. Its half life is only 7.1 milliseconds. Fusion reactions of Ca-48 and Cm-243 produce lighter isotopes. This is a group 16 element, together with polonium, tellurium, selenium, sulfur, and oxygen. It is expected to have 3 oxidation states – +4, +2, and -2. Little is known about Livermorium and its isotopes. Its density, electron configuration, atomic radius, and heat of fusion are unknown. Its covalent radius and melting point are also unknown. Livermorium has an atomic weight of 293 and is a period 7 element, along with fermium, californium, neptunium, and uranium."
 	},
 
